@@ -1,0 +1,1331 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tunevia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-15 19:57\n"
+"PO-Revision-Date: 2026-01-15 20:00+0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: tunevia.py:695
+msgid "&Cancel"
+msgstr "&Batal"
+
+#: tunevia.py:695
+msgid "&Download"
+msgstr "&Unduh"
+
+#: tunevia.py:247 tunevia.py:307
+msgid "&Help"
+msgstr "&Bantuan"
+
+#: tunevia.py:246 tunevia.py:307
+msgid "&Options"
+msgstr "&Opsi"
+
+#: tunevia.py:695
+msgid "&Play"
+msgstr "&Putar"
+
+#: settings_panel.py:33
+msgid "1 Hour"
+msgstr "1 Jam"
+
+#: settings_panel.py:28
+msgid "1 Minute"
+msgstr "1 Menit"
+
+#: settings_panel.py:30
+msgid "10 Minutes"
+msgstr "10 Menit"
+
+#: settings_panel.py:25
+msgid "10 Seconds"
+msgstr "10 Detik"
+
+#: settings_panel.py:31
+msgid "15 Minutes"
+msgstr "15 Menit"
+
+#: settings_panel.py:26
+msgid "15 Seconds"
+msgstr "15 Detik"
+
+#: settings_panel.py:23
+msgid "3 Seconds"
+msgstr "3 Detik"
+
+#: settings_panel.py:32
+msgid "30 Minutes"
+msgstr "30 Menit"
+
+#: settings_panel.py:27
+msgid "30 Seconds"
+msgstr "30 Detik"
+
+#: settings_panel.py:29
+msgid "5 Minutes"
+msgstr "5 Menit"
+
+#: settings_panel.py:24
+msgid "5 Seconds"
+msgstr "5 Detik"
+
+#: ui_components.py:624 ui_components.py:654 ui_components.py:679
+msgid "<Custom>"
+msgstr "<Kustom>"
+
+#: tunevia.py:694
+msgid ""
+"A YouTube URL has been detected in your clipboard:\n"
+"\n"
+"{url}\n"
+"\n"
+"What would you like to do?"
+msgstr ""
+"URL YouTube terdeteksi di papan klip Anda:\n"
+"\n"
+"{url}\n"
+"\n"
+"Apa yang ingin Anda lakukan?"
+
+#: downloader_panel.py:493
+msgid "A download is in progress. Please wait for it to finish before closing."
+msgstr "Unduhan sedang berlangsung. Harap tunggu hingga selesai sebelum menutup."
+
+#: lyrics_panel.py:203 youtube_panel.py:178
+msgid "A search is already in progress. Please wait."
+msgstr "Pencarian sedang berlangsung. Mohon tunggu."
+
+#: settings_panel.py:285
+msgid "Accessibility"
+msgstr "Aksesibilitas"
+
+#: ui_components.py:422 ui_components.py:432
+msgid "Action"
+msgstr "Aksi"
+
+#: ui_components.py:806
+msgid "Add Bookmark"
+msgstr "Tambah Penanda"
+
+#: downloader_panel.py:186
+msgid "Add Link(s)"
+msgstr "Tambah Tautan"
+
+#: downloader_panel.py:122
+msgid "Add Link(s)..."
+msgstr "Tambah Tautan..."
+
+#: ui_components.py:856 ui_components.py:906
+msgid "Add Multiple Items"
+msgstr "Tambah Banyak Item"
+
+#: ui_components.py:744
+msgid "Add New..."
+msgstr "Tambah Baru..."
+
+#: downloader_panel.py:123
+msgid "Add one or more video/playlist links to the download list"
+msgstr "Tambahkan satu atau lebih tautan video/daftar putar ke daftar unduhan"
+
+#: youtube_panel.py:489
+msgid "Added {num_new_added} results. Total {num_total}."
+msgstr "Menambahkan {num_new_added} hasil. Total {num_total}."
+
+#: downloader_panel.py:253
+msgid "Adding {} videos from {} '{}'"
+msgstr "Menambahkan {} video dari {} '{}'"
+
+#: downloader_panel.py:360
+msgid "All downloads are complete."
+msgstr "Semua unduhan selesai."
+
+#: ui_components.py:518
+msgid "All shortcuts reset to default."
+msgstr "Semua pintasan diatur ulang ke default."
+
+#: settings_panel.py:273 tunevia.py:249
+msgid "Always on Top"
+msgstr "Selalu di Atas"
+
+#: tunevia.py:365
+msgid "Always on top disabled."
+msgstr "Selalu di atas dinonaktifkan."
+
+#: tunevia.py:365
+msgid "Always on top enabled."
+msgstr "Selalu di atas diaktifkan."
+
+#: youtube_panel.py:404
+msgid "An error occurred during YouTube Music search: "
+msgstr "Terjadi kesalahan saat pencarian YouTube Music: "
+
+#: discovery_panel.py:120
+msgid "An error occurred. See console."
+msgstr "Terjadi kesalahan. Lihat konsol."
+
+#: lyrics_panel.py:288 lyrics_panel.py:331 lyrics_panel.py:360 youtube_panel.py:382
+msgid "An error occurred: "
+msgstr "Terjadi kesalahan: "
+
+#: radar_panel.py:103
+msgid "Analyzing your listening habits..."
+msgstr "Menganalisis kebiasaan mendengarkan Anda..."
+
+#: settings_panel.py:237
+msgid "Appearance & Behavior"
+msgstr "Tampilan & Perilaku"
+
+#: downloader_panel.py:434
+msgid "Are you sure you want to clear all items from the download list?"
+msgstr "Apakah Anda yakin ingin menghapus semua item dari daftar unduhan?"
+
+#: history_panel.py:275
+msgid "Are you sure you want to clear the entire play history? This cannot be undone."
+msgstr "Apakah Anda yakin ingin menghapus seluruh riwayat pemutaran? Ini tidak dapat dibatalkan."
+
+#: settings_panel.py:432
+msgid "Are you sure you want to clear the search results cache? This will remove {count} cached searches."
+msgstr "Apakah Anda yakin ingin menghapus cache hasil pencarian? Ini akan menghapus {count} pencarian yang tersimpan."
+
+#: ui_components.py:694
+msgid "Are you sure you want to delete the preset '{}'?"
+msgstr "Apakah Anda yakin ingin menghapus preset '{}'?"
+
+#: ui_components.py:514
+msgid "Are you sure you want to reset all shortcuts to their default values?"
+msgstr "Apakah Anda yakin ingin mengatur ulang semua pintasan ke nilai defaultnya?"
+
+#: lyrics_panel.py:120
+msgid "Artist Name:"
+msgstr "Nama Artis:"
+
+#: ui_components.py:532
+msgid "Audio Equalizer"
+msgstr "Equalizer Audio"
+
+#: settings_panel.py:295
+msgid "Audio Equalizer..."
+msgstr "Equalizer Audio..."
+
+#: settings_panel.py:391
+msgid "Audio normalization disabled."
+msgstr "Normalisasi audio dinonaktifkan."
+
+#: settings_panel.py:391
+msgid "Audio normalization enabled."
+msgstr "Normalisasi audio diaktifkan."
+
+#: settings_panel.py:239
+msgid "Authentication"
+msgstr "Autentikasi"
+
+#: settings_panel.py:407
+msgid "Auto fetch lyrics disabled"
+msgstr "Ambil lirik otomatis dinonaktifkan"
+
+#: settings_panel.py:407
+msgid "Auto fetch lyrics enabled"
+msgstr "Ambil lirik otomatis diaktifkan"
+
+#: settings_panel.py:278
+msgid "Auto-Fetch Lyrics When Playing"
+msgstr "Ambil Otomatis Lirik Saat Memutar"
+
+#: lyrics_panel.py:266
+msgid "Auto-fetch complete."
+msgstr "Pengambilan otomatis selesai."
+
+#: lyrics_panel.py:270
+msgid "Auto-fetch: Lyrics not found."
+msgstr "Ambil otomatis: Lirik tidak ditemukan."
+
+#: lyrics_panel.py:240 lyrics_panel.py:243
+msgid "Auto-fetching lyrics..."
+msgstr "Mengambil lirik otomatis..."
+
+#: settings_panel.py:260
+msgid "Autoplay Next Track"
+msgstr "Putar Otomatis Lagu Berikutnya"
+
+#: settings_panel.py:380
+msgid "Autoplay disabled."
+msgstr "Putar otomatis dinonaktifkan."
+
+#: settings_panel.py:380
+msgid "Autoplay enabled."
+msgstr "Putar otomatis diaktifkan."
+
+#: ui_components.py:848
+msgid "Bookmark deleted."
+msgstr "Penanda dihapus."
+
+#: ui_components.py:833
+msgid "Bookmark updated."
+msgstr "Penanda diperbarui."
+
+#: downloader_panel.py:143
+msgid "Browse for a download directory"
+msgstr "Jelajahi direktori unduhan"
+
+#: downloader_panel.py:142 settings_panel.py:292
+msgid "Browse..."
+msgstr "Jelajahi..."
+
+#: lyrics_panel.py:203 youtube_panel.py:178
+msgid "Busy"
+msgstr "Sibuk"
+
+#: ui_components.py:65 ui_components.py:170 ui_components.py:255 ui_components.py:419 ui_components.py:919
+msgid "Cancel"
+msgstr "Batal"
+
+#: ui_components.py:680
+msgid "Cannot overwrite a built-in preset name."
+msgstr "Tidak dapat menimpa nama preset bawaan."
+
+#: ui_components.py:48
+msgid "Change Application Language"
+msgstr "Ubah Bahasa Aplikasi"
+
+#: settings_panel.py:299
+msgid "Change Application Language..."
+msgstr "Ubah Bahasa Aplikasi..."
+
+#: ui_components.py:415
+msgid "Change Shortcut..."
+msgstr "Ubah Pintasan..."
+
+#: settings_panel.py:271
+msgid "Change the application's color scheme between a light and dark mode."
+msgstr "Ubah skema warna aplikasi antara mode terang dan gelap."
+
+#: settings_panel.py:300
+msgid "Change the display language for the entire application interface. You will be prompted to select from available languages."
+msgstr "Ubah bahasa tampilan untuk seluruh antarmuka aplikasi. Anda akan diminta untuk memilih dari bahasa yang tersedia."
+
+#: tunevia.py:661
+msgid "Changelog file not found at: {}"
+msgstr "File log perubahan tidak ditemukan di: {}"
+
+#: downloader_panel.py:246
+msgid "Channel"
+msgstr "Saluran"
+
+#: downloader_panel.py:155
+msgid "Check for and install updates for the yt-dlp library"
+msgstr "Periksa dan instal pembaruan untuk pustaka yt-dlp"
+
+#: lyrics_panel.py:123
+msgid "Check this if you don't know the artist's name."
+msgstr "Centang ini jika Anda tidak tahu nama artisnya."
+
+#: downloader_panel.py:473
+msgid "Checking for yt-dlp updates..."
+msgstr "Memeriksa pembaruan yt-dlp..."
+
+#: settings_panel.py:251
+msgid "Choose between searching standard YouTube for a wide variety of content or YouTube Music for officially licensed songs and albums."
+msgstr "Pilih antara mencari YouTube standar untuk berbagai konten atau YouTube Music untuk lagu dan album berlisensi resmi."
+
+#: downloader_panel.py:467
+msgid "Choose download directory"
+msgstr "Pilih direktori unduhan"
+
+#: settings_panel.py:293
+msgid "Clear"
+msgstr "Bersihkan"
+
+#: history_panel.py:95
+msgid "Clear All History"
+msgstr "Hapus Semua Riwayat"
+
+#: downloader_panel.py:126
+msgid "Clear List"
+msgstr "Bersihkan Daftar"
+
+#: downloader_panel.py:156
+msgid "Clear Log"
+msgstr "Bersihkan Log"
+
+#: tunevia.py:636
+msgid "Clear Play History"
+msgstr "Hapus Riwayat Putar"
+
+#: settings_panel.py:444 tunevia.py:637
+msgid "Clear Search Cache"
+msgstr "Hapus Cache Pencarian"
+
+#: downloader_panel.py:157
+msgid "Clear all messages from the log view"
+msgstr "Bersihkan semua pesan dari tampilan log"
+
+#: history_panel.py:96
+msgid "Clear the entire play history"
+msgstr "Hapus seluruh riwayat pemutaran"
+
+#: settings_panel.py:452
+msgid "Clears the local cache of previous search results. This can free up a small amount of space and ensures you get fresh results on your next search for the same term."
+msgstr "Membersihkan cache lokal dari hasil pencarian sebelumnya. Ini dapat membebaskan sedikit ruang dan memastikan Anda mendapatkan hasil terbaru pada pencarian berikutnya untuk istilah yang sama."
+
+#: radar_panel.py:79
+msgid "Click the button to scan your recent listening history and discover top songs from artists you like."
+msgstr "Klik tombol untuk memindai riwayat mendengarkan terbaru Anda dan temukan lagu-lagu teratas dari artis yang Anda sukai."
+
+#: utils.py:184
+msgid "Clipboard busy, please try again."
+msgstr "Papan klip sibuk, silakan coba lagi."
+
+#: settings_panel.py:412
+msgid "Clipboard monitoring disabled"
+msgstr "Pemantauan papan klip dinonaktifkan"
+
+#: settings_panel.py:412
+msgid "Clipboard monitoring enabled"
+msgstr "Pemantauan papan klip diaktifkan"
+
+#: downloader_panel.py:158
+msgid "Close"
+msgstr "Tutup"
+
+#: downloader_panel.py:159
+msgid "Close the downloader window"
+msgstr "Tutup jendela pengunduh"
+
+#: ui_components.py:256
+msgid "Close without selecting lyrics"
+msgstr "Tutup tanpa memilih lirik"
+
+#: ui_components.py:985
+msgid "Command Palette"
+msgstr "Palet Perintah"
+
+#: youtube_panel.py:329
+msgid "Component Missing"
+msgstr "Komponen Hilang"
+
+#: yt_dlp_manager.py:123
+msgid "Component Setup Error"
+msgstr "Kesalahan Pengaturan Komponen"
+
+#: downloader_panel.py:434
+msgid "Confirm Clear"
+msgstr "Konfirmasi Bersihkan"
+
+#: settings_panel.py:433
+msgid "Confirm Clear Cache"
+msgstr "Konfirmasi Hapus Cache"
+
+#: history_panel.py:275
+msgid "Confirm Clear History"
+msgstr "Konfirmasi Hapus Riwayat"
+
+#: ui_components.py:694
+msgid "Confirm Delete"
+msgstr "Konfirmasi Hapus"
+
+#: ui_components.py:514
+msgid "Confirm Reset"
+msgstr "Konfirmasi Atur Ulang"
+
+#: lyrics_panel.py:282 lyrics_panel.py:354
+msgid "Connection Error"
+msgstr "Kesalahan Koneksi"
+
+#: yt_dlp_manager.py:72
+msgid "Contacting GitHub for the latest version..."
+msgstr "Menghubungi GitHub untuk versi terbaru..."
+
+#: settings_panel.py:289
+msgid ""
+"Controls how much information NVDA announces.\n"
+"Quiet: Only critical announcements.\n"
+"Default: Standard announcements for actions and results.\n"
+"Verbose: Detailed announcements, including list navigation."
+msgstr ""
+"Mengontrol seberapa banyak informasi yang diumumkan NVDA.\n"
+"Quiet: Hanya pengumuman penting.\n"
+"Default: Pengumuman standar untuk tindakan dan hasil.\n"
+"Verbose: Pengumuman terperinci, termasuk navigasi daftar."
+
+#: downloader_panel.py:138
+msgid "Convert to MP3 (Audio only)"
+msgstr "Konversi ke MP3 (Hanya audio)"
+
+#: downloader_panel.py:392
+msgid "Converting: {}"
+msgstr "Mengonversi: {}"
+
+#: settings_panel.py:469
+msgid "Cookies file path cleared."
+msgstr "Jalur file cookie dibersihkan."
+
+#: settings_panel.py:464
+msgid "Cookies file path set."
+msgstr "Jalur file cookie diatur."
+
+#: help_panel.py:36
+msgid "Copies the entire user guide text to the clipboard."
+msgstr "Menyalin seluruh teks panduan pengguna ke papan klip."
+
+#: youtube_panel.py:723
+msgid "Copy"
+msgstr "Salin"
+
+#: youtube_panel.py:720
+msgid "Copy Channel/Artist Link"
+msgstr "Salin Tautan Saluran/Artis"
+
+#: youtube_panel.py:668
+msgid "Copy Content"
+msgstr "Salin Konten"
+
+#: help_panel.py:35
+msgid "Copy Guide to Clipboard"
+msgstr "Salin Panduan ke Papan Klip"
+
+#: lyrics_panel.py:127
+msgid "Copy Lyrics"
+msgstr "Salin Lirik"
+
+#: youtube_panel.py:722
+msgid "Copy Share Text"
+msgstr "Salin Teks Berbagi"
+
+#: youtube_panel.py:721
+msgid "Copy Title"
+msgstr "Salin Judul"
+
+#: youtube_panel.py:719 youtube_panel.py:757
+msgid "Copy Video Link"
+msgstr "Salin Tautan Video"
+
+#: lyrics_panel.py:128
+msgid "Copy the displayed lyrics to the clipboard."
+msgstr "Salin lirik yang ditampilkan ke papan klip."
+
+#: utils.py:172 utils.py:173 utils.py:176 utils.py:177
+msgid "Could not access clipboard."
+msgstr "Tidak dapat mengakses papan klip."
+
+#: youtube_panel.py:1042
+msgid "Could not find any songs for the radio queue."
+msgstr "Tidak dapat menemukan lagu untuk antrean radio."
+
+#: radar_panel.py:119
+msgid "Could not identify any artists from your recent history."
+msgstr "Tidak dapat mengidentifikasi artis dari riwayat terbaru Anda."
+
+#: lyrics_panel.py:43
+msgid ""
+"Could not initialize lyrics search component due to incompatible arguments.\n"
+"Please check your lyricsgenius library version.\n"
+"Error: {}"
+msgstr ""
+"Tidak dapat menginisialisasi komponen pencarian lirik karena argumen yang tidak kompatibel.\n"
+"Harap periksa versi pustaka lyricsgenius Anda.\n"
+"Error: {}"
+
+#: lyrics_panel.py:48
+msgid ""
+"Could not initialize lyrics search component.\n"
+"Please check your Genius API token and internet connection.\n"
+"Error: {}"
+msgstr ""
+"Tidak dapat menginisialisasi komponen pencarian lirik.\n"
+"Harap periksa token API Genius dan koneksi internet Anda.\n"
+"Error: {}"
+
+#: youtube_panel.py:861
+msgid "Could not open URL: {}"
+msgstr "Tidak dapat membuka URL: {}"
+
+#: youtube_panel.py:1033
+msgid "Could not start radio: {}"
+msgstr "Tidak dapat memulai radio: {}"
+
+#: settings_panel.py:240
+msgid "Customization"
+msgstr "Kustomisasi"
+
+#: tunevia.py:635
+msgid "Customize Shortcuts"
+msgstr "Kustomisasi Pintasan"
+
+#: tunevia.py:624
+msgid "Cycle Repeat Mode"
+msgstr "Ganti Mode Ulang"
+
+#: settings_panel.py:269 tunevia.py:253
+msgid "Dark"
+msgstr "Gelap"
+
+#: settings_panel.py:39
+msgid "Default"
+msgstr "Default"
+
+#: ui_components.py:746
+msgid "Delete"
+msgstr "Hapus"
+
+#: ui_components.py:585
+msgid "Delete Preset"
+msgstr "Hapus Preset"
+
+#: ui_components.py:810 ui_components.py:827
+msgid "Description cannot be empty."
+msgstr "Deskripsi tidak boleh kosong."
+
+#: utils.py:172 utils.py:176
+msgid "Details"
+msgstr "Detail"
+
+#: tunevia.py:405
+msgid "Direct URL"
+msgstr "URL Langsung"
+
+#: downloader_panel.py:141
+msgid "Directory where files will be downloaded"
+msgstr "Direktori tempat file akan diunduh"
+
+#: discovery_panel.py:145
+msgid "Discovery playlists loaded."
+msgstr "Daftar putar Discovery dimuat."
+
+#: youtube_panel.py:482
+msgid "Displaying {num_total} cached results for '{query}'."
+msgstr "Menampilkan {num_total} hasil tersimpan untuk '{query}'."
+
+#: youtube_panel.py:488
+msgid "Displaying {num_total} results (added {num_new_added})."
+msgstr "Menampilkan {num_total} hasil (ditambahkan {num_new_added})."
+
+#: youtube_panel.py:485
+msgid "Displaying {num_total} results from YouTube Music."
+msgstr "Menampilkan {num_total} hasil dari YouTube Music."
+
+#: lyrics_panel.py:126
+msgid "Displays the found lyrics."
+msgstr "Menampilkan lirik yang ditemukan."
+
+#: downloader_panel.py:493
+msgid "Download Active"
+msgstr "Unduhan Aktif"
+
+#: downloader_panel.py:152
+msgid "Download All"
+msgstr "Unduh Semua"
+
+#: downloader_panel.py:140
+msgid "Download directory:"
+msgstr "Direktori unduhan:"
+
+#: downloader_panel.py:359
+msgid "Download process finished."
+msgstr "Proses pengunduhan selesai."
+
+#: youtube_panel.py:707 youtube_panel.py:755
+msgid "Download with Downloader"
+msgstr "Unduh dengan Pengunduh"
+
+#: yt_dlp_manager.py:82
+msgid "Downloading yt-dlp v{}..."
+msgstr "Mengunduh yt-dlp v{}..."
+
+#: ui_components.py:823
+msgid "Edit Bookmark"
+msgstr "Edit Penanda"
+
+#: ui_components.py:823
+msgid "Edit bookmark description:"
+msgstr "Edit deskripsi penanda:"
+
+#: ui_components.py:745
+msgid "Edit..."
+msgstr "Edit..."
+
+#: settings_panel.py:264
+msgid "Enable Audio Normalization (ReplayGain)"
+msgstr "Aktifkan Normalisasi Audio (ReplayGain)"
+
+#: ui_components.py:546
+msgid "Enable Equalizer"
+msgstr "Aktifkan Equalizer"
+
+#: settings_panel.py:253
+msgid "Enable Live Search Suggestions"
+msgstr "Aktifkan Saran Pencarian Langsung"
+
+#: settings_panel.py:282
+msgid "Enable Player Keyboard Shortcuts (Global and In-App)"
+msgstr "Aktifkan Pintasan Keyboard Pemutar (Global dan Dalam Aplikasi)"
+
+#: settings_panel.py:283
+msgid "Enable or disable global and in-app keyboard shortcuts for controlling the player (e.g., Play/Pause, Volume). Global shortcuts work even when Tunevia is not the active window."
+msgstr "Aktifkan atau nonaktifkan pintasan keyboard global dan dalam aplikasi untuk mengontrol pemutar (mis., Putar/Jeda, Volume). Pintasan global berfungsi bahkan ketika Tunevia bukan jendela aktif."
+
+#: ui_components.py:806
+msgid "Enter a description for the bookmark at {}:"
+msgstr "Masukkan deskripsi untuk penanda pada {}:"
+
+#: ui_components.py:673
+msgid "Enter a name for the new preset:"
+msgstr "Masukkan nama untuk preset baru:"
+
+#: ui_components.py:879 ui_components.py:914
+msgid "Enter manually..."
+msgstr "Masukkan secara manual..."
+
+#: downloader_panel.py:186
+msgid "Enter one or more YouTube links (one per line):"
+msgstr "Masukkan satu atau lebih tautan YouTube (satu per baris):"
+
+#: settings_panel.py:473
+msgid "Enter preferred language code (e.g., en, ja, es, id) or leave blank for none:"
+msgstr "Masukkan kode bahasa yang disukai (mis., en, ja, es, id) atau biarkan kosong jika tidak ada:"
+
+#: youtube_panel.py:139
+msgid "Enter search terms, a YouTube URL, or select from previous searches (up to {max_items}). Press Enter to search. (Ctrl+F to focus)."
+msgstr "Masukkan kata pencarian, URL YouTube, atau pilih dari pencarian sebelumnya (hingga {max_items}). Tekan Enter untuk mencari. (Ctrl+F untuk fokus)."
+
+#: lyrics_panel.py:121
+msgid "Enter the artist of the song."
+msgstr "Masukkan nama artis lagu."
+
+#: lyrics_panel.py:119
+msgid "Enter the title of the song. (Ctrl+T to focus)."
+msgstr "Masukkan judul lagu. (Ctrl+T untuk fokus)."
+
+#: ui_components.py:706
+msgid "Equalizer reset to flat."
+msgstr "Equalizer diatur ulang ke flat."
+
+#: settings_panel.py:495
+msgid "Equalizer settings applied."
+msgstr "Pengaturan equalizer diterapkan."
+
+#: lyrics_panel.py:200 lyrics_panel.py:379 utils.py:157
+msgid "Error"
+msgstr "Kesalahan"
+
+#: downloader_panel.py:350
+msgid "Error downloading '{}': {}"
+msgstr "Kesalahan mengunduh '{}': {}"
+
+#: downloader_panel.py:396
+msgid "Error during processing."
+msgstr "Kesalahan selama pemrosesan."
+
+#: youtube_panel.py:888
+msgid "Error fetching data: {}"
+msgstr "Kesalahan mengambil data: {}"
+
+#: downloader_panel.py:236
+msgid "Error fetching info for '{}': {}"
+msgstr "Kesalahan mengambil info untuk '{}': {}"
+
+#: youtube_panel.py:542
+msgid "Error fetching related items from YouTube Music."
+msgstr "Kesalahan mengambil item terkait dari YouTube Music."
+
+#: youtube_panel.py:571
+msgid "Error fetching related videos."
+msgstr "Kesalahan mengambil video terkait."
+
+#: discovery_panel.py:119
+msgid "Error loading playlist."
+msgstr "Kesalahan memuat daftar putar."
+
+#: history_panel.py:238
+msgid ""
+"Error playing history item:\n"
+"{}"
+msgstr ""
+"Kesalahan memutar item riwayat:\n"
+"{}"
+
+#: lyrics_panel.py:328
+msgid "Error processing selected result: {}"
+msgstr "Kesalahan memproses hasil yang dipilih: {}"
+
+#: tunevia.py:665
+msgid "Error reading changelog: {}"
+msgstr "Kesalahan membaca log perubahan: {}"
+
+#: help_panel.py:68
+msgid "Error reading help file: {}"
+msgstr "Kesalahan membaca file bantuan: {}"
+
+#: history_panel.py:236
+msgid "Error retrieving history item data."
+msgstr "Kesalahan mengambil data item riwayat."
+
+#: lyrics_panel.py:195
+msgid "Error saving lyrics."
+msgstr "Kesalahan menyimpan lirik."
+
+#: lyrics_panel.py:193
+msgid "Error saving lyrics: {}"
+msgstr "Kesalahan menyimpan lirik: {}"
+
+#: tunevia.py:619
+msgid "Executing: {}"
+msgstr "Menjalankan: {}"
+
+#: youtube_panel.py:160
+msgid "Exit Application"
+msgstr "Keluar Aplikasi"
+
+#: tunevia.py:89
+msgid "Exit Tunevia"
+msgstr "Keluar Tunevia"
+
+#: youtube_panel.py:161
+msgid "Exit the application."
+msgstr "Keluar dari aplikasi."
+
+#: history_panel.py:93 history_panel.py:304 youtube_panel.py:633
+msgid "Export Playlist"
+msgstr "Ekspor Daftar Putar"
+
+#: youtube_panel.py:596
+msgid "Export Playlist..."
+msgstr "Ekspor Daftar Putar..."
+
+#: history_panel.py:94
+msgid "Export the currently displayed history to a playlist file"
+msgstr "Ekspor riwayat yang ditampilkan saat ini ke file daftar putar"
+
+#: yt_dlp_manager.py:90
+msgid "Extracting files..."
+msgstr "Mengekstrak file..."
+
+#: yt_dlp_manager.py:122
+msgid ""
+"Failed to download and set up 'yt-dlp'.\n"
+"\n"
+"Error details: {}"
+msgstr ""
+"Gagal mengunduh dan menyiapkan 'yt-dlp'.\n"
+"\n"
+"Detail kesalahan: {}"
+
+#: history_panel.py:314
+msgid "Failed to export history."
+msgstr "Gagal mengekspor riwayat."
+
+#: onboarding_dialog.py:100 feature_manager.py:45 ui_components.py:130
+msgid "Sound Effects (SFX)"
+msgstr "Efek Suara (SFX)"
+
+#: feature_manager.py:46
+msgid "Enable UI sound effects for navigation, clicks, and actions"
+msgstr "Aktifkan efek suara antarmuka untuk navigasi, klik, dan tindakan"
+
+#: onboarding_dialog.py:105
+msgid "This app also comes with sound effects for navigating around, opening items, and actions. Would you like to enable them?"
+msgstr "Aplikasi ini juga dilengkapi dengan efek suara untuk navigasi, membuka item, dan berbagai tindakan. Apakah Anda ingin mengaktifkannya?"
+
+#: onboarding_dialog.py:112
+msgid "Enable Sound Effects (Recommended for screen reader and keyboard navigation)"
+msgstr "Aktifkan Efek Suara (Disarankan untuk navigasi pembaca layar dan keyboard)"
+
+#: ui_components.py:125
+msgid "Sound Effects"
+msgstr "Efek Suara"
+
+#: ui_components.py:135
+msgid "Master switch to turn all UI sound effects on or off."
+msgstr "Sakelar utama untuk mengaktifkan atau menonaktifkan semua efek suara UI."
+
+#: ui_components.py:140
+msgid "Sound Effects Volume"
+msgstr "Volume Efek Suara"
+
+#: ui_components.py:155
+msgid "Sound effects volume slider: {value}%"
+msgstr "Penggeser volume efek suara: {value}%"
+
+#: video_comments_dialog.py:35
+msgid "Comments List"
+msgstr "Daftar Komentar"
+
+#: tunevia.py:382
+msgid "Switch to {} tab"
+msgstr "Beralih ke tab {}"
+
+#: youtube_panel.py:165
+msgid "No search results yet. Type a query above and press Enter to search."
+msgstr "Belum ada hasil pencarian. Ketik kueri di atas lalu tekan Enter untuk mencari."
+
+#: youtube_panel.py:195
+msgid "Search YouTube by typing a query above."
+msgstr "Cari di YouTube dengan mengetik kueri di atas."
+
+#: youtube_panel.py:285
+msgid "Searching for '{query}'... Please wait."
+msgstr "Mencari '{query}'... Mohon tunggu."
+
+#: youtube_panel.py:290
+msgid "Searching... Please wait."
+msgstr "Mencari... Mohon tunggu."
+
+#: youtube_panel.py:475
+msgid "Search failed. Please try again."
+msgstr "Pencarian gagal. Silakan coba lagi."
+
+#: youtube_panel.py:160
+msgid "Search Results"
+msgstr "Hasil Pencarian"
+
+#: youtube_panel.py:163
+msgid "Related Videos"
+msgstr "Video Terkait"
+
+#: youtube_panel.py:163
+msgid "Radio Queue"
+msgstr "Antrean Radio"
+
+#: youtube_panel.py:170
+msgid "Play a video to see related items."
+msgstr "Putar video untuk melihat item terkait."
+
+#: youtube_panel.py:300
+msgid "Search/load new video to see related items."
+msgstr "Cari atau muat video baru untuk melihat item terkait."
+
+#: spatial_audio & v1.6.5 updates
+msgid "Spatial Audio"
+msgstr "Spatial Audio"
+
+msgid "Enable Spatial Audio"
+msgstr "Aktifkan Spatial Audio"
+
+msgid "Spatial Audio Preset"
+msgstr "Preset Spatial Audio"
+
+msgid "Soundstage Width"
+msgstr "Lebar Panggung Suara"
+
+msgid "Room Size"
+msgstr "Ukuran Ruangan"
+
+msgid "3D Depth"
+msgstr "Kedalaman 3D"
+
+msgid "Soundstage Controls"
+msgstr "Kontrol Panggung Suara"
+
+msgid "Preset:"
+msgstr "Preset:"
+
+msgid "Reset to Default"
+msgstr "Reset ke Awal"
+
+msgid "Soundstage Width: {}%"
+msgstr "Lebar Panggung Suara: {}%"
+
+msgid "Room Size: {}%"
+msgstr "Ukuran Ruangan: {}%"
+
+msgid "3D Depth: {}%"
+msgstr "Kedalaman 3D: {}%"
+
+msgid "Spatial Audio reset to {}."
+msgstr "Spatial Audio direset ke {}."
+
+msgid "Spatial preset: {}"
+msgstr "Preset spasial: {}"
+
+msgid "Spatial Settings..."
+msgstr "Pengaturan Spasial..."
+
+msgid "Spatial Audio Settings"
+msgstr "Pengaturan Spatial Audio"
+
+msgid "Configure spatial soundstage width, room size, and 3D depth."
+msgstr "Atur lebar panggung suara, ukuran ruangan, dan kedalaman 3D."
+
+msgid "Spatial Audio: On"
+msgstr "Spatial Audio: Aktif"
+
+msgid "Spatial Audio: Off"
+msgstr "Spatial Audio: Nonaktif"
+
+msgid "Toggle wide spatial soundstage audio processing."
+msgstr "Nyalakan atau matikan pemrosesan panggung suara spasial."
+
+msgid "Spatial Audio is disabled in Feature Manager."
+msgstr "Spatial Audio dinonaktifkan di Pengelola Fitur."
+
+msgid "Spatial Audio disabled."
+msgstr "Spatial Audio dimatikan."
+
+msgid "Spatial Audio enabled ({preset})."
+msgstr "Spatial Audio dinyalakan ({preset})."
+
+msgid "Spatial Audio settings applied."
+msgstr "Pengaturan Spatial Audio diterapkan."
+
+msgid "Stereo audio enabled."
+msgstr "Audio stereo diaktifkan."
+
+msgid "Spatial Audio..."
+msgstr "Spatial Audio..."
+
+msgid "Adjust stereo soundstage width, room size, and 3D depth."
+msgstr "Atur lebar panggung stereo, ukuran ruangan, dan kedalaman 3D."
+
+msgid "Toggle Spatial Audio"
+msgstr "Nyalakan/Matikan Spatial Audio"
+
+msgid "Widen stereo soundstage with spatial audio and room effects."
+msgstr "Memperlebar panggung suara stereo dengan efek ruang spasial."
+
+msgid "Skip sponsor segments (SponsorBlock)"
+msgstr "Lewati segmen sponsor (SponsorBlock)"
+
+msgid "Skip sponsored segments, intros, and promos using SponsorBlock."
+msgstr "Melewati segmen sponsor, intro, dan promo menggunakan SponsorBlock."
+
+msgid "SponsorBlock enabled."
+msgstr "SponsorBlock diaktifkan."
+
+msgid "SponsorBlock disabled."
+msgstr "SponsorBlock dinonaktifkan."
+
+msgid "Already in favorites."
+msgstr "Sudah ada di favorit."
+
+msgid "Added to favorites: {}"
+msgstr "Ditambahkan ke favorit: {}"
+
+msgid "Presets:"
+msgstr "Preset:"
+
+msgid "Apply Music Player preset"
+msgstr "Terapkan preset Pemutar Musik"
+
+msgid "Apply Music + Discovery preset"
+msgstr "Terapkan preset Musik + Penjelajah"
+
+msgid "Apply Power User preset"
+msgstr "Terapkan preset Pengguna Mahir"
+
+msgid "Apply Recommended Settings preset"
+msgstr "Terapkan preset Pengaturan yang Disarankan"
+
+msgid "Applied preset: {preset}. Restart Tunevia to apply tab changes."
+msgstr "Preset diterapkan: {preset}. Mulai ulang Tunevia untuk menerapkan perubahan tab."
+
+msgid "Finalizing installation..."
+msgstr "Menyelesaikan pemasangan..."
+
+msgid "Initializing Tunevia"
+msgstr "Memulai Tunevia"
+
+msgid "Setting up required components (yt-dlp)... Please wait."
+msgstr "Menyiapkan komponen yang diperlukan (yt-dlp)... Mohon tunggu."
+
+msgid "yt-dlp updated successfully to v{}!\nPlease restart the application to apply the update."
+msgstr "yt-dlp berhasil diperbarui ke v{}!\nSilakan mulai ulang aplikasi untuk menerapkan pembaruan."
+
+msgid "Update failed: {}"
+msgstr "Pembaruan gagal: {}"
+
+msgid "yt-dlp is already up-to-date (v{})."
+msgstr "yt-dlp sudah versi terbaru (v{})."
+
+msgid "Updated version info to {}"
+msgstr "Info versi diperbarui ke {}"
+
+msgid "Failed to download and set up 'yt-dlp'.\n\nError details: {}"
+msgstr "Gagal mengunduh dan menyiapkan 'yt-dlp'.\n\nDetail kesalahan: {}"
+
+#: v1.7.0 Updater, Lossless, and Audiophile/Blind-First Features
+msgid "Checking for component updates..."
+msgstr "Memeriksa pembaruan komponen..."
+
+msgid "Could not complete the component update right now. Please check your internet connection and try again."
+msgstr "Tidak dapat menyelesaikan pembaruan komponen saat ini. Periksa koneksi internet lalu coba lagi."
+
+msgid "You are using the latest version of Tunevia ({version})."
+msgstr "Anda sudah menggunakan versi Tunevia terbaru ({version})."
+
+msgid "A new version of Tunevia ({version}) is available."
+msgstr "Versi baru Tunevia ({version}) tersedia."
+
+msgid "Could not check for updates right now. Please try again later."
+msgstr "Tidak dapat memeriksa pembaruan saat ini. Silakan coba lagi nanti."
+
+msgid "Update download cancelled."
+msgstr "Pengunduhan pembaruan dibatalkan."
+
+msgid "The downloaded update file could not be verified. Please try again."
+msgstr "Berkas pembaruan tidak dapat diverifikasi. Silakan coba lagi."
+
+msgid "The downloaded update package was incomplete. Please try again."
+msgstr "Paket pembaruan yang diunduh tidak lengkap. Silakan coba lagi."
+
+msgid "Could not download the update right now. Please check your connection and try again."
+msgstr "Tidak dapat mengunduh pembaruan saat ini. Periksa koneksi Anda dan coba lagi."
+
+msgid "Update is ready. Tunevia will restart to complete installation."
+msgstr "Pembaruan siap. Tunevia akan dimulai ulang untuk menyelesaikan pemasangan."
+
+msgid "Could not prepare the update installer. Please try again."
+msgstr "Tidak dapat menyiapkan pemasang pembaruan. Silakan coba lagi."
+
+msgid "Tunevia minimized to system tray."
+msgstr "Tunevia diperkecil ke system tray."
+
+msgid "&Open Local Audio...\tCtrl+O"
+msgstr "&Buka Audio Lokal...\tCtrl+O"
+
+msgid "Open local or lossless audio files"
+msgstr "Buka berkas audio lokal atau lossless"
+
+msgid "&Check for Updates..."
+msgstr "&Periksa Pembaruan..."
+
+msgid "Getting updates..."
+msgstr "Memeriksa pembaruan..."
+
+msgid "What is new:"
+msgstr "Pembaruan terbaru:"
+
+msgid "Would you like to download and install this update now?"
+msgstr "Apakah Anda ingin mengunduh dan memasang pembaruan ini sekarang?"
+
+msgid "Update Available"
+msgstr "Pembaruan Tersedia"
+
+msgid "&Update Now"
+msgstr "&Perbarui Sekarang"
+
+msgid "&Later"
+msgstr "&Nanti"
+
+msgid "Updates"
+msgstr "Pembaruan"
+
+msgid "Update Check"
+msgstr "Pemeriksaan Pembaruan"
+
+msgid "Updating Tunevia"
+msgstr "Memperbarui Tunevia"
+
+msgid "Downloading Tunevia {version}..."
+msgstr "Mengunduh Tunevia {version}..."
+
+msgid "Update download progress"
+msgstr "Progres pengunduhan pembaruan"
+
+msgid "{}% complete"
+msgstr "{}% selesai"
+
+msgid "Downloading update, {} percent"
+msgstr "Mengunduh pembaruan, {} persen"
+
+msgid "Cancelling..."
+msgstr "Membatalkan..."
+
+msgid "Update Error"
+msgstr "Kesalahan Pembaruan"
+
+msgid "Update cancelled."
+msgstr "Pembaruan dibatalkan."
+
+msgid "Installing Update"
+msgstr "Memasang Pembaruan"
+
+msgid "Update downloaded."
+msgstr "Pembaruan selesai diunduh."
+
+msgid "Open Local / Lossless Audio"
+msgstr "Buka Audio Lokal / Lossless"
+
+msgid "Open Up-Next Queue"
+msgstr "Buka Antrean Putar Berikutnya"
+
+msgid "Sleep Timer"
+msgstr "Timer Tidur"
+
+msgid "Pause playback automatically after:"
+msgstr "Jeda pemutaran otomatis setelah:"
+
+msgid "Sleep Timer Duration"
+msgstr "Durasi Timer Tidur"
+
+msgid "End of current track"
+msgstr "Akhir lagu saat ini"
+
+msgid "{} minutes"
+msgstr "{} menit"
+
+msgid "Up-Next Queue"
+msgstr "Antrean Putar Berikutnya"
+
+msgid "Up-Next Queue List"
+msgstr "Daftar Antrean Putar Berikutnya"
+
+msgid "Move Up"
+msgstr "Geser Naik"
+
+msgid "Move Down"
+msgstr "Geser Turun"
+
+msgid "Remove"
+msgstr "Hapus"
+
+msgid "Clear Queue"
+msgstr "Kosongkan Antrean"
+
+msgid "Up-Next queue is empty."
+msgstr "Antrean Putar Berikutnya kosong."
+
+msgid "No queued tracks."
+msgstr "Tidak ada lagu dalam antrean."
+
+msgid "{} track(s) in queue:"
+msgstr "{} lagu dalam antrean:"
+
+msgid "Moved item to position {}"
+msgstr "Dipindahkan ke posisi {}"
+
+msgid "Removed {} from queue."
+msgstr "{} dihapus dari antrean."
+
+msgid "Queue cleared."
+msgstr "Antrean dikosongkan."
+
+msgid "Set / Clear A-B Loop"
+msgstr "Atur / Hapus Loop A-B"
+
+msgid "Cycle Bass Boost"
+msgstr "Ubah Penguatan Bass"
+
+msgid "Toggle Vocal Clarity Mode"
+msgstr "Nyalakan/Matikan Mode Kejernihan Vokal"
+
+msgid "Toggle Night Listening Mode"
+msgstr "Nyalakan/Matikan Mode Mendengarkan Malam"
+
+msgid "Toggle Screen Reader Audio Ducking"
+msgstr "Nyalakan/Matikan Peredaman Musik Pembaca Layar"
+
+msgid "Toggle Lossless Bit-Perfect Mode"
+msgstr "Nyalakan/Matikan Mode Lossless Bit-Perfect"
+
+msgid "Announce Track and Audio Info"
+msgstr "Umumkan Info Lagu dan Mode Audio"
+
+msgid "Play Next (Add to Queue)"
+msgstr "Putar Berikutnya (Tambah ke Antrean)"
+
+msgid "Lossless Bit-Perfect"
+msgstr "Lossless Bit-Perfect"
+
+msgid "Vocal Clarity"
+msgstr "Kejernihan Vokal"
+
+msgid "Night Mode"
+msgstr "Mode Malam"
+
+msgid "NVDA Ducking"
+msgstr "Peredaman NVDA"
+
+msgid "Standard"
+msgstr "Standar"
+
+msgid "Local File"
+msgstr "Berkas Lokal"
+
+msgid "YouTube Stream"
+msgstr "Aliran YouTube"
+
+msgid "Local Audio"
+msgstr "Audio Lokal"
+
+msgid "Open Local or Lossless Audio"
+msgstr "Buka Audio Lokal atau Lossless"
+
+msgid "Playing first file and added {} file(s) to Up-Next queue."
+msgstr "Memutar berkas pertama dan menambahkan {} berkas ke antrean Putar Berikutnya."
+
+msgid "Lossless Bit-Perfect mode enabled."
+msgstr "Mode Lossless Bit-Perfect diaktifkan."
+
+msgid "Lossless Bit-Perfect mode disabled."
+msgstr "Mode Lossless Bit-Perfect dimatikan."
+
+msgid "Bass boost {} percent."
+msgstr "Penguatan bass {} persen."
+
+msgid "Bass boost off."
+msgstr "Penguatan bass dimatikan."
+
+msgid "Vocal Clarity mode enabled."
+msgstr "Mode Kejernihan Vokal diaktifkan."
+
+msgid "Vocal Clarity mode disabled."
+msgstr "Mode Kejernihan Vokal dimatikan."
+
+msgid "Night Listening mode enabled."
+msgstr "Mode Mendengarkan Malam diaktifkan."
+
+msgid "Night Listening mode disabled."
+msgstr "Mode Mendengarkan Malam dimatikan."
+
+msgid "Screen reader audio ducking enabled."
+msgstr "Peredaman musik saat pembaca layar berbicara diaktifkan."
+
+msgid "Screen reader audio ducking disabled."
+msgstr "Peredaman musik saat pembaca layar berbicara dimatikan."
+
+msgid "Loop point A set at {}."
+msgstr "Titik loop A diatur pada {}."
+
+msgid "Loop point B must be after point A."
+msgstr "Titik loop B harus setelah titik A."
+
+msgid "A-B Loop active from {a} to {b}."
+msgstr "Loop A-B aktif dari {a} ke {b}."
+
+msgid "A-B Loop cleared."
+msgstr "Loop A-B dihapus."
+
+msgid "Sleep timer turned off."
+msgstr "Timer tidur dimatikan."
+
+msgid "Sleep timer set to stop at the end of current track."
+msgstr "Timer tidur diatur berhenti di akhir lagu saat ini."
+
+msgid "Sleep timer set for {} minutes."
+msgstr "Timer tidur diatur untuk {} menit."
+
+msgid "Sleep timer ended."
+msgstr "Timer tidur selesai."
+
+msgid "Sleep timer ended. Playback stopped."
+msgstr "Timer tidur selesai. Pemutaran dihentikan."
+
+msgid "Sleep timer ended. Playback paused."
+msgstr "Timer tidur selesai. Pemutaran dijeda."
+
+msgid "Added {} to Up-Next queue."
+msgstr "{} ditambahkan ke antrean Putar Berikutnya."
+
+msgid "Jumped to {pct} percent, {time}"
+msgstr "Melompat ke {pct} persen, {time}"
+
+msgid "Duration not available for percentage jump."
+msgstr "Durasi tidak tersedia untuk lompat persentase."
+
+msgid "{title}, by {artist}. {cur} of {total}, {pct} percent, {rem} remaining. Volume {vol} percent, speed {rate:.2f}x. Audio mode: {modes}. Source: {src}."
+msgstr "{title}, oleh {artist}. {cur} dari {total}, {pct} persen, sisa {rem}. Volume {vol} persen, kecepatan {rate:.2f}x. Mode audio: {modes}. Sumber: {src}."

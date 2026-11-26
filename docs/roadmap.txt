@@ -1,0 +1,49 @@
+Tunevia Development Roadmap
+===========================
+
+Approved Features (20)
+----------------------
+1. Spotify/Apple Music playlist import functionality.
+2. Discord Rich Presence integration showing current track.
+3. Mini-player overlay mode (Always on top, compact UI).
+4. Podcast subscription, management, and playback support.
+5. Built-in Equalizer presets (Pop, Rock, Bass Boost, etc.).
+6. Last.fm Scrobbling integration.
+7. Seamless gapless playback and crossfading between tracks.
+8. Local media folder scanning and playback.
+9. SponsorBlock integration to automatically skip YouTube sponsor segments.
+10. Automatic lyrics translation to user's locale.
+11. Scheduled downloads (e.g., download playlists during off-peak hours).
+12. Advanced ID3 tag editor for downloaded MP3s.
+13. Chromecast / DLNA casting support.
+14. Sleep timer to auto-stop playback or close the app.
+15. Customizable themes with community theme sharing.
+16. Media key and Windows SMTC (System Media Transport Controls) integration.
+17. Collaborative playlists via a lightweight shared backend.
+18. Offline mode toggle for browsing history and downloads without network errors.
+19. Voice commands mapping for hands-free basic control.
+20. Smart Playlists that automatically group songs based on play count or release year.
+
+Approved Bug Fixes (20)
+-----------------------
+1. [FIXED] Critical Startup Crash: Fix SyntaxError in settings_manager.py line 248.
+2. [FIXED] Settings Panel Crash: Implement missing MainFrame handlers (on_change_language, on_sound_settings, on_customize_shortcuts).
+3. Fix YouTube Search sometimes failing/hanging due to stale yt-dlp extractors.
+4. Prevent UI freezing when fetching large playlists (move to background thread).
+5. Resolve VLC backend memory leaks when skipping tracks repeatedly.
+6. Handle invalid path characters in YouTube titles causing download failures.
+7. [FIXED] Fix lyrics fetching failures when titles have tags like "(Official Video)".
+8. [FIXED] Ensure volume level persists correctly across app restarts.
+9. [FIXED] Fix keyboard focus getting trapped inside the Equalizer dialog.
+10. [FIXED] Fix NVDA screen reader not properly announcing list items in the Radar Tab.
+11. Handle network disconnections gracefully without crashing the Audio Player thread.
+12. [FIXED] Correctly refresh the History Tab UI immediately after clearing history.
+13. [FIXED] Resolve issue where deleting a Favorite item selects the wrong adjacent item.
+14. Prevent duplicate entries from populating the History Tab.
+15. Ensure global hotkeys unregister properly on application exit.
+16. Fix layout overlap in the Settings tab on high DPI displays.
+17. Address thread-safety issues when yt-dlp auto-updates while a download is active.
+18. Fix missing translation strings in template.po for newer UI elements.
+19. Prevent multiple instances of Tunevia from opening simultaneously.
+20. Gracefully handle HTTP 429 Too Many Requests errors during Music Discovery scraping.
+21. [FIXED] Implement "Replay" button functionality when playback finishes.

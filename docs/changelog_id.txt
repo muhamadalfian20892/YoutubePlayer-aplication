@@ -1,0 +1,357 @@
+Baru pada 26/11/2026:
+	Merilis Tunevia 1.7.0 dengan fitur pembaruan aplikasi bawaan (Bantuan -> Periksa Pembaruan atau Ctrl+K), perbaikan bug Alt+Tab yang sempat membuat jendela tersembunyi/minimize saat berpindah aplikasi, peningkatan jalur audio DSP ke 48 kHz, serta dukungan pemutaran audio Lossless lokal dan 10 peningkatan khusus pendengar dan pengguna pembaca layar: buka berkas audio lokal/lossless (Ctrl+O untuk FLAC, WAV, AIFF, WavPack, APE, ALAC), mode Lossless Bit-Perfect tanpa DSP (Ctrl+Shift+L), Bass Boost (Ctrl+Shift+B), Vocal Clarity untuk suara vokal/podcast (Ctrl+Shift+V), Night Listening mode untuk malam hari (Ctrl+Shift+N), Smart NVDA Ducking yang mengecilkan musik otomatis saat pembaca layar berbicara (Ctrl+Shift+D), A-B Loop pengulang bagian lagu (Ctrl+Shift+A), Sleep Timer dengan volume meredup perlahan 15 detik sebelum jeda (Ctrl+Shift+Z), pengelola antrean Putar Berikutnya (Ctrl+Shift+Q dan menu klik kanan di daftar lagu), lompat posisi 0-90% lewat tombol angka 0-9, dan pengumuman detail lagu serta mode audio lewat tombol I.
+	Memperbaiki kasus lagu berjalan (durasi bertambah) tapi suaranya tidak keluar setelah jeda atau pindah lagu: reset buffer WaveOut pada flush sekarang ikut melepas status pause dan memanggil waveOutRestart, menambahkan pemulihan otomatis saat paket audio masuk, memuat daftar perangkat output audio lebih awal sebelum lagu pertama diputar agar tidak salah perangkat saat baru dibuka, serta memastikan pemilihan format cadangan selalu melewati aliran khusus video (`acodec=none`).
+	Merombak keluaran Spatial Audio memakai ring buffer berbasis event Windows (4 slot x 25 ms yang diisi thread khusus) agar aliran 48 kHz tidak lagi putus-putus atau bunyi mrepet-mrepet akibat antrean menumpuk dan paket terbuang. Menambahkan penjepit batas puncak (peak headroom) dan transisi volume mulus pada Audio Normalization serta pengatur volume agar tidak timbul bunyi klik, memakai kurva volume logaritmik yang wajar di telinga, mengabaikan sinyal reset volume 100% dari VLC saat lagu baru dimulai sehingga volume awal selalu mengikuti slider, serta mengatur langkah panah slider volume ke 5% dengan pengumuman NVDA ter-debounce agar navigasi volume tidak tersendat.
+	Menambahkan fitur Spatial Audio (versi 1.6.5) biar jangkauan suara terasa lebar dan lega seperti efek ruang di aplikasi musik modern! Kalian bisa mengatur Stereo Width, Room Size, dan Ambience Depth lewat lima preset bawaan (Off, Subtle Wide, Concert Hall, Studio Room, Wide Stage) atau menggeser slider sendiri sesuai selera. Tekan Ctrl+Shift+S untuk menyalakan atau mematikannya cepat, Ctrl+Shift+E untuk membuka jendela pengaturannya, atau cari lewat Command Palette (Ctrl+K).
+	Mesin pemrosesan Spatial Audio ini dirancang ringan pakai operasi audio C bawaan Python dengan buffer tetap sekitar 10 KB dan keluaran WaveOut Windows langsung, jadi pemakaian RAM tetap rendah dan suara tetap responsif tanpa lag. Equalizer, kecepatan putar, volume, Mono Audio, dan Audio Normalization tetap jalan berbarengan dengan mulus.
+	Memperbaiki masalah Tunevia yang dulu gagal dibuka atau langsung tertutup di beberapa komputer Windows lain saat dijalankan sebagai aplikasi portabel (.exe)! Sekarang pencarian DLL tidak lagi menimpa folder _internal PyInstaller, libvlccore.dll dimuat lebih dulu, paket yt-dlp beserta dependensinya sudah dibundel lengkap, cache plugin VLC bawaan komputer lama dan pustaka tak terpakai dibersihkan, kompresi UPX pada runtime dimatikan agar tidak diblokir antivirus, dan aplikasi tetap aman jalan tanpa jendela konsol.
+	Membereskan berbagai bug tersembunyi yang sebelumnya bisa bikin aplikasi error atau crash di tengah jalan: kesalahan nama fungsi ukuran berkas di Downloader, modul standar yang lupa diimpor di pemutar audio, panel lirik, dan panel Radar, pembaruan UI dari thread latar belakang, handler favorit dan tautan langsung di jendela utama, serta crash saat daftar Favorit atau Riwayat masih kosong.
+	Merapikan aksesibilitas, fokus pembaca layar, dan penyimpanan pengaturan: baris tombol di Audio Player disusun rapi dalam tiga baris agar tidak terpotong; dialog Suara dan Equalizer mengarahkan fokus Tab dengan benar di NVDA; panah bawah di Command Palette langsung masuk ke daftar perintah; menu klik kanan di Komentar Video berjalan normal; tema Terang mengembalikan warna kontrol anak dengan bersih; tab Pengaturan tidak bisa tersembunyi tanpa sengaja; pilihan lompat seek hingga 1 jam (3600 detik) tersimpan utuh tanpa terpotong ke 60 detik; serta menyalakan fitur Mono Audio di Pengelola Fitur tidak lagi memaksa audio langsung berubah jadi mono sebelum pengguna memilihnya.
+
+Baru pada 23/10/2026:
+	Navigasi tombol Tab di layar pencarian YouTube sekarang sudah sembuh total dan bisa diajak keliling berputar tanpa terputus! Sebelumnya ada bug yang bikin tombol Tab terjebak bolak-balik cuma di kotak cari sama hasil cari saja, bikin daftar Video Terkait, tombol Downloader, dan tombol Keluar jadi terisolasi dan nggak bisa disentuh lewat keyboard. Sekarang rantai navigasinya sudah diperbaiki: kalian bisa menekan Tab maupun Shift+Tab dengan sangat mulus dari kotak cari, tombol playlist, hasil pencarian, daftar video terkait, tombol muat lebih banyak, sampai ke tombol keluar dan berputar kembali ke atas!
+	Buat teman-teman pengguna pembaca layar (NVDA), berpindah ke daftar hasil pencarian atau daftar video terkait sekarang terasa jauh lebih jelas! Begitu sorotan keyboard mendarat di daftar tersebut, NVDA sekarang langsung mengumumkan nama daftarnya dengan ramah ("Daftar Hasil Pencarian YouTube"), jadi kalian tahu persis sedang berada di mana tanpa perlu meraba-raba lagi.
+	Memutar video panjang seperti podcast 1 sampai 4 jam, rekaman diskusi, atau buku audio sekarang jadi super stabil dan anti mogok! Dulu kalau kalian lagi dengerin video berdurasi panjang terus memencet tombol maju (fast-forward) cepat-cepat berkali-kali, pemutar audio sering mendadak mati sendiri dan mengira videonya sudah habis (tiba-tiba bilang "Playback finished" padahal baru menit ke-15). Masalah itu sekarang sudah beres total! Kalian bisa bebas melompat maju maupun mundur sesuka hati tanpa takut videonya tiba-tiba berhenti. Bahkan kalau koneksi internet kalian sempat goyang atau kedip di tengah jalan, aplikasinya bakal otomatis menyambungkan kembali suaranya tepat di detik terakhir tanpa kalian perlu mengulang dari awal!
+	Loading saat memutar video sekarang jadi sekejap mata tanpa nunggu lama! Dulu saat kalian menekan tombol Enter pada sebuah video, aplikasi sempat bengong 5 sampai 7 detik sebelum lagunya mulai bersuara. Sekarang, begitu kalian menekan Enter, suaranya langsung berbunyi detik itu juga! Rahasianya, saat kalian sedang menjelajahi daftar lagu pakai panah dan mendengarkan judulnya dibacakan oleh pembaca layar, Tunevia diam-diam sudah menyiapkan aliran suaranya duluan di latar belakang. Jadi begitu kalian pencet Enter, lagunya langsung mengalun seketika!
+	Lagu berikutnya di daftar putar sekarang otomatis disiapkan duluan saat lagu saat ini sedang berputar. Begitu lagunya habis atau kalian menekan tombol Next, lagu selanjutnya langsung berbunyi instan tanpa ada jeda loading lagi!
+	Lenyapnya delay saat memencet Pause dan bebas suara kresek/patah-patah saat Play! Kemarin sempat ada jeda sepersekian detik saat memencet tombol Pause sebelum suaranya benar-benar berhenti, dan pas dilanjutkan kembali (unpause), suaranya sempat terdengar tersendat atau patah-patah sebentar. Pengaturan sinkronisasi pemutar audio sekarang sudah diperbaiki total: begitu kalian memencet tombol Pause atau menekan spasi, suaranya langsung berhenti detik itu juga, dan pas dipencet Play lagi suaranya langsung mengalun jernih dan mulus tanpa ada suara patah-patah sama sekali!
+	Tombol Play/Pause dan tampilan status di layar sekarang berganti secara instan (0 detik)! Tampilan tombol tidak perlu lagi menunggu sinyal lambat dari pemutar musik, jadi begitu ditekan, tombol langsung berubah jadi "Play" atau "Pause" seketika dan pembaca layar langsung mengumumkannya tanpa jeda.
+	Maju-mundurin lagu (rewind dan fast-forward) sekarang terasa super responsif dan enteng! Menekan tombol panah maju atau mundur satu kali sekarang langsung melompati lagu seketika tanpa ada rasa tertahan lagi, dan pembaca layar NVDA bakal langsung membacakan posisi menit dan detik yang baru di setiap ketukan tombol. Kalau kalian menekan panah bertubi-tubi dengan cepat, aplikasinya akan melompat ke menit tujuan akhir kalian dengan sangat mulus tanpa bikin audio macet.
+	Melompat ke Bab (Chapters) atau penanda waktu (Bookmarks) sekarang juga berlangsung seketika tanpa jeda sedikit pun!
+	Daftar Video Terkait sekarang selalu terisi rekomendasi lagu saat kalian mencari sesuatu atau memutar musik, bukan lagi kosong melompong! Jalur rekomendasi video kini terhubung langsung lewat koneksi kilat, dan saat kalian melakukan pencarian, rekomendasi lagu terkait otomatis dimuat untuk hasil teratas.
+	Memperbaiki equalizer yang selalu kembali ke nilai awal (default) setiap kali jendelanya ditutup dan dibuka lagi! Pengaturan slider frekuensi, penguatan preamp, serta nama preset yang kalian pilih kini tersimpan aman ke berkas konfigurasi dan tetap terpasang rapi saat dibuka kembali.
+	Menambahkan opsi "Off" pada setelan NVDA Verbosity bagi kalian yang menginginkan keheningan penuh. Jika diatur ke Off, Tunevia benar-benar membungkam seluruh suara pengumuman pembaca layar. Selain itu, setiap perubahan setelan di menu Pengaturan kini langsung disimpan seketika ke penyimpanan agar tidak hilang saat aplikasi ditutup.
+	Maju mundur lagu (fast-forward dan rewind) serta perpindahan layar tab kini dibuat tenang dan senyap (quiet). Pada setelan bawaan, pembaca layar tidak akan lagi berceloteh berisik saat tombol panah ditekan berturut-turut atau saat berpindah tab, sehingga kalian bisa menikmati musik dan efek suara navigasi dengan nyaman tanpa gangguan.
+	Navigasi panah Atas dan Bawah di bilah sisi (sidebar) kategori Pengaturan kini tidak lagi melempar kursor kalian masuk secara paksa ke item pertama di dalam kategori. Kursor kalian tetap anteng di daftar kategori sampai kalian sendiri yang menekan tombol Tab atau Enter untuk masuk ke pengaturannya.
+	Tampilan teks dan pesan status di seluruh aplikasi kini dibikin lebih manusiawi dan bersih tanpa tanda kurung bertumpuk atau kode konsol yang berantakan. Status download sekarang menjelaskan proses secara ramah (misalnya: "Downloading in progress", perkiraan waktu seperti "about 2m left", dan ukuran berkas yang mudah dipahami).
+	Tampilan Downloader kini diringkas menjadi satu tabel utama yang rapi! Kotak log kedua di bagian bawah yang membingungkan telah disingkirkan, sehingga semua informasi (judul, status, persen progres, kecepatan, sisa waktu, dan ukuran berkas) berkumpul rapi di satu tempat dengan baris status ringkas di bawahnya.
+	Kalian sekarang bisa menyalin tautan video langsung dari tab Riwayat (History)! Bisa melalui tombol baru "Copy Link", lewat menu klik kanan "Copy Video Link", atau cukup sorot judul lagunya lalu tekan tombol Ctrl+C di keyboard.
+	Berkas cookies kini otomatis terdeteksi dan tersimpan dengan benar! Jika kalian memiliki berkas cookies di folder aplikasi, Tunevia akan langsung mengenalinya, menyimpan lokasinya secara permanen, dan tidak akan lagi menyuruh kalian memuat cookies berulang-ulang.
+	Pengaturan urutan tab di menu Pengaturan kini secara cerdas menyembunyikan tab dari fitur yang sedang kalian matikan di Feature Manager. Jika fitur Statistik atau Radar dimatikan, tab tersebut otomatis hilang dari daftar pengaturan tab, dan akan muncul kembali secara otomatis saat fiturnya kalian hidupkan lagi.
+
+Baru pada 19/10/2026:
+	Memperbaiki masalah freeze parah di mana Tunevia versi .exe mandiri sempat macet total dan jendelanya tidak merespons saat baru dibuka! Aku menemukan bahwa dialog What's New dan beberapa kotak popup sempat memakai perintah tutup yang belum tuntas sehingga mengunci jendela aplikasi dalam status modal abadi, dan mesin latar belakang sempat mencoba mengunduh modul lewat internet di awal padahal seluruh berkasnya sudah terbungkus rapi di dalam aplikasi. Aku sudah membetulkan seluruh penutup dialog agar tertutup sempurna, dan memastikan aplikasi langsung mendeteksi modul bawaannya dalam 0 detik tanpa membekukan layar!
+	Saat pertama kali membuka Tunevia, aplikasi sekarang langsung membuka layar pencarian YouTube dengan kursor yang langsung berkedip siap di kotak cari! Sebelumnya sehabis wizard persiapan awal, sorotan keyboard sempat keliru mengarah ke tab Pengaturan (Settings). Aku menambahkan pengarah fokus otomatis agar begitu aplikasi muncul, kalian bisa langsung mengetik judul lagu favorit tanpa repot!
+	Menjelajahi daftar dan tab dengan tombol Tab atau panah kini terasa jauh lebih mulus, enteng, dan responsif! Aku membuang penangkap tombol Tab berlebih yang dulu sempat memicu konflik ganda, melenyapkan rasa tersendat saat berpindah antar-kontrol bagi pengguna pembaca layar.
+	Navigasi aplikasi dan menu klik kanan (konteks) sekarang kembali super mulus, responsif, dan bebas stutter! Sebelumnya, pembersih memori sempat terlalu rajin membuang data dari RAM saat aplikasi masih aktif dipakai, yang bikin perpindahan panah dan klik menu terasa agak berat atau tersendat. Sekarang sistem pembersih memori jauh lebih cerdas: aplikasi mempertahankan performa penuh berkecepatan tinggi saat kalian aktif bernavigasi, dan baru memangkas penggunaan RAM saat kalian benar-benar sedang istirahat (nganggur selama 45 detik) atau saat aplikasi diminimalkan ke taskbar/tray!
+	Membuka dialog Detail Video, Deskripsi, maupun Komentar kini terasa instan tanpa patah-patah! Aku membetulkan koordinat klik kanan pada daftar hasil pencarian agar menu muncul tepat sasaran, menambahkan efek suara konfirmasi buka popup yang renyah, merapikan teks agar otomatis terbungkus rapi (word-wrap) tanpa perlu digulir ke samping, serta menambahkan tombol Escape langsung untuk menutup dialog seketika.
+	Daftar komentar video sekarang jauh lebih nyaman dijelajahi! Pengambilan komentar lebih cepat hingga 40% tanpa tersendat, pembaruan daftar komentar langsung dimasukkan sekaligus (batch update) tanpa kedip, dan kalian sekarang cukup menekan tombol Enter atau klik dua kali pada komentar mana pun untuk membuka kotak baca komentar penuh beserta tombol salin teks komentar dan nama penulisnya!
+	Pencarian lagu dan video di tab YouTube sekarang kecepatannya bener-bener gila-gilaan! Aku menghubungkan pencarian langsung ke mesin pencari internal YouTube berkecepatan tinggi dengan koneksi yang selalu siaga. Hasil pencarian sekarang muncul sekejap mata (hanya sekitar 0,3 detik atau hampir 10 kali lipat lebih cepat dari sebelumnya), tanpa bikin komputer kalian nunggu lama atau ngos-ngosan!
+	Tampilan menu Pengaturan (Settings) sekarang dirombak total jadi jauh lebih rapi dan elegan dengan navigasi bilah sisi (sidebar)! Di sebelah kiri ada daftar kategori yang jelas (Feature Manager, Pengaturan Pencarian, Pengaturan Pemutaran, Tampilan & Perilaku, Aksesibilitas, Akun & Cookie, Kustomisasi, dan Pengaturan Tab), dan di sebelah kanan langsung menampilkan pengaturan sesuai kategori yang kalian pilih. Navigasinya sangat ramah buat pengguna keyboard dan pembaca layar (NVDA), cukup tekan Tab atau panah buat berpindah kategori tanpa pusing!
+	Penggunaan memori RAM dipangkas habis-habisan saat aplikasi santai (idle) hingga di bawah 10 MB! Dulu saat aplikasi baru dibuka atau diam saja, memori RAM bisa termakan sampai 50-70 MB. Sekarang Tunevia dibekali teknologi pembersih memori cerdas yang otomatis merapikan dan membuang beban memori tak terpakai setiap kali aplikasi sedang nganggur. Penggunaan RAM langsung anjlok drastis hanya sekitar 1 sampai 4 MB saja, bikin laptop spek kentang sekalipun tetap adem dan lancar jaya!
+	Pilihan menu klik kanan sekarang jauh lebih pintar dan bersih: fitur yang dimatikan tidak akan pernah nongol lagi di menu! Misalnya kalau kalian mematikan fitur "Channel Browser" (Jelajah Channel/Artis) di Feature Manager, maka opsi untuk membuka channel, melihat video channel, maupun menyalin tautan channel otomatis hilang sepenuhnya dari menu klik kanan. Begitu juga dengan menu Favorit, Downloader, Radio, dan Komentar—semua menu hanya menampilkan apa yang kalian aktifkan saja.
+	Melihat rincian video, deskripsi, dan komentar sekarang jauh lebih cepat secepat kilat! Informasi detail video dan deskripsi sekarang diambil lewat jalur khusus dalam hitungan sepersekian detik tanpa proses bongkar muat video yang berat. Kotak komentar juga dilengkapi memori kilat (cache), jadi kalau kalian membuka kembali komentar video yang sama, hasilnya langsung muncul detik itu juga (0 detik) tanpa loading lagi!
+	Kecepatan download di tab Downloader sekarang ngebut gila-gilaan! Aku memasang mesin download multi-thread paralel (8 koneksi sekaligus), ukuran pecahan paket HTTP 10 MB untuk membypass pembatasan kecepatan dari YouTube, dan mempekerjakan seluruh inti prosesor komputer kalian (-threads 0) saat mengonversi suara. Hasilnya, download lagu yang biasanya santai sekarang melesat kilat dalam hitungan detik!
+	Tampilan progres download sekarang jauh lebih rapi dan bersih dalam satu baris daftar (ListView) yang terbarui langsung di tempat (in-place)! Dulu tiap kali ada progres 1%, aplikasi mencetak baris teks baru ke bawah terus-menerus sampai ratusan baris dan bikin layar banjir teks. Sekarang tiap lagu punya kolom lengkap (Judul, Status, Progres %, Kecepatan, Perkiraan Waktu/ETA, dan Ukuran) yang angkanya berganti mulus di barisnya sendiri tanpa bikin teks baru ke bawah.
+	Kalian sekarang bisa memilih format suara unduhan sesuka hati! Tersedia pilihan MP3 (192 kbps), M4A/AAC (192 kbps), OPUS (128 kbps), FLAC (lossless jernih tanpa kompresi), dan WAV. Jika centang audio dimatikan, aplikasi otomatis mengunduh video MP4 kualitas terbaik dengan teknik stream-copy instan tanpa perlu rendering ulang yang lama!
+	Navigasi tombol Tab dan Shift+Tab di layar pencarian YouTube sekarang sudah bisa dipakai berkeliling (tab around) dengan sangat lancar dan berputar tanpa terputus! Sebelumnya, daftar hasil pencarian dan video terkait sempat "mengunci" tombol Tab karena menggunakan mode tangkapan karakter khusus, dan daftar video terkait sempat dinonaktifkan sehingga terlewat begitu saja. Sekarang kalian bisa menekan Tab atau Shift+Tab dari kolom pencarian, daftar hasil pencarian, daftar video terkait, sampai tombol keluar dan kembali lagi ke atas tanpa ada yang macet atau terperangkap!
+	Buat teman-teman pengguna pembaca layar (seperti NVDA), navigasi di tab layar YouTube sekarang sudah terbaca dengan sangat jelas dan tidak ada lagi suara "unknown unknown" yang membingungkan! Aku sudah merapikan susunan jendela dan membuang kotak pembungkus statis yang tidak perlu, serta memberikan label aksesibel yang bersih ("Search Results" dan "Related Videos") dengan teks panduan ramah saat daftar masih kosong.
+	Tombol Tab pada baris tab utama aplikasi sekarang otomatis meneruskan fokus masuk ke kontrol pertama halaman aktif, dan tombol Shift+Tab meneruskan ke kontrol terakhir, sehingga berpindah antar-tab dan kontrol aplikasi menggunakan keyboard terasa sangat mulus, alami, dan bebas jebakan fokus!
+	Putar ulang atau lanjutkan lagu setelah di-pause sekarang berjalan instan tanpa jeda atau lag 1-2 detik lagi! Sebelumnya setiap kali kalian menekan play setelah pause, aplikasi sempat menyuruh pemutar audio mengulang koneksi dari awal dan membongkar ulang saluran suara. Sekarang aplikasi langsung melanjutkan audio yang sudah tersimpan di memori, bikin suaranya langsung menyala seketika!
+	Pilihan ganti perangkat suara (Audio Output) di tab pemutar musik sekarang benar-benar bekerja memindahkan suara ke speaker atau headphone pilihan kalian! Dulu ada salah paham perintah sistem yang bikin Windows mengabaikan pergantian perangkat. Sekarang perangkat suara bawaan ("Default") juga tampil jelas di daftar, dan perangkat pilihan kalian bakal terus diingat untuk lagu-lagu berikutnya.
+	Kalian sekarang cukup menekan tombol Enter (atau Numpad Enter) langsung dari keyboard buat memutar lagu di semua daftar (pencarian YouTube, video terkait, trending Discovery, rilis baru, Radar, Favorit, maupun Riwayat)! Buat teman-teman pengguna NVDA, kalian nggak perlu lagi repot-repot memencet kombinasi NVDA+Enter hanya untuk menyalakan musik; cukup sorot judul lagunya dan tekan Enter, lagunya langsung mengalun!
+	Kalian sekarang bisa milih langsung mau pakai efek suara navigasi atau nggak pas pertama kali buka Tunevia! Di layar selamat datang pertama, aplikasi sekarang dengan ramah menanyakan: "Aplikasi ini juga dilengkapi dengan efek suara untuk navigasi, membuka item, dan berbagai tindakan. Apakah Anda ingin mengaktifkannya?". Kalau kalian lebih suka yang hening tanpa suara klik, tinggal matikan centangnya dan aplikasi bakal langsung tenang tanpa perlu repot nyari di menu pengaturan nanti. Asyiknya lagi, pilihan kalian bakal tetap diingat walaupun kalian gonta-ganti preset di halaman berikutnya!
+	Kalau kalian mematikan efek suara di Pengaturan Suara, aplikasi sekarang benar-benar melewati semua proses pencarian berkas suara di penyimpanan saat kalian ngeklik atau berpindah tombol, jadi semuanya terasa instan dan secepat kilat!
+	Nggak ada lagi rasa lag atau macet sepersekian detik pas kalian pertama kali ngeklik tombol atau pindah-pindah tab di laptop atau PC yang speknya pas-pasan! Semua efek suara sekarang diam-diam disiapkan duluan di latar belakang saat aplikasi baru dibuka, jadi klik pertama langsung bunyi lancar tanpa bikin aplikasi bengong.
+	Buat teman-teman tunanetra pengguna pembaca layar (terutama NVDA), menjelajahi daftar lagu dan mengatur volume sekarang nggak bakal bikin aplikasi patah-patah atau macet lagi! Dulu ada jeda tidur tersembunyi yang nahan jendela aplikasi tiap kali NVDA berbicara sepatah kata, yang bikin navigasi panah terasa lambat di beberapa komputer. Jeda itu sudah dibuang jauh-jauh, jadi navigasi keyboard terasa super mulus dan gesit!
+	Jembatan penghubung ke pembaca layar NVDA sekarang jauh lebih pintar dan otomatis menyesuaikan dengan Windows 32-bit atau 64-bit, punya bunyi 'bip' cadangan yang aman, dan nggak bakal bikin berisik pesan galat di latar belakang kalau NVDA lagi nggak aktif.
+	Maju-mundur atau geser posisi lagu sekarang terasa jauh lebih mulus dan nggak bakal bikin pemutaran crash lagi! Sebelumnya kalau kalian menekan tombol rewind/fast-forward berkali-kali dengan cepat, aplikasi bakal ngehujani YouTube dengan puluhan permintaan sekaligus sampai koneksi tersedak dan lagunya macet. Sekarang aplikasi dengan sopan menunggu sepersekian detik sampai kalian selesai menekan baru meminta aliran lagu, menjaga semuanya tetap stabil dan bebas macet.
+	Lagu baru sekarang mulai berbunyi jauh lebih cepat! Setiap kali kalian memilih lagu, Tunevia dulu sempat meminta data lagu yang sama persis sebanyak dua kali berturut-turut ke YouTube. Permintaan kedua yang mubazir itu sudah dihapus, jadi kalian nggak perlu nunggu kelamaan sebelum lagunya mulai bersuara!
+	Kalian sekarang bisa melompat-lompat lagu secepat apa pun tanpa takut suaranya tabrakan atau tumpang tindih! Dulu kalau kalian menekan tombol 'Next' dengan cepat, lagu lama yang telat selesai dimuat di latar belakang kadang malah mulai berbunyi di atas lagu baru kalian. Sekarang tiap pemutaran diberi nomor pelacak cerdas, jadi lagu lama yang datang terlambat bakal langsung dibuang.
+	Tampilan penunjuk menit dan detik lagu sekarang jauh lebih hemat tenaga. Layar hanya diperbarui saat angka detiknya benar-benar berganti dan bukan menggambar ulang terus-menerus, menghemat penggunaan prosesor dan baterai laptop kalian.
+	Mengganti perangkat suara (misalnya dari speaker ke headphone) di Pengaturan Suara sekarang terhubung langsung ke sistem audio modern Windows, jadi pergantian suara berjalan mulus tanpa macet atau bisu.
+	Kalau kalian suka pakai mode audio mono (berguna banget kalau kalian cuma dengerin pakai sebelah earphone), pengaturannya sekarang dipasang pas lagunya benar-benar mulai berbunyi, jadi suara dari kedua telinga tergabung sempurna tanpa ada bagian instrumen yang hilang.
+	Memperbaiki kebocoran memori pas kalian bolak-balik antara mendengarkan lagu dan menonton video lewat tombol "Show Video". Selain itu, saat jendela videonya ditutup, layarnya sekarang dikembalikan dengan rapi ke panel latar belakang tanpa meninggalkan jendela kosong yang mengganggu.
+	Ngegeprek masalah crash parah di tab YouTube di mana aplikasi tiba-tiba menutup sendiri pas kalian mencoba mencari video terkait. Ternyata ada data yang coba dibaca sebelum sempat diambil dari internet. Sekarang fiturnya sudah aman dan lancar dipakai kapan saja!
+	Mesin pencarian YouTube Music sekarang baru disiapkan saat kalian benar-benar menggunakannya, bukan pas aplikasi baru dibuka. Jadi kalau koneksi internet kalian lagi lambat pas Tunevia dibuka, aplikasinya nggak bakal macet di layar awal.
+	Riwayat pencarian sekarang dibatasi maksimal 20 pencarian terakhir saja. Dulu Tunevia mengingat semua kata yang pernah kalian cari selamanya, bikin berkas pengaturan jadi bengkak dan bikin aplikasi makin hari makin lambat pas dibuka. Sekarang riwayat yang sudah terlalu lama otomatis dibersihkan biar aplikasi tetap enteng dan ngebut!
+	Memperbaiki crash saat mengeklik tombol 'Play' pada kotak deteksi tautan YouTube dari clipboard! Kemarin ada salah ketik fungsi yang bikin aplikasinya mogok saat tombol itu ditekan, tapi sekarang tautan langsung diputar seketika seperti yang kalian harapkan.
+	Panel Statistik sekarang menghitung total jam kalian mendengarkan musik dengan sangat akurat! Durasi asli lagu dari YouTube dulu sempat tidak tersalurkan dengan benar ke catatan riwayat, jadi panel statistik harus menebak berdasarkan durasi standar. Sekarang aplikasi tahu persis berapa lama kalian sudah mendengarkan lagu.
+	Mengunduh lagu di tab Downloader sekarang nggak bakal bikin seluruh tampilan aplikasi membeku saat kecepatan internet sedang tinggi-tingginya! Aku membatasi seberapa sering teks kemajuan unduhan diperbarui dan membatasi jumlah baris teksnya, jadi komputer kalian nggak bakal keberatan menggambar ribuan baris teks unduhan.
+	Membersihkan menu klik kanan di tab Discovery, Radar, dan Favorit agar dibuang dengan bersih dari memori komputer setelah ditutup, mencegah memori menumpuk kalau kalian sering klik kanan lagu.
+	Tab Discovery sekarang lebih kebal dan nggak bakal memunculkan pesan galat kalau kebetulan daftar tangga lagunya lagi kosong atau internet sempat terputus.
+	Tab rekomendasi Radar sekarang jauh lebih tangguh saat memeriksa lagu-lagu unik yang tidak punya tautan web langsung, melewatinya dengan mulus tanpa bikin aplikasi terhenti mendadak.
+	Kotak komentar video YouTube sekarang menampilkan tanda kutip, petik, dan simbol lainnya dengan rapi sebagai teks biasa! Dulu sering muncul kode web aneh seperti &quot; atau &#39;, tapi sekarang sudah diubah jadi kalimat normal yang nyaman dibaca.
+	Berkas pengaturan dan daftar putar (playlist) lagu kalian sekarang benar-benar kebal dari risiko rusak atau berubah jadi berkas kosong 0 byte! Aplikasi sekarang selalu menulis ke berkas sementara yang aman terlebih dahulu, dan baru mengganti berkas asli setelah penyimpanan benar-benar sukses. Kalau komputer tiba-tiba mati listrik saat menyimpan, playlist dan pengaturan kalian tetap aman tanpa ada yang hilang.
+	Mengatur tombol pintasan di dialog Pintasan Keyboard sekarang langsung aktif detik itu juga saat kalian menutup dialognya! Nggak perlu lagi menutup dan membuka ulang aplikasi hanya untuk mencoba tombol baru.
+	Merapikan proses awal mesin audio VLC dengan membuang pengaturan usang yang dulu sering memunculkan pesan peringatan di jendela konsol latar belakang.
+	Buat kalian yang menjalankan versi aplikasi .exe (mandiri), semuanya sudah diracik ulang dengan sangat rapi dan lengkap! Berkas bahasa, sertifikat keamanan YouTube, serta seluruh pustaka audio penting sudah dibungkus sempurna, menjamin aplikasi bisa langsung berjalan mulus di komputer Windows mana pun tanpa error berkas hilang.
+
+Baru pada 03/09/2026:
+	Sambutlah wizard onboarding peluncuran pertama yang serba baru di Tunevia! Kalau kalian belum pernah mengatur fitur Tunevia, sekarang aplikasi bakal menyambut kalian di startup dengan wizard 4 langkah yang ramah dan aksesibel, ngebantu kalian memilih fitur apa saja yang kalian butuhkan sebelum player utama dimuat.
+	Memperkenalkan Feature Manager terpusat! Tunevia punya segudang fitur keren kayak discovery, radar, lirik, downloader, equalizer, bookmark, dan statistik, tapi nggak semua orang butuh semua modul itu aktif terus-menerus. Sekarang kalian bisa mengatur 25 fitur terpisah dalam 6 kategori rapi (Core, Discovery, Lyrics, Downloads, Audio, dan Advanced) buat menghemat performa dan memori.
+	Menambahkan 4 preset praktis di wizard onboarding dan tab Settings: Music Player (playback murni yang super ringan), Music + Discovery, Power User (semua 25 fitur aktif), dan Recommended Settings (pengaturan seimbang yang ngebut).
+	Sistem dependensi cerdas kini hadir! Mengaktifkan fitur seperti Konversi MP3 bakal otomatis mengaktifkan modul YouTube Downloader, dan mematikan Pencarian Lirik bakal otomatis menonaktifkan fitur turunannya seperti lirik otomatis agar tidak terjadi konflik pengaturan.
+	Kecepatan startup sekarang meningkat drastis! Tab opsional dan modul berat (seperti API Genius lirik dan YouTube Music) bakal dilewati sepenuhnya saat startup jika dinonaktifkan, menghemat waktu booting dan penggunaan RAM.
+	Scraping di tab Discovery sekarang bersifat lazy-loaded! Daripada langsung menjalankan thread scraping di latar belakang saat Tunevia baru dibuka, tab Discovery sekarang baru akan mengambil data saat kalian pertama kali membuka tab tersebut.
+	Membersihkan kontrol pengaturan duplikat! Kami sudah menghapus tombol dan kotak centang yang ganda antara pengaturan biasa dan daftar fitur, seperti saran pencarian live, normalisasi audio, minimize ke tray, lirik otomatis, pemantau clipboard, dan pintasan keyboard player. Semuanya sekarang diatur rapi di satu tempat di Feature Manager.
+	Peningkatan besar-besaran untuk aksesibilitas pembaca layar (NVDA)! Semua kotak edit, kolom pencarian, combo box, dan tombol di seluruh aplikasi sekarang punya label dan nama aksesibel yang benar, karena tooltip bukanlah label!
+	Kotak pencarian YouTube sekarang memiliki label "Search YouTube:" yang jelas di depannya serta nama aksesibel eksplisit, jadi NVDA nggak bakal lagi membacanya sebagai kotak kosong tanpa label!
+	Mengganti simbol hati ("❤") yang membingungkan di tombol favorit dengan teks jelas ("Favorite" / "Favorited") serta aksi aksesibel dinamis ("Add to Favorites" / "Remove from Favorites")!
+	Menambahkan label dan nama aksesibel pada pilihan perangkat output audio, bikin navigasi ganti speaker atau headphone jadi jelas dan terbaca sempurna.
+	Semua tombol, daftar antrean, log download, dan kotak input di Downloader, panel Lirik, Riwayat, Favorit, Radar, Statistik, serta dialog kustom (Bookmark, Multi-Link Entry, Jumlah Playlist, Command Palette) sekarang sudah memiliki nama aksesibel yang lengkap.
+	Jangan khawatir soal data lagu kalian: menonaktifkan fitur seperti riwayat, favorit, atau bookmark di Feature Manager tidak akan pernah menghapus data tersimpan kalian; semuanya tetap aman dan langsung kembali saat fiturnya diaktifkan lagi!
+	Pintasan player dan hotkey media global sekarang sudah langsung aktif di preset Music Player dan Music + Discovery! Kalian dapat kontrol panah lengkap (Panah Atas/Bawah untuk mengatur volume, Panah Kiri/Kanan untuk seek) dan hotkey global (Alt+Shift+Panah/P/N/B) tanpa perlu repot mengaturnya lagi, dan pengaturan volume sekarang bisa langsung diubah di tab Audio Player meski lagu belum diputar!
+
+Baru pada 07/05/2026:
+Ngomong-ngomong, sekarang kalian bisa ngatur mau liat berapa banyak komentar di tiap video! Tinggal pergi ke Settings terus pilih deh limitnya, mulai dari 10 sampe 500, atau pilih 'all' kalau kalian emang pengen baca semuanya!
+Aku juga akhirnya benerin tombol "Show Video"! Sebelumnya tombol itu cuma ngebuka layar hitam kosong karena aplikasinya nyoba nampilin stream yang emang isinya cuma audio. Sekarang logikanya udah aku rombak total, jadi pas kalian klik "Show Video", aplikasinya bakal nge-pause sebentar, ngambil stream video penuh, dan ngelanjutin videonya biar kalian beneran bisa nonton!
+Mumpung lagi ngeberesin soal video, aku juga ngegeprek masalah nyebelin di mana jendela "VLC (Direct3D11 output)" tiba-tiba muncul tiap kali kalian muter lagu. Aplikasi sekarang udah pinter nyembunyiin tampilan video di latar belakang kecuali kalian beneran ngeklik tombol "Show Video".
+
+Baru pada 04/05/2026:
+Aku udah ngeberesin banyak masalah biar aplikasinya makin stabil dan enak dipake!
+Pertama, aku udah ngegeprek crash startup parah yang gara-gara error sintaks dan ada bagian UI yang kurang. Sekarang harusnya lancar jaya pas baru dibuka.
+Buat temen-temen pengguna NVDA, sekarang daftar Radar dan Rekomendasi bakal nyebutin judul lagunya pas kalian geser-geser pake panah.
+Ngatur favorit juga makin gampang. Aku nambahin opsi 'Tambah ke Favorit' di menu klik kanan buat hampir semua daftar—hasil pencarian, riwayat, discovery, pokoknya semuanya! Terus pas kalian hapus lagu dari favorit, daftarnya sekarang lebih pinter buat tetep di posisi terakhir, nggak lompat-lompat lagi.
+Cari lirik juga harusnya jauh lebih akurat sekarang. Aku bikin sistem yang otomatis ngebersihin judul video YouTube dari tulisan kayak '(Official Video)' biar Genius bisa nemuin lirik yang bener.
+Aku juga benerin crash kecil di downloader dan mastiin semua setting kalian, kayak tingkat volume, kesimpen dengan aman pas aplikasinya ditutup.
+Terakhir, aku ngerombak tampilan hasil pencarian di daftar. Sekarang langsung kelihatan durasi sama siapa yang upload di judulnya, kayak "[Judul]. duration: [Waktu] uploaded by [Channel]", biar kalian tau persis lagu mana yang mau diputer.
+
+Baru pada 24/03/2026:
+Bikin aplikasi kerasa lebih "hidup" dengan nambahin 6 efek suara baru! Sekarang kalian bakal dapet FEEDBACK suara pas ngeklik tombol, pindah tab, buka popup, sampe pas muncul dialog konfirmasi. Tenang, kalian tetep bisa atur ini di Sound Settings kalau lebih suka TANPA SOUND.
+Ngerombak total relevansi "Radio" mode! Sekarang pake fitur radio khusus YouTube Music dan playlist "RD", bukan cuma sekadar cari berdasarkan judul lagu. Jadi kalau kalian lagi dengerin Mahalini, yang muncul bakal lagu-lagu Indonesia yang nyambung, bukan lagu India atau internasional yang nggak jelas.
+Ngeberesin lagi error "Video Unavailable" pas ekstraksi. Aku udah nyetel pengaturan yt-dlp biar lebih SOLIT dengan pake beberapa player client dan ngelewatin pengecekan sertifikat kalau dibutuhin.
+Ngebersihin pesan error di seluruh aplikasi dengan ngilangin kode warna ANSI yang teknis banget. Nggak ada lagi karakter aneh-aneh di dialog error kalian!
+Benerin bug spesifik di penampil "Video Comments" yang bikin beberapa video kelihatan "Unavailable" padahal aslinya bisa diputer.
+Meningkatkan pengaturan ekstraksi buat downloader juga, mastiin antrean download kalian lebih andal dari sebelumnya.
+
+Baru pada 1.6.1:
+Memperbaiki masalah kritis di mana fitur "Update yt-dlp" STUCK dalam loop atau gagal menyimpan versi baru secara permanen. Sekarang, update diterapkan dengan benar dan tetap ada bahkan setelah kalian restart aplikasinya.
+Ngeberesin error "403 Forbidden" nyebelin yang muncul buat beberapa download YouTube. Aku udah ngotak-ngatik downloader-nya biar nyamar lebih baik, jadi download harusnya lancar jaya lagi.
+Benerin bug di mana file yang didownload kadang berakhir dengan nama generik kayak "videoplayback". Sekarang, aplikasi pastiin buat ngambil Judul dan Nama File yang bener setiap saat.
+
+Baru pada 1.6.0:
+Menambahkan panel "Stats" baru! Sekarang kalian bisa melihat kebiasaan mendengarkan kalian, termasuk pembagian waktu antara mendengarkan musik dan menonton video biasa, artis teratas, dan trek teratas kalian.
+Menambahkan tombol "Previous" dan "Next" umum ke pemutar audio untuk navigasi yang lebih mudah melalui antrean atau playlist kalian.
+Menambahkan penampil "Video Comments" baru. Kalian sekarang bisa membaca komentar untuk video yang sedang diputar langsung di dalam aplikasi.
+Meningkatkan kemampuan Pencarian dengan fitur "Live Search Suggestions" baru yang membantu kalian menemukan apa yang kalian cari lebih cepat. Kalian bisa menyalakan atau mematikan ini di Pengaturan.
+Memperbaiki masalah gangguan mengetik di bilah pencarian.
+Menambahkan fitur untuk Mengeskpor riwayat putar atau daftar pencarian kalian sebagai file playlist (.m3u atau .pls).
+Memperbaiki tautan "Top 100" dan "New Releases" di tab Discovery untuk menggunakan playlist YouTube yang andal.
+Memperbaiki masalah di mana kalian tidak bisa memutar ulang trek setelah selesai hanya dengan menekan Spasi atau Play. Sekarang berfungsi persis seperti yang kalian harapkan!
+Membersihkan antarmuka dengan menghapus tombol "Chapters" duplikat yang menyelinap ke tab Audio Player.
+Memperbarui dokumentasi agar sesuai dengan semua fitur terbaru dan terhebat.
+Memastikan bahwa aplikasi selalu menggunakan salinan lokal yt-dlp yang benar untuk stabilitas maksimum.
+Memperbaiki crash saat startup yang terkait dengan hotkey tab dan crash di panel statistik.
+Menambahkan shortcut global untuk Trek Sebelumnya (Alt+Shift+B) dan Trek Berikutnya (Alt+Shift+N) jadi kalian bisa melewati lagu bahkan saat Tunevia ada di latar belakang.
+
+Baru pada 27/11/2025:
+Menghapus fitur Voice Search karena masalah kompilasi dan kerumitan dependensi.
+Menambahkan fitur baru "Import/Export Playlists"! Sekarang kalian bisa menyimpan daftar video saat ini ke file playlist (.m3u atau .pls) dan memuatnya lagi nanti. Ini bikin gampang banget buat berbagi trek favorit atau menyimpan antrean buat lain waktu. Tombol "Playlist" telah menggantikan tombol "Voice Search" di sebelah bilah pencarian.
+
+Baru pada 26/11/2025:
+Pernah copy link terus berharap aplikasinya langsung paham harus ngapain? Aku udah nambahin pengaturan opsional baru di panel "Settings" yang bakal mantau clipboard kalian. Sekarang, kapan pun kalian copy URL YouTube, bakal muncul dialog yang nanya mau putar atau download videonya langsung!
+Buat video panjang yang punya banyak bagian, aku tambahin navigasi chapter! Kalau videonya punya chapter, tombol "Chapters" baru bakal muncul di kontrol player. Kalian tinggal klik buat buka daftar semua chapter yang ada dan lompat langsung ke bagian yang mau didengar.
+Memperbaiki bug kritis di pengaturan Tab Management di mana menghapus tab bakal bikin tab itu hancur selamanya, jadi nggak mungkin dikembalikan tanpa restart aplikasi. Sekarang, tab disembunyikan dengan benar dan bisa dimunculkan lagi kapan saja.
+
+Baru pada 1.5.9:
+Nambahin panel favorit! Kalian sekarang bisa masukin video ke daftar favorit, ini sama persis kayak tombol like di YouTube biasa.
+
+Baru pada 09/09/2025:
+Aku nambahin tab 'Discover' baru yang secara otomatis mengambil playlist resmi YouTube "Top 100 Global" dan "New Releases". Kalian bisa lihat apa yang lagi hot dan baru, cukup klik dua kali trek mana aja di daftar buat langsung memutarnya.
+Buat sesuatu yang agak lebih personal, ada juga tab 'Radar' yang masih gres! Tekan tombol "Scan", dan dia bakal menganalisis riwayat putar kalian baru-baru ini, mencari video terkait buat beberapa lagu itu, dan bikin daftar rekomendasi khusus buat kalian. Dia bahkan cukup pintar buat menyaring hal-hal yang udah kalian denger. Aku ngaku sih, ini belum selalu sempurna, tapi aku terus memperbaikinya! Anggap aja ini sumber rekomendasi kalian sendiri yang murni, agak kacau, dan bebas AI.
+
+Baru pada 1.5.8:
+Update ini lumayan besar, fokus buat bikin aplikasi lebih cepat dan gampang dipakai buat semua orang!
+
+Pertama, aku nambahin Command Palette baru. Cukup tekan Ctrl+K buat buka daftar yang bisa dicari dari hampir semua aksi di aplikasi, kayak toggle shuffle, buka downloader, atau ganti ke dark mode.
+
+Biar kalian nggak ketinggalan semua hal keren baru, aplikasi sekarang bakal nampilin dialog "What's New" pas pertama kali kalian jalanin setelah update. Dia bahkan cukup pintar buat nampilin changelog dalam bahasa pilihan kalian, kalau tersedia.
+
+Dan buat siapa aja yang pernah nanya "Gimana sih cara lakuin itu?", aku udah mindahin panduan pengguna langsung ke dalam aplikasi! Ada tab "Help" baru (Ctrl+6) jadi kalian bisa dapet instruksi dan informasi tanpa perlu ninggalin aplikasi.
+
+Buat kalian pengguna NVDA, aku nambahin pengaturan baru buat ngontrol seberapa rewel aplikasinya. Kalian sekarang bisa milih antara "Quiet", "Default", dan "Verbose" buat dapet jumlah informasi yang pas. Aku juga udah melengkapi banyak tooltip di seluruh aplikasi buat ngasih penjelasan lebih detail tentang fungsi tiap tombol.
+
+Aku juga ngotak-ngatik mesinnya biar hampir semuanya kerasa lebih ngebut. Tau kan jeda sebentar pas mau putar lagu? Aku kerja keras bikin itu jadi jauh lebih singkat. Playback harusnya mulai hampir instan sekarang. Pencarian YouTube, loading playlist besar, dan ngambil info di downloader juga jadi jauh lebih efisien, mudah-mudahan.
+
+Dan tentu aja, aku ngegeprek beberapa bug yang ngeganggu banget. Akhirnya aku nemuin masalah nyebelin di mana aplikasi bakal macet atau gagal di video yang dibatasi usia (age-restricted). Aku udah buang tombol "Continue Anyway" yang nggak bisa diandalkan; sekarang, dia bakal ngasih satu pesan jelas yang nyuruh kalian pakai file cookies buat video-video itu.
+
+Aku juga benerin crash di Command Palette baru, ngeberesin navigasi tab di dialog multi-link downloader, dan bikin beberapa perbaikan kecil sana-sini biar semuanya jalan mulus.
+Capek nambahin link download satu-satu? Tenang aja! Dialog "Add Link" di downloader sekarang jadi kotak teks multi-line yang besar. Kalian sekarang bisa paste seisi daftar link video atau playlist di sana sekaligus, bikin antrean download jadi jauh lebih cepet.
+
+Baru pada 28/07/2025:
+Aku ngebuang slider seek interval dari tab Audio Player. Gantinya, aku nambahin menu dropdown baru di tab Settings -> Playback Settings.
+Kalian sekarang bisa milih interval seek yang presisi, mulai dari 3 detik sampai 1 jam, buat pengalaman rewind dan fast-forward yang jauh lebih sesuai keinginan!
+Downloader sekarang bisa convert download-an audio-only kalian jadi format MP3.
+Kalau format "Audio Only" dipilih di dialog Format Selection, downloader bakal otomatis pakai FFmpeg buat ngurus konversinya.
+Status download sekarang bakal update jadi "Converting..." buat ngasih tau kalian pas lagi di tahap proses itu.
+Tombol "Load More Results" sekarang bakal muncul dengan bener pas kalian lagi liat hasil pencarian yang dimuat dari cache. Ini harusnya bikin transisi mulus dari liat item yang di-cache ke ngambil hasil live baru tanpa perlu nyari ulang dari awal.
+Memperbaiki masalah nyebelin di mana kode warna ANSI dari output konsol yt-dlp bisa ngacauin parsing persentase download, yang bikin error. String progress sekarang udah dibersihin, yang harusnya menjamin update progress bar yang mulus dan akurat.
+Meningkatkan stabilitas fungsi rewind dan fast-forward di audio player secara signifikan.
+Aku nambahin beberapa pengecekan keamanan buat nyegah seeking di luar batas durasi media, yang harusnya ngilangin sumber umum crash dan error traceback.
+Nambahin guard clauses ke semua fungsi playback utama (Play, Stop, dll.) buat nyetop aksi biar nggak jalan pas nggak ada media yang dimuat, yang harusnya makin ningkatin stabilitas.
+Memperbaiki pesan status dan pengumuman pembaca layar (screen reader) buat berbagai aksi, termasuk pencarian cache, konversi MP3, dan seeking.
+Antarmuka pengguna di panel Settings dan Audio Player diatur ulang dikit buat nyesuain kontrol baru dan yang dihapus, biar tampilannya tetep rapi.
+
+Baru pada 1.5.7:
+Kalian semua bakal seneng karena aku udah nambahin toggle shuffle baru ke audio player! Sekarang kalian bisa putar trek dari hasil pencarian atau playlist dengan urutan yang bener-bener acak, bikin dengerin musik jadi lebih asik!
+Tombol repeat sekarang jauh lebih canggih! Kalian bisa ganti-ganti antara tiga mode: off, repeat one (ulang satu), dan repeat all (ulang semua). Artinya kalian bisa looping satu lagu yang kalian suka atau dengerin seluruh playlist berulang-ulang!
+Buat para pejuang keyboard, shortcut baru udah ditambahin! Tekan control+s buat toggle shuffle dan control+r buat ganti mode repeat tanpa perlu nyentuh mouse!
+Downloader udah dirombak total dari nol! Kita udah nerapin sistem antrean tingkat pro, jadi sekarang kalian bisa nambahin banyak video dan playlist, dan semuanya bakal didownload satu per satu secara otomatis!
+UI downloader baru ngasih kalian kontrol penuh. Kalian sekarang bisa start, pause, resume, dan stop seluruh antrean. Bisa juga hapus item individu sebelum mereka mulai didownload, jadi nggak perlu nunggu download-an yang nggak kalian mau!
+Akhirnya aku nambahin pemilihan kualitas download! Sebelum nambahin video ke antrean, dialog baru bakal muncul, ngebiarin kalian milih format video, audio, atau gabungan yang tepat. Itu bahkan nampilin detail kualitas, codec, dan perkiraan ukuran file biar kalian tau persis apa yang kalian dapet!
+Antrean download kalian sekarang disimpan pas kalian nutup downloader! Artinya kalian bisa matiin aplikasi dan lanjutin download nanti tepat di mana kalian ninggalinnya, nggak ada lagi antrean yang ilang!
+Akhirnya, aku nambahin tema! Kalian sekarang bisa ganti antara tema terang klasik dan tema gelap baru yang jauh lebih nyaman di mata. Opsi ini ada di tab settings.
+Sekarang ada opsi "Always on Top" di menu settings. Kalau diaktifin, jendela Tunevia bakal tetep di atas aplikasi lain, cocok banget buat multitasking!
+Buat ngurangin keramean, aku nambahin opsi buat minimize aplikasi ke system tray alih-alih taskbar! Ikon tray bahkan nampilin status playback dan ngasih beberapa kontrol dasar.
+Nambahin global hotkey baru (alt+shift+w secara default) buat nampilin atau nyembunyiin jendela aplikasi dengan cepet. Ini jalan sempurna bareng fitur system tray baru!
+Memperbaiki segelintir bug kecil dan bikin beberapa peningkatan umum buat performa dan stabilitas! Aku selalu berusaha bikin semuanya makin mulus.
+
+Baru pada 1.5.6:
+Akhirnya dateng juga, kalian sekarang bisa atur pengalaman dengerin kalian dengan audio equalizer 10-band lengkap! Kalian bisa nemuin itu di bawah tab audio player atau dengan nekan control+e.
+Equalizer baru ini dateng dengan beberapa preset bawaan kayak Rock dan Jazz, tapi kalian juga bisa simpan dan hapus preset buatan sendiri.
+Nambahin slider pre-amp ke equalizer, ngebolehin kalian naikin volume sampe 200%. Hati-hati ya, ini mungkin bikin audio sember di trek tertentu!
+Buat yang benci lagu yang tiba-tiba keras atau pelan, ada opsi audio normalization baru di settings. Ini bantu jaga volume tetep konsisten, tapi baru ngefek di trek berikutnya yang kalian putar.
+Nambahin fitur aksesibilitas buat maksa audio jadi satu saluran mono. Kalian bisa toggle ini pakai tombol di player atau tekan control+m.
+Pernah pengen nyimpen momen penting di sebuah trek? Nah sekarang bisa! Tekan control+b buat nambah bookmark dengan deskripsi. Dialog bookmarks baru ngebolehin kalian liat, edit, hapus, dan lompat ke titik mana pun yang udah disimpan.
+Nambahin hotkey baru yang bisa diatur buat equalizer, bookmarks, dan toggle mono audio.
+Kalian sekarang bakal denger notifikasi suara kecil pas bookmark berhasil disimpan.
+Jangan khawatir soal settingan audio baru kalian, semuanya bakal disimpan dan dimuat otomatis.
+
+Baru pada 1.5.5:
+Update ini fokus banget buat bikin semuanya jadi jauh lebih pinter dan stabil.
+
+Pertama, sesuatu yang kayaknya bakal kalian suka. Tau kan gimana kalian harus restart seluruh aplikasi cuma buat ganti bahasa? Itu akhirnya ilang! Aku ngelakuin perombakan besar, dan sekarang pas kalian pilih bahasa baru di Settings, seluruh aplikasi update secara instan. Tiap tab, tiap tombol, tiap pesan kecil, semuanya ganti tanpa jeda.
+
+Dan mumpung lagi ngotak-ngatik itu, aku ngegeprek banyak bug yang nyebelin:
+
+Aku nemuin dan benerin crash parah yang kadang kejadian pas kalian baru mulai aplikasi. Harusnya jauh lebih andal sekarang.
+
+Aku juga ngeberesin crash serupa yang bisa muncul pas kalian nutup jendela video player kecil.
+
+Downloader-nya sekarang agak lebih hati-hati. Dia kerja lebih bagus buat mastiin kalian nggak nggak sengaja nutup aplikasi pas lagi di tengah download, jadi nggak ada lagi file korup!
+
+Buat kalian yang pakai voice search, aku benerin beberapa hal. Aplikasi sekarang bakal inget kalau kalian nolak akses mikrofon dan bakal berhenti nanya-nanya soal itu. Tombol 'Voice Search' juga lebih pinter dan nggak bakal aktif kalau komponen yang dibutuhin belum keinstal.
+
+Terakhir, aku bersih-bersih dikit. Semua dialog pop-up harusnya sekarang muncul rapi di tengah, dan aku nyetel beberapa hal lain di mesinnya biar pengalaman keseluruhannya kerasa lebih solid.
+
+Baru pada 1.5.4:
+Aku bikin Radio Mode jauh lebih pinter! Pernah mulai stasiun radio terus harus nunggu dia mikir mau muter apa selanjutnya? Nggak lagi! Sekarang, lagu yang kalian pilih bakal langsung main. Sambil kalian nikmatin trek pertama itu, aplikasi sibuk di background, nyiapin antrean trek terkait yang udah diacak penuh. Ini ngasih pengalaman dengerin yang mulus dan bener-bener acak, agak mirip layanan streaming favorit kalian, jadi kalian nggak pernah tau apa yang bakal muncul berikutnya.
+Aku juga ngotak-ngatik seeking. Tau kan jeda dikit pas kalian rewind atau fast-forward? Harusnya sekarang kerasa jauh lebih responsif. Player ngasih umpan balik audio langsung, bikin kerasa lebih cepet, apalagi kalau koneksi kalian agak lambat.
+Dan buat siapa aja yang pernah nanya 'Gimana cara ngelakuin itu?', aku udah nyusun file readme.txt baru yang detail. Itu ngejelasin tiap fitur, cerita dikit soal latar belakang aplikasi, dan ngasih panduan "Cara Menggunakan" lengkap buat kalian mulai.
+Terakhir, aku ngelakuin pemolesan serius di antarmuka pengguna. Aku ngebasmi bug di mana ganti bahasa nggak ngupdate semua tab; sekarang, seluruh aplikasi harusnya ganti secara instan. Buat mewujudkan ini, aku mastiin setiap potongan teks di panel Settings, History, dan Lyrics bisa diterjemahkan dengan bener. Aku juga benerin opsi 'Copy' di menu konteks hasil pencarian jadi dia bertingkah kayak submenu beneran, seperti yang direncanakan.
+
+Baru pada 1.5.3:
+Capek nyaring vlog dan wawancara padahal kalian cuma mau lagu resminya? Update ini buat kalian! Aku udah nambahin "YouTube Music Mode" baru. Kalian sekarang bisa ganti aplikasi buat nyari langsung di YouTube Music, yang ngasih hasil yang jauh lebih fokus ke lagu.
+Buat nampung ini dan opsi lainnya, aku bersih-bersih rumah dikit. Semua pengaturan aplikasi udah dipindah keluar dari menu "Options" lama ke tab "Settings" baru yang terorganisir. Ini tempat baru kalian buat semua konfigurasi, dan kalian bisa langsung lompat ke sana pakai shortcut Ctrl+5 baru!
+Sebagai bagian dari penyederhanaan ini, slider kontrol pitch di Audio Player udah dihapus biar antarmuka tetep bersih dan lugas. (dan sebenernya itu emang nggak jalan sih.) Aku juga nyetel perilaku search bar; dia nggak bakal otomatis nyari pas kalian jelajah history pakai tombol panah lagi. Pencarian cuma bakal mulai pas kalian tekan Enter atau secara eksplisit milih item, ngasih kontrol yang lebih presisi.
+Terakhir, aku udah ngegeprek banyak banget bug! Aku benerin crash startup parah gara-gara error sintaks, juga crash lain yang bisa kejadian pas mau buka panel Settings baru abis ganti bahasa. Aku juga benerin masalah di mana riwayat pencarian bisa nyegah aplikasi buat mulai, dan tombol-tombol 'Close' di dialog detail video itu sekarang jalan semestinya.
+
+Baru pada 1.5.2:
+Pernah pengen nyanyi bareng tapi nadanya ketinggian dikit? Atau mungkin cuma pengen iseng dan liat gimana lagu favorit kalian bunyinya kalau nadanya beda? Nah, sekarang bisa! Aku udah nambahin slider Pitch baru di tab Audio Player. Kalian sekarang bisa geser nada naik atau turun satu oktaf penuh (-12 sampai +12 semitone) buat nyamain suara kalian atau sekadar main-main.
+Dan ini ada satu buat nemuin lebih banyak dari artis yang kalian suka. Kalau kalian nemu video yang kalian suka, kalian sekarang bisa klik kanan di hasil pencarian dan pilih "View videos by this uploader." Aplikasi bakal instan jalanin pencarian baru buat channel spesifik itu, bikin gampang banget buat jelajah konten mereka lainnya.
+Biar makin ngebut, aplikasi sekarang pinter nginget hasil pencarian kalian selama sesi. Kalau kalian nyari hal yang sama dua kali, hasilnya bakal 
+dimuat instan dari cache! Dan tenang aja, kalian yang pegang kendali. Opsi baru "Clear Search Cache" di menu Options ngebolehin kalian hapus bersih semuanya kapan aja. Menu itu bahkan ngasih tau berapa banyak pencarian yang lagi disimpan.
+Terakhir, buat muat semua hal baru ini, aku ngerapihin dikit. Slider di tab Audio Player sekarang disusun dalam grid 2x2 yang rapi. Perubahan kecil sih, tapi bikin tata letak kerasa jauh lebih bersih dan terorganisir.
+
+Baru pada 1.5.1:
+Pernah nyoba download playlist gede tapi cuma mau beberapa lagu awal? Sekarang bisa! Pas kalian paste link playlist atau channel ke downloader, aplikasi bakal muncul dan nanya persisnya berapa video yang kalian mau ambil. Kalian bisa ambil semua, cuma 30, 50, atau 100 pertama, atau malah ketik angka sendiri. Cocok banget buat ngambil satu album atau seri tanpa menuhin antrean.
+Dan ini yang besar yang udah kalian minta: shortcut keyboard yang bisa diatur sepenuhnya! Nggak suka tombol bawaan? Meluncur ke opsi "Keyboard Shortcuts" baru di menu Options. Kalian sekarang bisa liat, ganti, dan reset tiap shortcut utama, baik buat kontrol player di aplikasi (kayak Ctrl+P) maupun hotkey global seluruh sistem (kayak Alt+Shift+P). Aplikasi nyimpen setup kalian otomatis jadi siap dipake pas kalian buka lagi.
+Kadang kalian cuma mau liat videonya, kan? Nah, aku nambahin tombol "Show Video" tepat di tab Audio Player. Pas trek lagi main, klik aja, dan jendela simpel bakal muncul buat nampilin videonya. Tombolnya bakal pinter ganti jadi "Hide Video", jadi kalian bisa tutup dengan klik lagi.
+Aku juga ngelakuin pemolesan serius di update ini. Ganti bahasa sekarang instan! Nggak perlu lagi restart aplikasi cuma buat liat perubahannya. Aku juga benerin masalah nyebelin di mana kalian bisa nggak sengaja nge-skip trek pas lagi ngetik di tab lain; hotkey player biasa sekarang cuma jalan pas tab Audio Player aktif (tenang, yang global Alt+Shift tetep jalan di mana aja!). Terakhir, aku ngegeprek crash parah yang bisa kejadian pas nutup jendela video player baru, bikin semuanya jadi jauh lebih mulus.
+
+Baru pada 1.5.0:
+Pernah pengen santai dan dengerin musik tanpa harus bikin playlist? Kenalin mode "Start Radio"! Cukup cari lagu yang kalian suka di hasil pencarian, klik kanan, dan tekan "Start Radio". Tunevia bakal ambil alih, bikin aliran musik serupa tanpa henti khusus buat kalian. Pas satu lagu kelar, dia bakal otomatis nyari dan muter trek terkait lainnya. Cara sempurna buat nemuin musik baru tanpa ngapa-ngapain! Kalian bahkan bisa liat apa yang bakal muncul selanjutnya di daftar "Related Videos".
+Dan ini fitur yang banyak diminta: Kalian sekarang punya kontrol penuh ke mana suaranya keluar! Aku nambahin menu dropdown baru di tab Audio Player jadi kalian bisa pilih perangkat output kalian. Mau musiknya main lewat headphone daripada speaker? Tinggal pilih dari daftar. Aplikasi bahkan bakal inget pilihan kalian buat lain kali.
+Buat bikin semua hal baru ini mungkin, aku harus bedah total inti aplikasinya. Aku udah cabut total mesin audio lama dan ganti sama yang jauh lebih kuat dan andal yang dipake VLC player. Ini nggak cuma benerin bug kritis dan nyebelin di mana pencarian dan download kadang gagal, tapi juga bikin aplikasi jauh lebih stabil secara keseluruhan. Aku harus ngegeprek serangkaian crash startup dan error parah buat bikin ini jalan, tapi hasil akhirnya harusnya jadi pengalaman yang jauh lebih mulus buat semua orang.
+
+Baru pada 1.4.9:
+Update ini semua tentang bikin segala sesuatu lebih cepet, lebih stabil, dan pokoknya lebih baik!
+Pernah tekan cari di YouTube dan dapet... kosong? Aku udah buru bug bandel itu yang kadang bikin pencarian gagal tanpa alasan. Mumpung lagi di situ, aku ngotak-ngatik serius di mesinnya buat bikin pencarian video jadi jauh lebih cepet. Dia jauh lebih pinter soal cara ngambil hasil sekarang, jadi kalian harusnya nemuin lagu kalian secepet kilat!
+Ngomongin soal hal yang rusak, aku juga benerin crash parah yang bisa kejadian pas kalian coba buka jendela YouTube Downloader. Itu udah beres semua, jadi harusnya kebuka tanpa masalah.
+Ini ada yang kecil tapi berguna: Jendela utama aplikasi sekarang bakal nampilin judul lengkap tanpa potongan dari trek apa pun yang lagi kalian putar. Nggak ada lagi tebak-tebakan akhir dari nama lagu yang super panjang itu!
+Dan terakhir, aku nuker sistem yang mainin efek suara kecil aplikasi. Yang baru jauh lebih stabil, artinya kalian nggak bakal nemu crash atau error aneh cuma gara-gara aplikasi ngeluarin suara.
+
+Baru pada 1.4.8:
+Kalian mungkin juga sadar beberapa shortcut keyboard di tab Audio Player belakangan ini agak bandel. Itu udah dibenerin semua sekarang! Tekan 'T' buat denger waktu, pake tombol panah buat volume dan seeking, dan Ctrl+P buat play/pause semuanya jalan sebagaimana mestinya lagi pas kalian di player.
+Dan buat kalian semua pengguna multibahasa di luar sana, aku punya sesuatu yang baru. Pas kalian buka 'View Readme' atau 'View Changelog' dari menu, aplikasi sekarang bakal coba nemuin versi dalam bahasa pilihan kalian! Contohnya, kalau kalian pake Tunevia dalam bahasa Indonesia, dia bakal nyari readme_id.txt.
+
+Baru pada 1.4.7:
+Pernah berharap Tunevia bisa ngomong bahasa kalian? Nah, sekarang bisa! Aku nambahin dukungan multibahasa, jadi kalian sekarang bisa ganti bahasa aplikasi langsung dari menu Options.
+Dan buat yang capek ngetik, istirahatin jari kalian karena voice search udah hadir! Aplikasi bakal minta izin buat pake mikrofon kalian pas pertama kali, tapi abis itu, kalian tinggal ngomong aja pencarian kalian. Yap, segampang itu.
+Aku juga nambahin beberapa isyarat audio kecil, kayak suara intro pas program mulai, dan bakal ada lagi yang nyusul. Dan tenang aja, kalau kalian lebih suka pengalaman yang lebih senyap, kalian bisa gampang matiin semua suara di bagian 'Sound Settings' baru di bawah menu Options.
+
+Baru pada 1.4.6:
+Pernah berharap kalian bisa cepet nemuin sesuatu di riwayat putar kalian? Sekarang bisa! Tab 'History' sekarang punya search bar sendiri. Tinggal mulai ngetik di search bar baru buat nyaring riwayat kalian berdasarkan judul video atau nama uploader. Daftarnya update sambil kalian ngetik, jadi kalian bisa nemuin apa yang kalian cari super cepet. Dan jangan khawatir, program bakal ngasih tau kalau riwayat kalian kosong atau kalau nggak ada yang cocok sama pencarian kalian. Plus, pas kalian pindah ke tab 'History', fokus keyboard bakal langsung mendarat di search bar, siap buat kalian ngetik.
+Dan buat pengguna Windows, aku nambahin fitur yang banyak diminta: dukungan media key global! Sekarang kalian bisa kontrol playback (Play/Pause, Rewind, Fast Forward, Volume Up/Down) bahkan pas Tunevia bukan jendela yang lagi fokus. Ini pake modifier Alt+Shift, jadi 'Alt+Shift+P' buat Play/Pause, 'Alt+Shift+Panah Kiri' buat Rewind, 'Alt+Shift+Panah Kanan' buat Fast Forward, 'Alt+Shift+Panah Atas' buat naikin volume, dan 'Alt+Shift+Panah Bawah' buat nurunin. Hotkey ini otomatis diset pas Tunevia mulai dan dihapus pas kalian nutup aplikasi. Program bakal ngasih tau (Lewat suara NVDA kalau kalian pake) kalau ada masalah pas daftarin mereka atau kalau kalian nggak di Windows. Dan kalau kalian nekan hotkey global pas nggak ada trek yang dimuat atau siap, player bakal ngasih tau pake pesan kayak 'Player not ready'.
+
+Baru pada 1.4.5:
+Ngerasa langkah playback speed yang lama terlalu ngebatasi? Dropdown di tab Audio Player udah dimodifikasi dan sekarang jadi slider! Sekarang kalian dapet kontrol halus buat ngatur kecepatan putar persis di mana kalian mau, di mana aja antara 0.25x (super lambat) dan 2.00x (kecepatan ganda).
+
+Baru pada 1.4.4:
+Nambahin beberapa shortcut keyboard praktis! Kalian sekarang bisa lompat langsung ke tab YouTube, Player, History, dan Lyrics pake Ctrl+1, Ctrl+2, Ctrl+3, dan Ctrl+4 berturut-turut.
+Meningkatkan navigasi keyboard! Tabbing lewat kontrol di dalam tab utama (YouTube, Player, History, Lyrics), panel Downloader, dan jendela Lyrics Search Results harusnya sekarang ngikutin jalur yang jauh lebih logis. Keliling cuma pake keyboard harusnya kerasa lebih bisa diprediksi dan nggak kayak kalian lompat acak.
+Juga nyetel di mana fokus keyboard mendarat pas kalian ganti tab atau buka hasil pencarian lirik. Harusnya sekarang mulai di kontrol yang lebih berguna, siap buat aksi.
+
+Baru pada 1.4.3:
+Nambahin kemampuan buat ganti antara trek audio yang beda kalau video yang kalian putar nyediain itu (kayak bahasa beda atau trek komentar). Pas beberapa trek terdeteksi pas loading, tombol 'Change Audio Track' baru bakal aktif di tab Audio Player. Klik tombol ini bakal nampilin dialog yang nunjukin trek yang tersedia, termasuk detail kayak bahasa, label, codec, dan bitrate.
+Kalian juga bisa atur bahasa audio preferensi sekarang. Cari opsi 'Set Preferred Audio Language...' di menu Options utama. Pas muat video baru, player bakal coba milih trek audio yang cocok sama bahasa ini dulu. Kalau trek yang cocok nggak ketemu, dia bakal default milih trek audio dengan bitrate tertinggi yang ada, meskipun metode ini juga kadang masih kurang bagus buat video tertentu.
+
+Baru pada 1.4.2:
+Pengen tau di mana posisi kalian di trek tanpa ngeliat? Cukup tekan 'T' pas kalian di tab Audio Player! Dia bakal nyebutin waktu playback sekarang dan total panjangnya (kayak "1:20 of 9:32"). Kalau waktunya nggak tersedia karena alesan tertentu, dia bakal bilang itu juga.
+Benerin hal nyebelin soal shortcut keyboard! Tau kan gimana kadang kalian coba atur slider Volume atau Seek Interval pake tombol panah, tapi malah rewind atau ganti volume? Nah, sekarang pas kalian punya fokus keyboard khusus di slider Seek Interval, slider Volume, atau dropdown Playback Speed, tombol panah bakal ngatur kontrol itu, sebagaimana mestinya. Begitu kalian tab atau klik di tempat lain, panah bakal balik buat ngontrol seek dan volume player.
+
+Baru pada 1.4.1:
+Cuma tune-up kecil buat Tunevia kali ini!
+Bikin beberapa perbaikan di mesinnya jadi program harusnya agak lebih pinter soal milih stream audio kualitas terbaik buat playback. Mudah-mudahan, itu artinya suara yang agak lebih bagus buat kalian!
+Tau kan pas kalian tekan rewind atau fast-forward di Audio Player? Sekarang status bar bakal langsung bilang 'Seeking...' jadi kalian tau dia nerima perintah dan lagi ngerjain itu. Nggak ada lagi tebak-tebakan apa klik kalian masuk apa nggak!
+Juga ngeberesin gimana status itu update abis seeking, jadi harusnya nggak kedip atau nampilin hal yang salah lagi.
+Oh, dan nambahin beberapa pengecekan jadi kalian nggak bisa nggak sengaja coba seeking pas nggak ada yang main, dan bikin pesannya lebih jelas kalau kalian coba skip lewat awal banget atau akhir trek.
+
+Baru pada 1.4.0:
+Yah, programnya punya nama baru! Sekarang Tunevia, karena jujur aja, dia ngelakuin lebih dari sekadar hal-hal YouTube hari gini!
+Kalian sekarang bisa bikin trek berikutnya dari hasil pencarian kalian main otomatis di tab Audio Player! Tentu aja, ada toggle di options kalau kalian ngerasa itu ngeganggu.
+Pernah pengen nyepetin atau ngelambatin trek kalian? Sekarang bisa! Nambahin kontrol playback speed (0.5x, 1x, 1.5x, 2x) langsung di tab Audio Player.
+Lupa apa yang abis diputer? Nggak lagi! Nambahin riwayat putar persisten buat hal-hal yang diputer lewat player bawaan.
+Dan ngomongin history, ada tab 'History' baru yang masih gres jadi kalian bisa liat dan putar ulang Youtube kalian sebelumnya!
+Capek nyari lirik manual? Nambahin opsi buat ngambil mereka secara otomatis pas trek mulai! Mereka bakal muncul di tab Lyrics. Harus ngaku sih, ini belum sempurna, kadang meleset, tapi aku lagi ngerjain itu! Pastinya, kalian bisa nyalain atau matiin ini di menu options.
+Nemu lirik yang kalian suka? Sekarang ada tombol 'Save Lyrics' di tab Lyrics buat simpen mereka ke file teks.
+Benci kehilangan posisi kalian di trek panjang? Nambahin opsi buat inget di mana kalian ninggalinnya! Dia bakal nanya apa kalian mau lanjutin pas kalian muat trek itu lagi.
+Nambahin sekumpulan shortcut keyboard praktis! Ctrl+P buat Play/Pause, Panah Atas/Bawah buat volume, Panah Kiri/Kanan buat seek, semua di tab Audio Player (kalian bisa toggle shortcut player ini di options kalau mereka ngeganggu). Juga, Ctrl+F lompatin kalian ke kotak pencarian YouTube, dan Ctrl+T fokus ke input judul Lyrics.
+Kalian sekarang bisa paste URL playlist YouTube langsung ke kotak pencarian! Semua item bakal ditambahin ke daftar hasil pencarian kalian, gampang banget.
+Audio Player sekarang bakal nampilin info lebih banyak pas dia bisa nemuinnya, kayak jumlah view dan tanggal upload.
+Terpaksa hapus tampilan jumlah dislike, sedihnya. YouTube nggak ngasih kita angka yang bisa diandalkan buat itu lagi.
+
+Baru pada 1.3.5:
+Audio player akhirnya dapet tab khusus sendiri! Nggak perlu lagi nyari-nyari dia.
+Audio harusnya sekarang main otomatis tepat setelah selesai loading, ngurangin klik buat kalian!
+Ngelakuin beberapa kerjaan buat bikin UI lebih jelas dan main lebih asik sama pembaca layar (screen reader).
+
+Baru pada 1.3.4:
+Program sekarang bakal ngecek kalau ada versi yt-dlp yang lebih baru pas kalian mulai.
+Benerin notifikasi penyelesaian download, itu harusnya beneran jalan sekarang. Kalian harusnya dapet notifikasi sistem pas download selesai dengan sukses.
+Benerin nama file yang didownload – mereka harusnya tetep pake spasi aslinya sekarang alih-alih pake garis bawah (underscore) yang nyebelin itu.
+
+Baru pada 1.3.3:
+Kabar baik! Kalian sekarang bisa paste link YouTube langsung ke kotak pencarian buat muter mereka.
+Nangani pesan error yang nggak jelas itu. Alih-alih cuma 'An error occurred', kalian harusnya liat hal yang lebih membantu kayak 'Internet connection error' atau detail soal masalah download yt-dlp.
+Meningkatkan gimana error jaringan ditangani buat lirik dan hal-hal YouTube. Kalian bakal dapet pesan lebih jelas kalau kalian offline atau punya masalah koneksi.
+Bikin pesan error download yt-dlp di daftar progress jadi agak lebih berguna, ngasih kalian konteks lebih.
+Bikin indikator loading lebih jelas. Kalian harusnya liat kursor sibuk buat operasi yang lebih lama kayak nyari, dan pesan 'Loading audio, please wait...' di player.
+Nyoba buat nyetop thread pencarian dan download biar nggak saling sikut. Nambahin beberapa pengecekan dan peringatan buat nyegah mulai yang baru pas yang lain lagi jalan.
+Bikin update progress download di daftar lebih mulus dan mudah-mudahan lebih akurat.
+Nyetop kalian dari mulai download pas yt-dlp lagi update, dan sebaliknya. Harusnya nyegah beberapa sakit kepala.
+Benerin bug di mana nambahin link YouTube dari menu konteks hasil pencarian ('Download with Youtube DL') nggak jalan bener. Mereka harusnya sekarang masuk dengan bener ke daftar download.
+
+Baru pada 1.3.2:
+Akhirnya nambahin kontrol volume ke audio player! Nggak ada lagi kuping pecah!
+Nambahin slider buat ngontrol seberapa jauh kalian skip maju atau mundur. Masih agak eksperimental, kasih tau aku gimana jalannya!
+Mutusin buat open source programnya!
+Nambahin cara buat update yt-dlp dari dalem program. Ini juga eksperimental, jadi hati-hati ya!
+
+Baru pada 1.3.1:
+Program harusnya sekarang terintegrasi penuh sama NVDA! Wuhuu!
+
+Baru pada 1.3.0:
+Integrasi API Genius buat nyari lirik lagu! Makasih banget buat Kristian atas sarannya!
+Sekarang ada tab 'Lyrics' khusus buat nyari dan liat lirik.
+Audio player sekarang nampilin judul video dan uploader, ngasih kalian konteks lebih baik buat apa yang lagi main.
+Ganti nama opsi 'Play' di menu konteks hasil pencarian YouTube jadi 'Play Audio'. Cuma biar lebih jelas, apalagi karena kita sebenernya nggak muter video.
+
+Baru pada 1.2.0:
+Kalian sekarang beneran bisa muter audio dari hasil pencarian! Cek menu konteks buat opsinya, dan jangan lupa baca readme!
+Nambahin suara ping kecil jadi kalian tau kapan audio udah selesai loading.
+Update readme.
+
+Baru pada 1.1.0:
+Perubahan pertama mulai di sini!

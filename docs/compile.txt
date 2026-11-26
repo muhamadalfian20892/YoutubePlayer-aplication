@@ -1,0 +1,68 @@
+   python -m nuitka tunevia.py ^
+     --standalone ^
+     --include-package=certifi ^
+     --include-package-data=certifi ^
+     --include-package=ytmusicapi ^
+     --include-package-data=ytmusicapi ^
+     --nofollow-import-to=PyQt5 ^
+     --nofollow-import-to=torch ^
+     --nofollow-import-to=PyQt6 ^
+     --nofollow-import-to=PySide2 ^
+     --nofollow-import-to=PySide6 ^
+     --nofollow-import-to=qtconsole ^
+     --nofollow-import-to=qtpy ^
+     --nofollow-import-to=QtWebEngine ^
+     --nofollow-import-to=google ^
+     --nofollow-import-to=googleapiclient ^
+     --nofollow-import-to=oauth2client ^
+     --nofollow-import-to=yt_dlp.extractor.lazy_extractors ^
+     --include-data-dir=docs=docs ^
+     --include-data-dir=libs=libs ^
+     --include-data-dir=sound=sound ^
+     --output-dir=build_tunevia
+
+--- PyInstaller (Recommended for Directory-Based Builds) ---
+   # Method 1 (Easiest - using the prepared build script):
+   Run:
+   build.bat
+   
+   # Or run via spec file:
+   pyinstaller Tunevia.spec --noconfirm
+
+   # Method 2 (Direct command line):
+   # 1. DELETE existing 'build' and 'dist' folders to ensure a clean state.
+   # 2. Run the command below (use ^ in Command Prompt, or ` in PowerShell without trailing spaces):
+   
+   pyinstaller tunevia.py ^
+     --name "Tunevia" ^
+     --onedir ^
+     --paths . ^
+     --add-data "docs;docs" ^
+     --add-data "libs;libs" ^
+     --add-data "sound;sound" ^
+     --add-data "locales;locales" ^
+     --collect-submodules "ytmusicapi" ^
+     --hidden-import "path_utils" ^
+     --hidden-import "constants" ^
+     --hidden-import "settings_manager" ^
+     --hidden-import "utils" ^
+     --hidden-import "nvda" ^
+     --hidden-import "translation_manager" ^
+     --hidden-import "youtube_panel" ^
+     --hidden-import "discovery_panel" ^
+     --hidden-import "radar_panel" ^
+     --hidden-import "audio_player_panel" ^
+     --hidden-import "history_panel" ^
+     --hidden-import "favorites_panel" ^
+     --hidden-import "lyrics_panel" ^
+     --hidden-import "settings_panel" ^
+     --hidden-import "downloader_panel" ^
+     --hidden-import "help_panel" ^
+     --hidden-import "stats_panel" ^
+     --hidden-import "ui_components" ^
+     --hidden-import "video_player_frame" ^
+     --hidden-import "feature_manager" ^
+     --hidden-import "onboarding_dialog"
+
+   # 3. If "settings_manager" is still missing, check the 'dist/Tunevia/_internal' folder.
+   #    It should contain 'settings_manager.pyc' or similar.

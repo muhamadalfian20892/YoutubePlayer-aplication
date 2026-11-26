@@ -1,0 +1,3050 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tunevia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-19 01:48\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tunevia.py:348
+msgid "&About"
+msgstr ""
+
+#: onboarding_dialog.py:68
+msgid "&Back"
+msgstr ""
+
+#: tunevia.py:709
+msgid "&Cancel"
+msgstr ""
+
+#: onboarding_dialog.py:73 onboarding_dialog.py:288 onboarding_dialog.py:296 onboarding_dialog.py:304
+msgid "&Continue"
+msgstr ""
+
+#: tunevia.py:709
+msgid "&Download"
+msgstr ""
+
+#: tunevia.py:343
+msgid "&Exit	Alt-F4"
+msgstr ""
+
+#: tunevia.py:345
+msgid "&File"
+msgstr ""
+
+#: tunevia.py:352
+msgid "&Help"
+msgstr ""
+
+#: tunevia.py:709
+msgid "&Play"
+msgstr ""
+
+#: audio_player_panel.py:461
+msgid "&Resume"
+msgstr ""
+
+#: audio_player_panel.py:461
+msgid "&Start Over"
+msgstr ""
+
+#: onboarding_dialog.py:315
+msgid "&Start Using Tunevia"
+msgstr ""
+
+#: onboarding_dialog.py:78
+msgid "&Use Recommended Settings"
+msgstr ""
+
+#: settings_panel.py:35
+msgid "1 Hour"
+msgstr ""
+
+#: settings_panel.py:30
+msgid "1 Minute"
+msgstr ""
+
+#: settings_panel.py:32
+msgid "10 Minutes"
+msgstr ""
+
+#: settings_panel.py:27
+msgid "10 Seconds"
+msgstr ""
+
+#: settings_panel.py:33
+msgid "15 Minutes"
+msgstr ""
+
+#: settings_panel.py:28
+msgid "15 Seconds"
+msgstr ""
+
+#: settings_panel.py:25
+msgid "3 Seconds"
+msgstr ""
+
+#: settings_panel.py:34
+msgid "30 Minutes"
+msgstr ""
+
+#: settings_panel.py:29
+msgid "30 Seconds"
+msgstr ""
+
+#: settings_panel.py:31
+msgid "5 Minutes"
+msgstr ""
+
+#: settings_panel.py:26
+msgid "5 Seconds"
+msgstr ""
+
+#: ui_components.py:725 ui_components.py:755 ui_components.py:780
+msgid "<Custom>"
+msgstr ""
+
+#: tunevia.py:708
+msgid ""
+"A YouTube URL has been detected in your clipboard:\n"
+"\n"
+"{url}\n"
+"\n"
+"What would you like to do?"
+msgstr ""
+
+#: downloader_panel.py:533
+msgid "A download is in progress. Please wait for it to finish before closing."
+msgstr ""
+
+#: tunevia.py:520
+msgid "A modern, accessible YouTube music player."
+msgstr ""
+
+#: lyrics_panel.py:203 youtube_panel.py:200
+msgid "A search is already in progress. Please wait."
+msgstr ""
+
+#: tunevia.py:390 tunevia.py:521
+msgid "About Tunevia"
+msgstr ""
+
+#: settings_panel.py:354
+msgid "Accessibility"
+msgstr ""
+
+#: ui_components.py:496 ui_components.py:507
+msgid "Action"
+msgstr ""
+
+#: audio_player_panel.py:1318 ui_components.py:925
+msgid "Add Bookmark"
+msgstr ""
+
+#: downloader_panel.py:126 downloader_panel.py:205
+msgid "Add Link(s)"
+msgstr ""
+
+#: downloader_panel.py:125
+msgid "Add Link(s)..."
+msgstr ""
+
+#: ui_components.py:975 ui_components.py:1025
+msgid "Add Multiple Items"
+msgstr ""
+
+#: ui_components.py:854
+msgid "Add New Bookmark"
+msgstr ""
+
+#: ui_components.py:853
+msgid "Add New..."
+msgstr ""
+
+#: downloader_panel.py:127
+msgid "Add one or more video/playlist links to the download list"
+msgstr ""
+
+#: audio_player_panel.py:1178
+msgid "Add this song to favorites"
+msgstr ""
+
+#: audio_player_panel.py:1177 discovery_panel.py:70 history_panel.py:238 radar_panel.py:96 youtube_panel.py:747
+msgid "Add to Favorites"
+msgstr ""
+
+#: tunevia.py:636
+msgid "Added to favorites: {}"
+msgstr ""
+
+#: youtube_panel.py:526
+msgid "Added {num_new_added} results. Total {num_total}."
+msgstr ""
+
+#: downloader_panel.py:272
+msgid "Adding {} videos from {} '{}'"
+msgstr ""
+
+#: audio_player_panel.py:236
+msgid "Adjust playback speed ({min:.2f}x to {max:.2f}x). Arrow keys adjust slider when focused."
+msgstr ""
+
+#: audio_player_panel.py:234
+msgid "Adjust the audio volume ({min}-{max}%). Arrow keys adjust slider when focused."
+msgstr ""
+
+#: downloader_panel.py:389
+msgid "All downloads are complete."
+msgstr ""
+
+#: ui_components.py:612
+msgid "All shortcuts reset to default."
+msgstr ""
+
+#: tunevia.py:629
+msgid "Already in favorites."
+msgstr ""
+
+#: settings_panel.py:350 settings_panel.py:351
+msgid "Always on Top"
+msgstr ""
+
+#: tunevia.py:527
+msgid "Always on top disabled."
+msgstr ""
+
+#: tunevia.py:527
+msgid "Always on top enabled."
+msgstr ""
+
+#: youtube_panel.py:437
+msgid "An error occurred during YouTube Music search: "
+msgstr ""
+
+#: discovery_panel.py:151
+msgid "An error occurred during playlist loading."
+msgstr ""
+
+#: lyrics_panel.py:292 lyrics_panel.py:335 lyrics_panel.py:364 youtube_panel.py:412
+msgid "An error occurred: "
+msgstr ""
+
+#: radar_panel.py:145
+msgid "Analyzing your listening habits..."
+msgstr ""
+
+#: settings_panel.py:305
+msgid "Appearance & Behavior"
+msgstr ""
+
+#: ui_components.py:69
+msgid "Application Language"
+msgstr ""
+
+#: settings_panel.py:469
+msgid "Applied preset: {preset}. Some changes will take effect after restart."
+msgstr ""
+
+#: settings_panel.py:284
+msgid "Apply Music + Discovery Preset"
+msgstr ""
+
+#: settings_panel.py:282
+msgid "Apply Music Player Preset"
+msgstr ""
+
+#: settings_panel.py:286
+msgid "Apply Power User Preset"
+msgstr ""
+
+#: settings_panel.py:288
+msgid "Apply Recommended Settings Preset"
+msgstr ""
+
+#: downloader_panel.py:471
+msgid "Are you sure you want to clear all items from the download list?"
+msgstr ""
+
+#: history_panel.py:309
+msgid "Are you sure you want to clear the entire play history? This cannot be undone."
+msgstr ""
+
+#: settings_panel.py:579
+msgid "Are you sure you want to clear the search results cache? This will remove {count} cached searches."
+msgstr ""
+
+#: ui_components.py:795
+msgid "Are you sure you want to delete the preset '{}'?"
+msgstr ""
+
+#: ui_components.py:602
+msgid "Are you sure you want to reset all shortcuts to their default values?"
+msgstr ""
+
+#: lyrics_panel.py:115
+msgid "Artist Name"
+msgstr ""
+
+#: lyrics_panel.py:114
+msgid "Artist Name:"
+msgstr ""
+
+#: audio_player_panel.py:290 settings_panel.py:370 ui_components.py:626
+msgid "Audio Equalizer"
+msgstr ""
+
+#: settings_panel.py:369
+msgid "Audio Equalizer..."
+msgstr ""
+
+#: audio_player_panel.py:241 audio_player_panel.py:388
+msgid "Audio Output Device"
+msgstr ""
+
+#: audio_player_panel.py:239
+msgid "Audio Output:"
+msgstr ""
+
+#: settings_panel.py:538
+msgid "Audio normalization disabled."
+msgstr ""
+
+#: settings_panel.py:538
+msgid "Audio normalization enabled."
+msgstr ""
+
+#: audio_player_panel.py:1282
+msgid "Audio normalization setting will apply to the next track played."
+msgstr ""
+
+#: audio_player_panel.py:1236
+msgid "Audio output set to {}"
+msgstr ""
+
+#: settings_panel.py:307
+msgid "Authentication"
+msgstr ""
+
+#: video_comments_dialog.py:39
+msgid "Author"
+msgstr ""
+
+#: settings_panel.py:554
+msgid "Auto fetch lyrics disabled"
+msgstr ""
+
+#: settings_panel.py:554
+msgid "Auto fetch lyrics enabled"
+msgstr ""
+
+#: lyrics_panel.py:270
+msgid "Auto-fetch complete."
+msgstr ""
+
+#: lyrics_panel.py:274
+msgid "Auto-fetch: Lyrics not found."
+msgstr ""
+
+#: lyrics_panel.py:244 lyrics_panel.py:247
+msgid "Auto-fetching lyrics..."
+msgstr ""
+
+#: audio_player_panel.py:323
+msgid "Automatically play the next track from the YouTube search results/playlist when the current one finishes"
+msgstr ""
+
+#: audio_player_panel.py:321 audio_player_panel.py:322 audio_player_panel.py:391 settings_panel.py:336 settings_panel.py:337
+msgid "Autoplay Next Track"
+msgstr ""
+
+#: audio_player_panel.py:909 settings_panel.py:527
+msgid "Autoplay disabled."
+msgstr ""
+
+#: audio_player_panel.py:909 settings_panel.py:527
+msgid "Autoplay enabled."
+msgstr ""
+
+#: onboarding_dialog.py:69
+msgid "Back"
+msgstr ""
+
+#: audio_player_panel.py:1339
+msgid "Bookmark added at {}."
+msgstr ""
+
+#: ui_components.py:967
+msgid "Bookmark deleted."
+msgstr ""
+
+#: ui_components.py:952
+msgid "Bookmark updated."
+msgstr ""
+
+#: audio_player_panel.py:295 audio_player_panel.py:296
+msgid "Bookmarks"
+msgstr ""
+
+#: ui_components.py:847
+msgid "Bookmarks List"
+msgstr ""
+
+#: audio_player_panel.py:1301
+msgid "Bookmarks are disabled in Feature Manager."
+msgstr ""
+
+#: settings_panel.py:365
+msgid "Browse Cookies File"
+msgstr ""
+
+#: downloader_panel.py:156
+msgid "Browse Download Directory"
+msgstr ""
+
+#: downloader_panel.py:157
+msgid "Browse for a download directory"
+msgstr ""
+
+#: downloader_panel.py:155 settings_panel.py:364
+msgid "Browse..."
+msgstr ""
+
+#: lyrics_panel.py:203 youtube_panel.py:200
+msgid "Busy"
+msgstr ""
+
+#: ui_components.py:72 ui_components.py:73 ui_components.py:198 ui_components.py:305 ui_components.py:493 ui_components.py:1041 ui_components.py:1042 ui_components.py:1087
+msgid "Cancel"
+msgstr ""
+
+#: ui_components.py:781
+msgid "Cannot overwrite a built-in preset name."
+msgstr ""
+
+#: settings_panel.py:376 ui_components.py:53
+msgid "Change Application Language"
+msgstr ""
+
+#: settings_panel.py:375
+msgid "Change Application Language..."
+msgstr ""
+
+#: audio_player_panel.py:309 audio_player_panel.py:310
+msgid "Change Audio Track"
+msgstr ""
+
+#: tunevia.py:388
+msgid "Change Language"
+msgstr ""
+
+#: ui_components.py:489
+msgid "Change Shortcut..."
+msgstr ""
+
+#: settings_panel.py:348
+msgid "Change the application's color scheme between a light and dark mode."
+msgstr ""
+
+#: audio_player_panel.py:311
+msgid "Change the audio track (e.g., language) if available for the current video."
+msgstr ""
+
+#: settings_panel.py:377
+msgid "Change the display language for the entire application interface. You will be prompted to select from available languages."
+msgstr ""
+
+#: tunevia.py:675
+msgid "Changelog file not found at: {}"
+msgstr ""
+
+#: downloader_panel.py:265
+msgid "Channel"
+msgstr ""
+
+#: audio_player_panel.py:299 audio_player_panel.py:300 audio_player_panel.py:986
+msgid "Chapters"
+msgstr ""
+
+#: tunevia.py:389
+msgid "Check for Updates"
+msgstr ""
+
+#: downloader_panel.py:172
+msgid "Check for and install updates for the yt-dlp library"
+msgstr ""
+
+#: lyrics_panel.py:119
+msgid "Check this if you don't know the artist's name."
+msgstr ""
+
+#: downloader_panel.py:511
+msgid "Checking for yt-dlp updates..."
+msgstr ""
+
+#: onboarding_dialog.py:181 onboarding_dialog.py:186
+msgid "Choose a Preset"
+msgstr ""
+
+#: audio_player_panel.py:986
+msgid "Choose a chapter:"
+msgstr ""
+
+#: audio_player_panel.py:1084
+msgid "Choose an audio track:"
+msgstr ""
+
+#: settings_panel.py:323
+msgid "Choose between searching standard YouTube for a wide variety of content or YouTube Music for officially licensed songs and albums."
+msgstr ""
+
+#: downloader_panel.py:505
+msgid "Choose download directory"
+msgstr ""
+
+#: onboarding_dialog.py:173
+msgid "Choose exactly which features you want to enable."
+msgstr ""
+
+#: onboarding_dialog.py:208
+msgid "Choose the features you want to use. You can change these options later from Settings."
+msgstr ""
+
+#: settings_panel.py:366
+msgid "Clear"
+msgstr ""
+
+#: history_panel.py:101 history_panel.py:102
+msgid "Clear All History"
+msgstr ""
+
+#: settings_panel.py:367
+msgid "Clear Cookies File"
+msgstr ""
+
+#: downloader_panel.py:131 downloader_panel.py:132
+msgid "Clear List"
+msgstr ""
+
+#: downloader_panel.py:173 downloader_panel.py:174
+msgid "Clear Log"
+msgstr ""
+
+#: settings_panel.py:329 settings_panel.py:592
+msgid "Clear Search Cache"
+msgstr ""
+
+#: downloader_panel.py:175
+msgid "Clear all messages from the log view"
+msgstr ""
+
+#: history_panel.py:103
+msgid "Clear the entire play history"
+msgstr ""
+
+#: settings_panel.py:601
+msgid "Clears the local cache of previous search results. This can free up a small amount of space and ensures you get fresh results on your next search for the same term."
+msgstr ""
+
+#: radar_panel.py:120
+msgid "Click the button to scan your recent listening history and discover top songs from artists you like."
+msgstr ""
+
+#: utils.py:220
+msgid "Clipboard busy, please try again."
+msgstr ""
+
+#: settings_panel.py:559
+msgid "Clipboard monitoring disabled"
+msgstr ""
+
+#: settings_panel.py:559
+msgid "Clipboard monitoring enabled"
+msgstr ""
+
+#: downloader_panel.py:176 ui_components.py:867
+msgid "Close"
+msgstr ""
+
+#: downloader_panel.py:177
+msgid "Close Downloader"
+msgstr ""
+
+#: downloader_panel.py:178
+msgid "Close the downloader window"
+msgstr ""
+
+#: audio_player_panel.py:970
+msgid "Close the video player window."
+msgstr ""
+
+#: ui_components.py:306
+msgid "Close without selecting lyrics"
+msgstr ""
+
+#: ui_components.py:1116
+msgid "Command Palette"
+msgstr ""
+
+#: ui_components.py:1125
+msgid "Commands List"
+msgstr ""
+
+#: video_comments_dialog.py:40
+msgid "Comment"
+msgstr ""
+
+#: settings_panel.py:326
+msgid "Comment Fetch Limit"
+msgstr ""
+
+#: settings_panel.py:325
+msgid "Comment Fetch Limit:"
+msgstr ""
+
+#: settings_panel.py:515
+msgid "Comment fetch limit set to {}"
+msgstr ""
+
+#: video_comments_dialog.py:38
+msgid "Comments List"
+msgstr ""
+
+#: video_comments_dialog.py:113
+msgid "Comments loaded."
+msgstr ""
+
+#: video_comments_dialog.py:17
+msgid "Comments: {}"
+msgstr ""
+
+#: youtube_panel.py:357
+msgid "Component Missing"
+msgstr ""
+
+#: yt_dlp_manager.py:162
+msgid "Component Setup Error"
+msgstr ""
+
+#: downloader_panel.py:471
+msgid "Confirm Clear"
+msgstr ""
+
+#: settings_panel.py:580
+msgid "Confirm Clear Cache"
+msgstr ""
+
+#: history_panel.py:309
+msgid "Confirm Clear History"
+msgstr ""
+
+#: ui_components.py:795
+msgid "Confirm Delete"
+msgstr ""
+
+#: ui_components.py:602
+msgid "Confirm Reset"
+msgstr ""
+
+#: lyrics_panel.py:286 lyrics_panel.py:358
+msgid "Connection Error"
+msgstr ""
+
+#: yt_dlp_manager.py:95
+msgid "Contacting GitHub for the latest version..."
+msgstr ""
+
+#: onboarding_dialog.py:74
+msgid "Continue"
+msgstr ""
+
+#: settings_panel.py:359
+msgid ""
+"Controls how much information NVDA announces.\n"
+"Quiet: Only critical announcements.\n"
+"Default: Standard announcements for actions and results.\n"
+"Verbose: Detailed announcements, including list navigation."
+msgstr ""
+
+#: downloader_panel.py:149 downloader_panel.py:150
+msgid "Convert to MP3 (Audio only)"
+msgstr ""
+
+#: downloader_panel.py:426
+msgid "Converting: {}"
+msgstr ""
+
+#: settings_panel.py:362
+msgid "Cookies File Path"
+msgstr ""
+
+#: settings_panel.py:618
+msgid "Cookies file path cleared."
+msgstr ""
+
+#: settings_panel.py:613
+msgid "Cookies file path set."
+msgstr ""
+
+#: settings_panel.py:361
+msgid "Cookies file path:"
+msgstr ""
+
+#: help_panel.py:37
+msgid "Copies the entire user guide text to the clipboard."
+msgstr ""
+
+#: youtube_panel.py:767
+msgid "Copy"
+msgstr ""
+
+#: youtube_panel.py:764
+msgid "Copy Channel/Artist Link"
+msgstr ""
+
+#: youtube_panel.py:706
+msgid "Copy Content"
+msgstr ""
+
+#: help_panel.py:36
+msgid "Copy Guide to Clipboard"
+msgstr ""
+
+#: lyrics_panel.py:125 lyrics_panel.py:126
+msgid "Copy Lyrics"
+msgstr ""
+
+#: youtube_panel.py:766
+msgid "Copy Share Text"
+msgstr ""
+
+#: youtube_panel.py:765
+msgid "Copy Title"
+msgstr ""
+
+#: youtube_panel.py:763 youtube_panel.py:802
+msgid "Copy Video Link"
+msgstr ""
+
+#: lyrics_panel.py:127
+msgid "Copy the displayed lyrics to the clipboard."
+msgstr ""
+
+#: audio_player_panel.py:315
+msgid "Copy title, uploader, and URL of the current track to the clipboard for sharing."
+msgstr ""
+
+#: utils.py:208 utils.py:209 utils.py:212 utils.py:213
+msgid "Could not access clipboard."
+msgstr ""
+
+#: audio_player_panel.py:539
+msgid "Could not extract any media information."
+msgstr ""
+
+#: audio_player_panel.py:1149
+msgid "Could not extract stream URL for format {}."
+msgstr ""
+
+#: audio_player_panel.py:1129
+msgid "Could not extract stream URL for video."
+msgstr ""
+
+#: youtube_panel.py:1122
+msgid "Could not find any songs for the radio queue."
+msgstr ""
+
+#: radar_panel.py:161
+msgid "Could not identify any artists from your recent history."
+msgstr ""
+
+#: audio_player_panel.py:655
+msgid "Could not load audio."
+msgstr ""
+
+#: youtube_panel.py:906
+msgid "Could not open URL: {}"
+msgstr ""
+
+#: youtube_panel.py:1113
+msgid "Could not start radio: {}"
+msgstr ""
+
+#: audio_player_panel.py:220
+msgid "Current Track Title"
+msgstr ""
+
+#: audio_player_panel.py:246
+msgid "Current playback speed."
+msgstr ""
+
+#: audio_player_panel.py:228
+msgid "Current playback time / Total duration. Press shortcut to speak time."
+msgstr ""
+
+#: audio_player_panel.py:221
+msgid "Currently playing audio title and uploader"
+msgstr ""
+
+#: onboarding_dialog.py:173 onboarding_dialog.py:335
+msgid "Custom"
+msgstr ""
+
+#: settings_panel.py:308
+msgid "Customization"
+msgstr ""
+
+#: onboarding_dialog.py:199
+msgid "Customize Your Tunevia"
+msgstr ""
+
+#: onboarding_dialog.py:310
+msgid "Customize Your Tunevia. Check or uncheck features."
+msgstr ""
+
+#: audio_player_panel.py:946
+msgid "Cycle repeat mode (Currently Off)."
+msgstr ""
+
+#: audio_player_panel.py:948
+msgid "Cycle repeat mode (Currently repeating all tracks)."
+msgstr ""
+
+#: audio_player_panel.py:947
+msgid "Cycle repeat mode (Currently repeating one track)."
+msgstr ""
+
+#: settings_panel.py:345
+msgid "Dark"
+msgstr ""
+
+#: settings_panel.py:41
+msgid "Default"
+msgstr ""
+
+#: ui_components.py:857
+msgid "Delete"
+msgstr ""
+
+#: ui_components.py:858
+msgid "Delete Bookmark"
+msgstr ""
+
+#: ui_components.py:686
+msgid "Delete Preset"
+msgstr ""
+
+#: audio_player_panel.py:1324 ui_components.py:929 ui_components.py:946
+msgid "Description cannot be empty."
+msgstr ""
+
+#: utils.py:208 utils.py:212
+msgid "Details"
+msgstr ""
+
+#: tunevia.py:520
+msgid "Developed by"
+msgstr ""
+
+#: downloader_panel.py:154
+msgid "Directory where files will be downloaded"
+msgstr ""
+
+#: onboarding_dialog.py:366
+msgid "Disabled {child} because it requires {parent}."
+msgstr ""
+
+#: discovery_panel.py:174
+msgid "Discovery playlists loaded."
+msgstr ""
+
+#: youtube_panel.py:519
+msgid "Displaying {num_total} cached results for '{query}'."
+msgstr ""
+
+#: youtube_panel.py:525
+msgid "Displaying {num_total} results (added {num_new_added})."
+msgstr ""
+
+#: youtube_panel.py:522
+msgid "Displaying {num_total} results from YouTube Music."
+msgstr ""
+
+#: lyrics_panel.py:124
+msgid "Displays the found lyrics."
+msgstr ""
+
+#: downloader_panel.py:533
+msgid "Download Active"
+msgstr ""
+
+#: downloader_panel.py:167 downloader_panel.py:168
+msgid "Download All"
+msgstr ""
+
+#: downloader_panel.py:161
+msgid "Download Log"
+msgstr ""
+
+#: downloader_panel.py:136
+msgid "Download Queue"
+msgstr ""
+
+#: downloader_panel.py:153
+msgid "Download directory"
+msgstr ""
+
+#: downloader_panel.py:152
+msgid "Download directory:"
+msgstr ""
+
+#: downloader_panel.py:387
+msgid "Download process finished."
+msgstr ""
+
+#: youtube_panel.py:749 youtube_panel.py:800
+msgid "Download with Downloader"
+msgstr ""
+
+#: tunevia.py:613
+msgid "Downloader"
+msgstr ""
+
+#: tunevia.py:608
+msgid "Downloader is disabled in Feature Manager."
+msgstr ""
+
+#: yt_dlp_manager.py:105
+msgid "Downloading yt-dlp v{}..."
+msgstr ""
+
+#: ui_components.py:856 ui_components.py:942
+msgid "Edit Bookmark"
+msgstr ""
+
+#: ui_components.py:942
+msgid "Edit bookmark description:"
+msgstr ""
+
+#: ui_components.py:855
+msgid "Edit..."
+msgstr ""
+
+#: ui_components.py:645
+msgid "Enable Equalizer"
+msgstr ""
+
+#: ui_components.py:121 ui_components.py:122 ui_components.py:186
+msgid "Enable Sound Effects (SFX)"
+msgstr ""
+
+#: onboarding_dialog.py:122 onboarding_dialog.py:123
+msgid "Enable sound effects (SFX)"
+msgstr ""
+
+#: onboarding_dialog.py:355
+msgid "Enabled {parent} because {child} requires it."
+msgstr ""
+
+#: audio_player_panel.py:734
+msgid "End of playlist."
+msgstr ""
+
+#: audio_player_panel.py:1318 ui_components.py:925
+msgid "Enter a description for the bookmark at {}:"
+msgstr ""
+
+#: ui_components.py:774
+msgid "Enter a name for the new preset:"
+msgstr ""
+
+#: ui_components.py:998 ui_components.py:1035
+msgid "Enter manually..."
+msgstr ""
+
+#: downloader_panel.py:205
+msgid "Enter one or more YouTube links (one per line):"
+msgstr ""
+
+#: settings_panel.py:622
+msgid "Enter preferred language code (e.g., en, ja, es, id) or leave blank for none:"
+msgstr ""
+
+#: youtube_panel.py:151
+msgid "Enter search terms, a YouTube URL, or select from previous searches (up to {max_items}). Press Enter to search. (Ctrl+F to focus)."
+msgstr ""
+
+#: lyrics_panel.py:116
+msgid "Enter the artist of the song."
+msgstr ""
+
+#: lyrics_panel.py:113
+msgid "Enter the title of the song. (Ctrl+T to focus)."
+msgstr ""
+
+#: audio_player_panel.py:289
+msgid "Equalizer"
+msgstr ""
+
+#: audio_player_panel.py:1240
+msgid "Equalizer is disabled in Feature Manager."
+msgstr ""
+
+#: ui_components.py:808
+msgid "Equalizer reset to flat."
+msgstr ""
+
+#: audio_player_panel.py:1261 settings_panel.py:644
+msgid "Equalizer settings applied."
+msgstr ""
+
+#: audio_player_panel.py:653 lyrics_panel.py:200 lyrics_panel.py:383 utils.py:182
+msgid "Error"
+msgstr ""
+
+#: downloader_panel.py:378
+msgid "Error downloading '{}': {}"
+msgstr ""
+
+#: downloader_panel.py:430
+msgid "Error during processing."
+msgstr ""
+
+#: video_comments_dialog.py:93
+msgid "Error fetching comments: {}"
+msgstr ""
+
+#: youtube_panel.py:939
+msgid "Error fetching data: {}"
+msgstr ""
+
+#: downloader_panel.py:255
+msgid "Error fetching info for '{}': {}"
+msgstr ""
+
+#: youtube_panel.py:580
+msgid "Error fetching related items from YouTube Music."
+msgstr ""
+
+#: youtube_panel.py:609
+msgid "Error fetching related videos."
+msgstr ""
+
+#: audio_player_panel.py:654
+msgid "Error loading media."
+msgstr ""
+
+#: discovery_panel.py:150
+msgid "Error loading playlist."
+msgstr ""
+
+#: history_panel.py:272
+msgid ""
+"Error playing history item:\n"
+"{}"
+msgstr ""
+
+#: lyrics_panel.py:332
+msgid "Error processing selected result: {}"
+msgstr ""
+
+#: tunevia.py:679
+msgid "Error reading changelog: {}"
+msgstr ""
+
+#: help_panel.py:62
+msgid "Error reading help file: {}"
+msgstr ""
+
+#: history_panel.py:270
+msgid "Error retrieving history item data."
+msgstr ""
+
+#: lyrics_panel.py:195
+msgid "Error saving lyrics."
+msgstr ""
+
+#: lyrics_panel.py:193
+msgid "Error saving lyrics: {}"
+msgstr ""
+
+#: audio_player_panel.py:1072
+msgid "Error saving playback position: {}"
+msgstr ""
+
+#: youtube_panel.py:181 youtube_panel.py:182
+msgid "Exit Application"
+msgstr ""
+
+#: tunevia.py:158
+msgid "Exit Tunevia"
+msgstr ""
+
+#: tunevia.py:343
+msgid "Exit the application"
+msgstr ""
+
+#: youtube_panel.py:183
+msgid "Exit the application."
+msgstr ""
+
+#: history_panel.py:98 history_panel.py:99 history_panel.py:339 youtube_panel.py:671
+msgid "Export Playlist"
+msgstr ""
+
+#: youtube_panel.py:634
+msgid "Export Playlist..."
+msgstr ""
+
+#: history_panel.py:100
+msgid "Export the currently displayed history to a playlist file"
+msgstr ""
+
+#: yt_dlp_manager.py:113
+msgid "Extracting files..."
+msgstr ""
+
+#: yt_dlp_manager.py:161
+msgid ""
+"Failed to download and set up 'yt-dlp'.\n"
+"\n"
+"Error details: {}"
+msgstr ""
+
+#: history_panel.py:349
+msgid "Failed to export history."
+msgstr ""
+
+#: youtube_panel.py:681
+msgid "Failed to export playlist."
+msgstr ""
+
+#: youtube_panel.py:937
+msgid "Failed to extract video information."
+msgstr ""
+
+#: audio_player_panel.py:579
+msgid "Failed to get audio stream: {}"
+msgstr ""
+
+#: audio_player_panel.py:1131
+msgid "Failed to load video stream: {}"
+msgstr ""
+
+#: youtube_panel.py:651
+msgid "Failed to parse playlist or playlist is empty."
+msgstr ""
+
+#: audio_player_panel.py:1151
+msgid "Failed to switch track: {}"
+msgstr ""
+
+#: audio_player_panel.py:265 audio_player_panel.py:266
+msgid "Fast Forward"
+msgstr ""
+
+#: audio_player_panel.py:847
+msgid "Fast forward {} seconds"
+msgstr ""
+
+#: audio_player_panel.py:561
+msgid "Fast stream extraction failed to find a URL."
+msgstr ""
+
+#: audio_player_panel.py:385 audio_player_panel.py:1176
+msgid "Favorite"
+msgstr ""
+
+#: audio_player_panel.py:1172
+msgid "Favorited"
+msgstr ""
+
+#: tunevia.py:609
+msgid "Feature Disabled"
+msgstr ""
+
+#: settings_panel.py:278
+msgid "Feature Manager"
+msgstr ""
+
+#: downloader_panel.py:213
+msgid "Fetching info for {} item(s)..."
+msgstr ""
+
+#: downloader_panel.py:536
+msgid "Fetching information for links. Please wait for it to finish before closing."
+msgstr ""
+
+#: lyrics_panel.py:325 lyrics_panel.py:326
+msgid "Fetching lyrics for '{}'..."
+msgstr ""
+
+#: yt_dlp_manager.py:127
+msgid "Finalizing installation..."
+msgstr ""
+
+#: youtube_panel.py:1039
+msgid "Finding radio station..."
+msgstr ""
+
+#: radar_panel.py:173
+msgid "Finding top songs for {artist} ({i}/{total})..."
+msgstr ""
+
+#: downloader_panel.py:410
+msgid "Finished downloading: {}"
+msgstr ""
+
+#: audio_player_panel.py:700
+msgid "Finished."
+msgstr ""
+
+#: radar_panel.py:229
+msgid "Found {count} new recommendations."
+msgstr ""
+
+#: youtube_panel.py:523
+msgid "Found {num_total} results from YouTube Music."
+msgstr ""
+
+#: ui_components.py:664
+msgid "Frequency Bands (dB)"
+msgstr ""
+
+#: settings_panel.py:306
+msgid "General & Accessibility"
+msgstr ""
+
+#: youtube_panel.py:910
+msgid "Getting video description..."
+msgstr ""
+
+#: youtube_panel.py:916
+msgid "Getting video details..."
+msgstr ""
+
+#: ui_components.py:851 ui_components.py:852
+msgid "Go To"
+msgstr ""
+
+#: help_panel.py:55
+msgid "Help file not found at: {}"
+msgstr ""
+
+#: audio_player_panel.py:969
+msgid "Hide Video"
+msgstr ""
+
+#: history_panel.py:270
+msgid "History Error"
+msgstr ""
+
+#: history_panel.py:89
+msgid "History List"
+msgstr ""
+
+#: history_panel.py:346 history_panel.py:347
+msgid "History exported successfully."
+msgstr ""
+
+#: onboarding_dialog.py:148
+msgid "How do you want to use Tunevia?"
+msgstr ""
+
+#: onboarding_dialog.py:299
+msgid "How do you want to use Tunevia? Choose a preset or Custom."
+msgstr ""
+
+#: ui_components.py:999 ui_components.py:1030 ui_components.py:1031
+msgid "How many videos to add?"
+msgstr ""
+
+#: lyrics_panel.py:117 lyrics_panel.py:118
+msgid "I don't know artist name"
+msgstr ""
+
+#: downloader_panel.py:151
+msgid "If checked, downloads only the audio and converts it to an MP3 file."
+msgstr ""
+
+#: settings_panel.py:352
+msgid "If checked, the Tunevia window will always stay on top of all other application windows, even when it's not focused."
+msgstr ""
+
+#: youtube_panel.py:643
+msgid "Import Playlist"
+msgstr ""
+
+#: youtube_panel.py:633
+msgid "Import Playlist..."
+msgstr ""
+
+#: youtube_panel.py:157
+msgid "Import or Export playlists (M3U, PLS)."
+msgstr ""
+
+#: youtube_panel.py:664
+msgid "Imported {} items from playlist."
+msgstr ""
+
+#: ui_components.py:189
+msgid "Individual Sound Volumes"
+msgstr ""
+
+#: history_panel.py:336 youtube_panel.py:615 youtube_panel.py:668
+msgid "Info"
+msgstr ""
+
+#: yt_dlp_manager.py:85
+msgid "Initializing Tunevia"
+msgstr ""
+
+#: lyrics_panel.py:284 lyrics_panel.py:356
+msgid "Internet connection error: "
+msgstr ""
+
+#: history_panel.py:165 utils.py:146 youtube_panel.py:492
+msgid "Invalid Date"
+msgstr ""
+
+#: history_panel.py:253
+msgid "Invalid Timestamp"
+msgstr ""
+
+#: stats_panel.py:176
+msgid "Just getting started!"
+msgstr ""
+
+#: settings_panel.py:382 ui_components.py:447 ui_components.py:487
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: settings_panel.py:381
+msgid "Keyboard Shortcuts..."
+msgstr ""
+
+#: tunevia.py:727
+msgid "Language changed. Please restart the application for the changes to take effect."
+msgstr ""
+
+#: youtube_panel.py:1134
+msgid "Last Played Song"
+msgstr ""
+
+#: settings_panel.py:345
+msgid "Light"
+msgstr ""
+
+#: youtube_panel.py:160
+msgid "List of YouTube search results or playlist items. Right-click for options. Double-click or Enter to play."
+msgstr ""
+
+#: ui_components.py:302
+msgid "List of lyrics search results"
+msgstr ""
+
+#: history_panel.py:90
+msgid "List of recently played videos (max {max_items}). Double-click or Enter to play."
+msgstr ""
+
+#: youtube_panel.py:165
+msgid "List of related videos or the current radio queue. Double-click or Enter to play."
+msgstr ""
+
+#: stats_panel.py:53 stats_panel.py:78
+msgid "Listening Habits"
+msgstr ""
+
+#: stats_panel.py:73
+msgid "Listening Time and Statistics"
+msgstr ""
+
+#: stats_panel.py:153
+msgid ""
+"Listening to Music: {}\n"
+""
+msgstr ""
+
+#: audio_player_panel.py:1157 youtube_panel.py:900
+msgid "Listening to: {title} - {uploader} via Tunevia {url}"
+msgstr ""
+
+#: youtube_panel.py:171 youtube_panel.py:172
+msgid "Load More Results"
+msgstr ""
+
+#: audio_player_panel.py:1304
+msgid "Load an audio track to manage bookmarks."
+msgstr ""
+
+#: audio_player_panel.py:1243
+msgid "Load an audio track to use the equalizer."
+msgstr ""
+
+#: youtube_panel.py:173
+msgid "Load the next batch of results."
+msgstr ""
+
+#: youtube_panel.py:520
+msgid "Loaded {num_total} results from cache."
+msgstr ""
+
+#: video_comments_dialog.py:103
+msgid "Loaded {} comments."
+msgstr ""
+
+#: youtube_panel.py:867
+msgid "Loaded {} related videos."
+msgstr ""
+
+#: audio_player_panel.py:388
+msgid "Loading Devices..."
+msgstr ""
+
+#: audio_player_panel.py:501
+msgid "Loading audio info..."
+msgstr ""
+
+#: audio_player_panel.py:443
+msgid "Loading audio stream..."
+msgstr ""
+
+#: audio_player_panel.py:502
+msgid "Loading audio..."
+msgstr ""
+
+#: youtube_panel.py:343
+msgid "Loading channel videos..."
+msgstr ""
+
+#: discovery_panel.py:92 discovery_panel.py:112 discovery_panel.py:169
+msgid "Loading charts..."
+msgstr ""
+
+#: video_comments_dialog.py:34
+msgid "Loading comments..."
+msgstr ""
+
+#: youtube_panel.py:331
+msgid "Loading from cache..."
+msgstr ""
+
+#: youtube_panel.py:348
+msgid "Loading more..."
+msgstr ""
+
+#: discovery_panel.py:94 discovery_panel.py:113 discovery_panel.py:170
+msgid "Loading new releases..."
+msgstr ""
+
+#: youtube_panel.py:342
+msgid "Loading playlist items..."
+msgstr ""
+
+#: radar_panel.py:245
+msgid "Loading recommended track..."
+msgstr ""
+
+#: youtube_panel.py:546
+msgid "Loading related videos..."
+msgstr ""
+
+#: discovery_panel.py:187
+msgid "Loading track..."
+msgstr ""
+
+#: audio_player_panel.py:1110
+msgid "Loading video stream..."
+msgstr ""
+
+#: downloader_panel.py:160
+msgid "Log"
+msgstr ""
+
+#: lyrics_panel.py:123
+msgid "Lyrics Display"
+msgstr ""
+
+#: lyrics_panel.py:367
+msgid "Lyrics Fetch Error"
+msgstr ""
+
+#: lyrics_panel.py:295
+msgid "Lyrics Search Error"
+msgstr ""
+
+#: lyrics_panel.py:309 ui_components.py:263 ui_components.py:300
+msgid "Lyrics Search Results"
+msgstr ""
+
+#: lyrics_panel.py:200
+msgid "Lyrics component not initialized."
+msgstr ""
+
+#: lyrics_panel.py:360
+msgid "Lyrics fetch timed out."
+msgstr ""
+
+#: lyrics_panel.py:190 lyrics_panel.py:191
+msgid "Lyrics saved successfully!"
+msgstr ""
+
+#: lyrics_panel.py:270 lyrics_panel.py:349
+msgid "Lyrics search complete."
+msgstr ""
+
+#: lyrics_panel.py:288
+msgid "Lyrics search timed out."
+msgstr ""
+
+#: downloader_panel.py:151
+msgid "MP3 conversion is disabled in Feature Manager."
+msgstr ""
+
+#: ui_components.py:1032
+msgid "Manual video count"
+msgstr ""
+
+#: ui_components.py:134 ui_components.py:187
+msgid "Master Sound Effects Volume"
+msgstr ""
+
+#: ui_components.py:188
+msgid "Master Volume"
+msgstr ""
+
+#: ui_components.py:301
+msgid "Matching results found. Use up/down arrows to navigate and Enter to select:"
+msgstr ""
+
+#: audio_player_panel.py:1333
+msgid "Maximum bookmarks reached for this video."
+msgstr ""
+
+#: downloader_panel.py:164
+msgid "Message"
+msgstr ""
+
+#: tunevia.py:534
+msgid "Minimize to tray disabled."
+msgstr ""
+
+#: tunevia.py:534
+msgid "Minimize to tray enabled."
+msgstr ""
+
+#: lyrics_panel.py:330
+msgid "Missing artist name or song title in selected result."
+msgstr ""
+
+#: audio_player_panel.py:305
+msgid "Mono"
+msgstr ""
+
+#: audio_player_panel.py:306
+msgid "Mono Audio"
+msgstr ""
+
+#: audio_player_panel.py:1291
+msgid "Mono audio enabled."
+msgstr ""
+
+#: audio_player_panel.py:1286
+msgid "Mono audio is disabled in Feature Manager."
+msgstr ""
+
+#: settings_panel.py:132 settings_panel.py:312
+msgid "Move Down"
+msgstr ""
+
+#: settings_panel.py:313
+msgid "Move Tab Down"
+msgstr ""
+
+#: settings_panel.py:311
+msgid "Move Tab Up"
+msgstr ""
+
+#: settings_panel.py:131 settings_panel.py:310
+msgid "Move Up"
+msgstr ""
+
+#: settings_panel.py:283
+msgid "Music + Discovery"
+msgstr ""
+
+#: settings_panel.py:281
+msgid "Music Player"
+msgstr ""
+
+#: settings_panel.py:355 settings_panel.py:356
+msgid "NVDA Verbosity Level"
+msgstr ""
+
+#: settings_panel.py:571
+msgid "NVDA verbosity set to {}"
+msgstr ""
+
+#: discovery_panel.py:89
+msgid "New Releases"
+msgstr ""
+
+#: audio_player_panel.py:269
+msgid "Next"
+msgstr ""
+
+#: audio_player_panel.py:270
+msgid "Next Track"
+msgstr ""
+
+#: audio_player_panel.py:223
+msgid "No audio loaded"
+msgstr ""
+
+#: audio_player_panel.py:800 audio_player_panel.py:1046
+msgid "No audio loaded."
+msgstr ""
+
+#: audio_player_panel.py:224
+msgid "No audio loaded. Select 'Play Audio' from YouTube tab."
+msgstr ""
+
+#: ui_components.py:888
+msgid "No bookmarks for this track."
+msgstr ""
+
+#: youtube_panel.py:615
+msgid "No channel URL available for this item."
+msgstr ""
+
+#: audio_player_panel.py:977
+msgid "No chapters available for this video."
+msgstr ""
+
+#: video_comments_dialog.py:101
+msgid "No comments found or disabled."
+msgstr ""
+
+#: ui_components.py:894
+msgid "No description"
+msgstr ""
+
+#: youtube_panel.py:935
+msgid "No description available."
+msgstr ""
+
+#: audio_player_panel.py:1210
+msgid "No devices found"
+msgstr ""
+
+#: history_panel.py:146
+msgid "No history items match '{}'."
+msgstr ""
+
+#: stats_panel.py:91
+msgid "No history yet."
+msgstr ""
+
+#: lyrics_panel.py:256 lyrics_panel.py:346 youtube_panel.py:400 youtube_panel.py:428
+msgid "No internet connection detected."
+msgstr ""
+
+#: discovery_panel.py:164
+msgid "No items found in playlist."
+msgstr ""
+
+#: downloader_panel.py:308
+msgid "No items in queue to download."
+msgstr ""
+
+#: history_panel.py:336 youtube_panel.py:668
+msgid "No items to export."
+msgstr ""
+
+#: lyrics_panel.py:151
+msgid "No lyrics loaded. Please search for a song."
+msgstr ""
+
+#: lyrics_panel.py:167 lyrics_panel.py:168
+msgid "No lyrics to save."
+msgstr ""
+
+#: audio_player_panel.py:759
+msgid "No more tracks."
+msgstr ""
+
+#: radar_panel.py:226
+msgid "No new recommendations found."
+msgstr ""
+
+#: audio_player_panel.py:1080
+msgid "No other audio tracks available for this video."
+msgstr ""
+
+#: youtube_panel.py:1124
+msgid "No related songs found."
+msgstr ""
+
+#: youtube_panel.py:858
+msgid "No related videos found."
+msgstr ""
+
+#: youtube_panel.py:190 youtube_panel.py:515
+msgid "No results found for '{query}'."
+msgstr ""
+
+#: youtube_panel.py:516
+msgid "No results found."
+msgstr ""
+
+#: audio_player_panel.py:1164
+msgid "No track is currently loaded to share."
+msgstr ""
+
+#: audio_player_panel.py:958
+msgid "No video is currently loaded."
+msgstr ""
+
+#: settings_panel.py:627
+msgid "None"
+msgstr ""
+
+#: radar_panel.py:139
+msgid "Not Enough Data"
+msgstr ""
+
+#: lyrics_panel.py:279 lyrics_panel.py:354
+msgid "Not Found"
+msgstr ""
+
+#: stats_panel.py:55
+msgid "Not enough data yet."
+msgstr ""
+
+#: settings_panel.py:289
+msgid "Note: Disabling or enabling notebook tabs and deep modules will take full effect after restarting Tunevia."
+msgstr ""
+
+#: help_panel.py:72 lyrics_panel.py:163
+msgid "Nothing to copy."
+msgstr ""
+
+#: utils.py:88
+msgid "Notification sound file not found: {}"
+msgstr ""
+
+#: ui_components.py:70 ui_components.py:71 ui_components.py:197 ui_components.py:303 ui_components.py:492 ui_components.py:1039 ui_components.py:1040 ui_components.py:1084 ui_components.py:1214
+msgid "OK"
+msgstr ""
+
+#: youtube_panel.py:754
+msgid "Open Channel/Artist in Browser"
+msgstr ""
+
+#: tunevia.py:387
+msgid "Open Sound Settings"
+msgstr ""
+
+#: youtube_panel.py:753
+msgid "Open Video in Browser"
+msgstr ""
+
+#: youtube_panel.py:177 youtube_panel.py:178
+msgid "Open YouTube Downloader"
+msgstr ""
+
+#: settings_panel.py:383
+msgid "Open a dialog to customize the global and in-app keyboard shortcuts for player controls and other actions."
+msgstr ""
+
+#: settings_panel.py:380
+msgid "Open a dialog to enable or disable specific application sounds, such as the startup sound or notification sounds."
+msgstr ""
+
+#: audio_player_panel.py:973
+msgid "Open a window to watch the current video."
+msgstr ""
+
+#: settings_panel.py:371
+msgid "Open the 10-band audio equalizer to adjust frequency gains and pre-amplification. You can use built-in presets or save your own."
+msgstr ""
+
+#: youtube_panel.py:179
+msgid "Open the YouTube Downloader window."
+msgstr ""
+
+#: audio_player_panel.py:291
+msgid "Open the audio equalizer settings."
+msgstr ""
+
+#: downloader_panel.py:536
+msgid "Operation in Progress"
+msgstr ""
+
+#: downloader_panel.py:144
+msgid "Options"
+msgstr ""
+
+#: settings_panel.py:363
+msgid "Path to your cookies.txt file, exported from your browser. Providing this file helps yt-dlp access age-restricted or members-only content that requires a login."
+msgstr ""
+
+#: audio_player_panel.py:259 audio_player_panel.py:661 tunevia.py:176
+msgid "Pause"
+msgstr ""
+
+#: audio_player_panel.py:683 audio_player_panel.py:808 tunevia.py:173
+msgid "Paused"
+msgstr ""
+
+#: audio_player_panel.py:259 audio_player_panel.py:680 audio_player_panel.py:689 tunevia.py:176
+msgid "Play"
+msgstr ""
+
+#: discovery_panel.py:69 history_panel.py:237 radar_panel.py:95 youtube_panel.py:743
+msgid "Play Audio"
+msgstr ""
+
+#: youtube_panel.py:798
+msgid "Play Related Video"
+msgstr ""
+
+#: history_panel.py:92 history_panel.py:93
+msgid "Play Selected"
+msgstr ""
+
+#: youtube_panel.py:169
+msgid "Play a video to see related items."
+msgstr ""
+
+#: history_panel.py:317
+msgid "Play history cleared."
+msgstr ""
+
+#: history_panel.py:148 history_panel.py:306
+msgid "Play history is empty."
+msgstr ""
+
+#: audio_player_panel.py:263
+msgid "Play or pause the audio. (Configurable shortcut)."
+msgstr ""
+
+#: audio_player_panel.py:271
+msgid "Play the next track in the list. (Configurable shortcut)."
+msgstr ""
+
+#: audio_player_panel.py:250
+msgid "Play the previous track in the list. (Configurable shortcut)."
+msgstr ""
+
+#: history_panel.py:94
+msgid "Play the selected video from history"
+msgstr ""
+
+#: tunevia.py:156
+msgid "Play/Pause"
+msgstr ""
+
+#: tunevia.py:386
+msgid "Play/Pause Audio"
+msgstr ""
+
+#: ui_components.py:828
+msgid "Playback Bookmarks"
+msgstr ""
+
+#: audio_player_panel.py:655 history_panel.py:272
+msgid "Playback Error"
+msgstr ""
+
+#: settings_panel.py:304
+msgid "Playback Settings"
+msgstr ""
+
+#: audio_player_panel.py:235
+msgid "Playback Speed"
+msgstr ""
+
+#: audio_player_panel.py:231
+msgid "Playback Speed:"
+msgstr ""
+
+#: audio_player_panel.py:227
+msgid "Playback Status and Time"
+msgstr ""
+
+#: audio_player_panel.py:571
+msgid "Playback failed. The video may be private, or your cookies file might be invalid or expired. Please check your cookies file in Settings."
+msgstr ""
+
+#: audio_player_panel.py:701
+msgid "Playback finished."
+msgstr ""
+
+#: audio_player_panel.py:904
+msgid "Playback speed {:.2f}x"
+msgstr ""
+
+#: settings_panel.py:564
+msgid "Player keyboard shortcuts disabled."
+msgstr ""
+
+#: settings_panel.py:564
+msgid "Player keyboard shortcuts enabled."
+msgstr ""
+
+#: audio_player_panel.py:811 tunevia.py:173
+msgid "Playing"
+msgstr ""
+
+#: youtube_panel.py:337
+msgid "Playing direct link."
+msgstr ""
+
+#: youtube_panel.py:336
+msgid "Playing direct video link..."
+msgstr ""
+
+#: history_panel.py:267
+msgid "Playing from history: {}"
+msgstr ""
+
+#: audio_player_panel.py:719 audio_player_panel.py:748
+msgid "Playing next shuffled track."
+msgstr ""
+
+#: youtube_panel.py:875
+msgid "Playing..."
+msgstr ""
+
+#: youtube_panel.py:845
+msgid "Playing: {}"
+msgstr ""
+
+#: downloader_panel.py:265 youtube_panel.py:155 youtube_panel.py:156
+msgid "Playlist"
+msgstr ""
+
+#: youtube_panel.py:678 youtube_panel.py:679
+msgid "Playlist exported successfully."
+msgstr ""
+
+#: downloader_panel.py:262
+msgid "Playlist is empty or could not be loaded."
+msgstr ""
+
+#: lyrics_panel.py:211
+msgid "Please enter a song title."
+msgstr ""
+
+#: lyrics_panel.py:215
+msgid "Please enter artist name or check 'I don't know artist name'."
+msgstr ""
+
+#: ui_components.py:350
+msgid "Please select a search result."
+msgstr ""
+
+#: downloader_panel.py:302
+msgid "Please select a valid download directory."
+msgstr ""
+
+#: history_panel.py:259 history_panel.py:274 history_panel.py:280 history_panel.py:285
+msgid "Please select an item from the history list."
+msgstr ""
+
+#: history_panel.py:276
+msgid "Please select exactly one item to play."
+msgstr ""
+
+#: ui_components.py:54
+msgid "Please select your desired language."
+msgstr ""
+
+#: settings_panel.py:285
+msgid "Power User"
+msgstr ""
+
+#: ui_components.py:656
+msgid "Pre-Amp"
+msgstr ""
+
+#: ui_components.py:660
+msgid "Pre-Amp Gain"
+msgstr ""
+
+#: ui_components.py:764
+msgid "Pre-amp {} percent"
+msgstr ""
+
+#: settings_panel.py:627
+msgid "Preferred audio language set to: {}"
+msgstr ""
+
+#: ui_components.py:800
+msgid "Preset '{}' deleted."
+msgstr ""
+
+#: ui_components.py:789
+msgid "Preset '{}' saved."
+msgstr ""
+
+#: ui_components.py:778
+msgid "Preset name cannot be empty."
+msgstr ""
+
+#: ui_components.py:648
+msgid "Preset:"
+msgstr ""
+
+#: settings_panel.py:280
+msgid "Presets:"
+msgstr ""
+
+#: ui_components.py:384
+msgid "Press the desired key combination now. Press Escape to cancel."
+msgstr ""
+
+#: ui_components.py:395
+msgid ""
+"Press the desired key combination now...\n"
+"(Press Escape to cancel)"
+msgstr ""
+
+#: audio_player_panel.py:248
+msgid "Previous"
+msgstr ""
+
+#: audio_player_panel.py:249
+msgid "Previous Track"
+msgstr ""
+
+#: audio_player_panel.py:773
+msgid "Previous track not available in radio mode."
+msgstr ""
+
+#: settings_panel.py:40
+msgid "Quiet"
+msgstr ""
+
+#: radar_panel.py:126
+msgid "Radar feature disabled. Please install 'ytmusicapi' library."
+msgstr ""
+
+#: youtube_panel.py:163 youtube_panel.py:164 youtube_panel.py:851
+msgid "Radio Queue"
+msgstr ""
+
+#: tunevia.py:583
+msgid "Radio finished or could not find more songs."
+msgstr ""
+
+#: audio_player_panel.py:912
+msgid "Radio mode disabled to allow autoplay."
+msgstr ""
+
+#: audio_player_panel.py:920
+msgid "Radio mode disabled."
+msgstr ""
+
+#: youtube_panel.py:1133
+msgid "Radio queue empty, finding more songs..."
+msgstr ""
+
+#: youtube_panel.py:858
+msgid "Radio queue is empty."
+msgstr ""
+
+#: youtube_panel.py:1129
+msgid "Radio queue updated."
+msgstr ""
+
+#: audio_player_panel.py:655
+msgid "Reason"
+msgstr ""
+
+#: radar_panel.py:123
+msgid "Recommendations List"
+msgstr ""
+
+#: settings_panel.py:287
+msgid "Recommended"
+msgstr ""
+
+#: stats_panel.py:63 stats_panel.py:79 stats_panel.py:80
+msgid "Refresh Stats"
+msgstr ""
+
+#: youtube_panel.py:163 youtube_panel.py:164 youtube_panel.py:851
+msgid "Related Videos"
+msgstr ""
+
+#: settings_panel.py:339 settings_panel.py:340
+msgid "Remember Playback Position"
+msgstr ""
+
+#: settings_panel.py:532
+msgid "Remember playback position disabled."
+msgstr ""
+
+#: settings_panel.py:532
+msgid "Remember playback position enabled."
+msgstr ""
+
+#: downloader_panel.py:128 downloader_panel.py:129 history_panel.py:95 history_panel.py:96
+msgid "Remove Selected"
+msgstr ""
+
+#: downloader_panel.py:133
+msgid "Remove all items from the download list"
+msgstr ""
+
+#: audio_player_panel.py:1173
+msgid "Remove from Favorites"
+msgstr ""
+
+#: history_panel.py:241
+msgid "Remove from History"
+msgstr ""
+
+#: downloader_panel.py:130
+msgid "Remove the selected item from the list"
+msgstr ""
+
+#: history_panel.py:97
+msgid "Remove the selected video(s) from history"
+msgstr ""
+
+#: audio_player_panel.py:1174
+msgid "Remove this song from favorites"
+msgstr ""
+
+#: history_panel.py:300
+msgid "Removed selected item(s) from history."
+msgstr ""
+
+#: audio_player_panel.py:941
+msgid "Repeat"
+msgstr ""
+
+#: audio_player_panel.py:943
+msgid "Repeat (All)"
+msgstr ""
+
+#: audio_player_panel.py:942
+msgid "Repeat (One)"
+msgstr ""
+
+#: audio_player_panel.py:933
+msgid "Repeat all."
+msgstr ""
+
+#: audio_player_panel.py:931
+msgid "Repeat off."
+msgstr ""
+
+#: audio_player_panel.py:932
+msgid "Repeat one."
+msgstr ""
+
+#: audio_player_panel.py:724
+msgid "Repeating playlist."
+msgstr ""
+
+#: audio_player_panel.py:713
+msgid "Repeating track."
+msgstr ""
+
+#: audio_player_panel.py:257 audio_player_panel.py:733 audio_player_panel.py:802
+msgid "Replay"
+msgstr ""
+
+#: audio_player_panel.py:805
+msgid "Replaying"
+msgstr ""
+
+#: settings_panel.py:133 settings_panel.py:314
+msgid "Reset"
+msgstr ""
+
+#: ui_components.py:491
+msgid "Reset All"
+msgstr ""
+
+#: ui_components.py:687
+msgid "Reset Bands"
+msgstr ""
+
+#: settings_panel.py:315
+msgid "Reset Tab Order"
+msgstr ""
+
+#: ui_components.py:490
+msgid "Reset to Default"
+msgstr ""
+
+#: tunevia.py:727
+msgid "Restart Required"
+msgstr ""
+
+#: audio_player_panel.py:460
+msgid "Resume Playback?"
+msgstr ""
+
+#: audio_player_panel.py:459
+msgid "Resume playback from saved position ({})?"
+msgstr ""
+
+#: audio_player_panel.py:464
+msgid "Resuming playback at {}"
+msgstr ""
+
+#: audio_player_panel.py:252 audio_player_panel.py:253
+msgid "Rewind"
+msgstr ""
+
+#: audio_player_panel.py:841
+msgid "Rewind {} seconds"
+msgstr ""
+
+#: lyrics_panel.py:167 lyrics_panel.py:194
+msgid "Save Error"
+msgstr ""
+
+#: lyrics_panel.py:128 lyrics_panel.py:129
+msgid "Save Lyrics"
+msgstr ""
+
+#: lyrics_panel.py:180
+msgid "Save Lyrics As"
+msgstr ""
+
+#: ui_components.py:774
+msgid "Save Preset"
+msgstr ""
+
+#: ui_components.py:685
+msgid "Save Preset..."
+msgstr ""
+
+#: lyrics_panel.py:190
+msgid "Save Successful"
+msgstr ""
+
+#: lyrics_panel.py:130
+msgid "Save the displayed lyrics to a text file."
+msgstr ""
+
+#: radar_panel.py:228
+msgid "Scan complete! Found {count} new tracks you might like."
+msgstr ""
+
+#: radar_panel.py:225
+msgid "Scan complete. Couldn't find any new recommendations."
+msgstr ""
+
+#: radar_panel.py:122
+msgid "Scan for Recommendations"
+msgstr ""
+
+#: radar_panel.py:129
+msgid "Scan history to find new tracks."
+msgstr ""
+
+#: radar_panel.py:146
+msgid "Scanning for recommendations..."
+msgstr ""
+
+#: discovery_panel.py:114
+msgid "Scraping YouTube Playlists..."
+msgstr ""
+
+#: ui_components.py:1123
+msgid "Search Commands"
+msgstr ""
+
+#: history_panel.py:87
+msgid "Search History"
+msgstr ""
+
+#: history_panel.py:86
+msgid "Search History:"
+msgstr ""
+
+#: lyrics_panel.py:120 lyrics_panel.py:121
+msgid "Search Lyrics"
+msgstr ""
+
+#: youtube_panel.py:159
+msgid "Search Results"
+msgstr ""
+
+#: settings_panel.py:303
+msgid "Search Settings"
+msgstr ""
+
+#: settings_panel.py:319 settings_panel.py:320
+msgid "Search Source"
+msgstr ""
+
+#: youtube_panel.py:150
+msgid "Search YouTube"
+msgstr ""
+
+#: youtube_panel.py:149
+msgid "Search YouTube:"
+msgstr ""
+
+#: settings_panel.py:586
+msgid "Search cache cleared."
+msgstr ""
+
+#: settings_panel.py:576
+msgid "Search cache is already empty."
+msgstr ""
+
+#: youtube_panel.py:467
+msgid "Search failed."
+msgstr ""
+
+#: lyrics_panel.py:122
+msgid "Search for lyrics on Genius.com."
+msgstr ""
+
+#: settings_panel.py:504
+msgid "Search mode set to {}"
+msgstr ""
+
+#: settings_panel.py:509
+msgid "Search suggestions disabled."
+msgstr ""
+
+#: settings_panel.py:509
+msgid "Search suggestions enabled."
+msgstr ""
+
+#: youtube_panel.py:470
+msgid "Search/Load Error"
+msgstr ""
+
+#: youtube_panel.py:292
+msgid "Search/load new video to see related items."
+msgstr ""
+
+#: youtube_panel.py:362
+msgid "Searching YouTube Music..."
+msgstr ""
+
+#: lyrics_panel.py:138 lyrics_panel.py:220 lyrics_panel.py:223
+msgid "Searching lyrics..."
+msgstr ""
+
+#: youtube_panel.py:344
+msgid "Searching videos..."
+msgstr ""
+
+#: settings_panel.py:332
+msgid "Seek Interval"
+msgstr ""
+
+#: settings_panel.py:331
+msgid "Seek Interval:"
+msgstr ""
+
+#: audio_player_panel.py:254
+msgid "Seek backward by the interval set in Settings. (Configurable shortcut)."
+msgstr ""
+
+#: audio_player_panel.py:267
+msgid "Seek forward by the interval set in Settings. (Configurable shortcut)."
+msgstr ""
+
+#: settings_panel.py:522
+msgid "Seek interval set to {}"
+msgstr ""
+
+#: audio_player_panel.py:877
+msgid "Seek to {}"
+msgstr ""
+
+#: audio_player_panel.py:1084
+msgid "Select Audio Track"
+msgstr ""
+
+#: onboarding_dialog.py:157
+msgid "Select a preset that matches your listening needs, or choose Custom to pick individual features."
+msgstr ""
+
+#: ui_components.py:488
+msgid "Select an action and change its shortcut. Global shortcuts work even when the app is not focused."
+msgstr ""
+
+#: audio_player_panel.py:242
+msgid "Select the audio output device."
+msgstr ""
+
+#: ui_components.py:304
+msgid "Select the highlighted lyrics and close"
+msgstr ""
+
+#: settings_panel.py:605
+msgid "Select your cookies.txt file"
+msgstr ""
+
+#: onboarding_dialog.py:336
+msgid "Selected preset: {}"
+msgstr ""
+
+#: ui_components.py:394
+msgid "Set New Shortcut"
+msgstr ""
+
+#: settings_panel.py:373
+msgid "Set Preferred Audio Language"
+msgstr ""
+
+#: settings_panel.py:372
+msgid "Set Preferred Audio Language..."
+msgstr ""
+
+#: settings_panel.py:623
+msgid "Set Preferred Language"
+msgstr ""
+
+#: settings_panel.py:374
+msgid "Set a preferred language code (e.g., 'en' for English, 'ja' for Japanese) for audio tracks. When a video has multiple audio tracks, Tunevia will try to select this language automatically."
+msgstr ""
+
+#: settings_panel.py:333
+msgid "Set the amount of time the Rewind and Fast Forward buttons jump forward or backward in the audio."
+msgstr ""
+
+#: settings_panel.py:327
+msgid "Set the number of comments to load for each video. 'all' will load all available comments, which may be slower."
+msgstr ""
+
+#: utils.py:207
+msgid "SetData returned false."
+msgstr ""
+
+#: yt_dlp_manager.py:86
+msgid "Setting up required components (yt-dlp)... Please wait."
+msgstr ""
+
+#: audio_player_panel.py:313 audio_player_panel.py:314
+msgid "Share Current Track"
+msgstr ""
+
+#: ui_components.py:497 ui_components.py:508
+msgid "Shortcut"
+msgstr ""
+
+#: ui_components.py:587
+msgid "Shortcut changed."
+msgstr ""
+
+#: ui_components.py:599
+msgid "Shortcut reset to default."
+msgstr ""
+
+#: audio_player_panel.py:972
+msgid "Show Video"
+msgstr ""
+
+#: tunevia.py:348
+msgid "Show about dialog"
+msgstr ""
+
+#: tunevia.py:350
+msgid "Show the latest changes"
+msgstr ""
+
+#: tunevia.py:155
+msgid "Show/Hide Tunevia"
+msgstr ""
+
+#: audio_player_panel.py:277
+msgid "Shuffle"
+msgstr ""
+
+#: audio_player_panel.py:278
+msgid "Shuffle Mode"
+msgstr ""
+
+#: audio_player_panel.py:917
+msgid "Shuffle disabled."
+msgstr ""
+
+#: audio_player_panel.py:917
+msgid "Shuffle enabled."
+msgstr ""
+
+#: downloader_panel.py:408
+msgid "Skipped (already downloaded): {}"
+msgstr ""
+
+#: downloader_panel.py:280
+msgid "Skipped adding an invalid item."
+msgstr ""
+
+#: lyrics_panel.py:112
+msgid "Song Title"
+msgstr ""
+
+#: lyrics_panel.py:111
+msgid "Song Title:"
+msgstr ""
+
+#: lyrics_panel.py:266 lyrics_panel.py:274 lyrics_panel.py:352
+msgid "Song lyrics not found."
+msgstr ""
+
+#: ui_components.py:227
+msgid "Sound Effects"
+msgstr ""
+
+#: onboarding_dialog.py:112
+msgid "Sound Effects (SFX)"
+msgstr ""
+
+#: settings_panel.py:379 ui_components.py:185
+msgid "Sound Settings"
+msgstr ""
+
+#: settings_panel.py:378
+msgid "Sound Settings..."
+msgstr ""
+
+#: onboarding_dialog.py:134
+msgid "Sound effects disabled."
+msgstr ""
+
+#: onboarding_dialog.py:132
+msgid "Sound effects enabled."
+msgstr ""
+
+#: audio_player_panel.py:245 audio_player_panel.py:901
+msgid "Speed: {:.2f}x"
+msgstr ""
+
+#: settings_panel.py:321
+msgid "Standard YouTube"
+msgstr ""
+
+#: youtube_panel.py:745
+msgid "Start Radio"
+msgstr ""
+
+#: downloader_panel.py:169
+msgid "Start downloading all items in the list"
+msgstr ""
+
+#: downloader_panel.py:313
+msgid "Starting download process..."
+msgstr ""
+
+#: audio_player_panel.py:467
+msgid "Starting playback from the beginning."
+msgstr ""
+
+#: youtube_panel.py:1033
+msgid "Starting radio with: {}"
+msgstr ""
+
+#: stats_panel.py:86
+msgid "Statistics refreshed."
+msgstr ""
+
+#: downloader_panel.py:139
+msgid "Status"
+msgstr ""
+
+#: audio_player_panel.py:1291
+msgid "Stereo audio enabled."
+msgstr ""
+
+#: audio_player_panel.py:273 audio_player_panel.py:274
+msgid "Stop"
+msgstr ""
+
+#: audio_player_panel.py:275
+msgid "Stop audio playback and clear player."
+msgstr ""
+
+#: audio_player_panel.py:692
+msgid "Stopped"
+msgstr ""
+
+#: audio_player_panel.py:822
+msgid "Stopping playback."
+msgstr ""
+
+#: history_panel.py:346 youtube_panel.py:678
+msgid "Success"
+msgstr ""
+
+#: onboarding_dialog.py:270
+msgid "Summary of active configuration"
+msgstr ""
+
+#: tunevia.py:382
+msgid "Switch to {} tab"
+msgstr ""
+
+#: tunevia.py:514
+msgid "Switched to {} tab"
+msgstr ""
+
+#: audio_player_panel.py:691 audio_player_panel.py:1098
+msgid "Switching audio track..."
+msgstr ""
+
+#: audio_player_panel.py:1090
+msgid "Switching to track: {}"
+msgstr ""
+
+#: tunevia.py:531
+msgid "System Tray feature is disabled in Feature Manager."
+msgstr ""
+
+#: settings_panel.py:309
+msgid "Tab Management"
+msgstr ""
+
+#: settings_panel.py:697
+msgid "Tab order and visibility have been reset to default."
+msgstr ""
+
+#: settings_panel.py:713
+msgid "Tab settings updated."
+msgstr ""
+
+#: settings_panel.py:316
+msgid "Tabs List"
+msgstr ""
+
+#: utils.py:204
+msgid "Text copied to clipboard!"
+msgstr ""
+
+#: lyrics_panel.py:181 settings_panel.py:606
+msgid "Text files (*.txt)|*.txt|All files (*.*)|*.*"
+msgstr ""
+
+#: settings_panel.py:347
+msgid "Theme"
+msgstr ""
+
+#: tunevia.py:538
+msgid "Theme set to {}."
+msgstr ""
+
+#: settings_panel.py:343
+msgid "Theme:"
+msgstr ""
+
+#: ui_components.py:1026
+msgid "This is a {type} ('{title}') with {count} videos."
+msgstr ""
+
+#: audio_player_panel.py:791
+msgid "This is the first track."
+msgstr ""
+
+#: audio_player_panel.py:573
+msgid "This video is age-restricted and requires a login. Please provide a cookies.txt file in the Settings panel to play such content."
+msgstr ""
+
+#: downloader_panel.py:163
+msgid "Time"
+msgstr ""
+
+#: stats_panel.py:32 stats_panel.py:72
+msgid "Time Spent"
+msgstr ""
+
+#: utils.py:135
+msgid "Time not available"
+msgstr ""
+
+#: audio_player_panel.py:1044
+msgid "Time not available."
+msgstr ""
+
+#: audio_player_panel.py:1042
+msgid "Time: {current} of {total}"
+msgstr ""
+
+#: lyrics_panel.py:290 lyrics_panel.py:362
+msgid "Timeout"
+msgstr ""
+
+#: downloader_panel.py:138
+msgid "Title"
+msgstr ""
+
+#: audio_player_panel.py:307
+msgid "Toggle mono/stereo audio output."
+msgstr ""
+
+#: audio_player_panel.py:279
+msgid "Toggle shuffle mode for the current playlist/search results."
+msgstr ""
+
+#: stats_panel.py:39 stats_panel.py:74 stats_panel.py:75
+msgid "Top Artists"
+msgstr ""
+
+#: stats_panel.py:46 stats_panel.py:76 stats_panel.py:77
+msgid "Top Tracks"
+msgstr ""
+
+#: stats_panel.py:152
+msgid ""
+"Total: {}\n"
+""
+msgstr ""
+
+#: discovery_panel.py:87
+msgid "Trending Songs (Global)"
+msgstr ""
+
+#: tunevia.py:574 video_player_frame.py:50 video_player_frame.py:52 video_player_frame.py:103 video_player_frame.py:107
+msgid "Tunevia Video Player"
+msgstr ""
+
+#: settings_panel.py:279
+msgid "Tunevia lets you decide which features are loaded and available. Disabling optional features can reduce startup time and resource usage."
+msgstr ""
+
+#: onboarding_dialog.py:437
+msgid "Tunevia setup complete. Enjoy your music!"
+msgstr ""
+
+#: history_panel.py:88
+msgid "Type to search played videos by title or uploader."
+msgstr ""
+
+#: downloader_panel.py:140
+msgid "URL"
+msgstr ""
+
+#: utils.py:217 utils.py:218
+msgid "Unable to open clipboard."
+msgstr ""
+
+#: audio_player_panel.py:479 video_comments_dialog.py:105 youtube_panel.py:900
+msgid "Unknown"
+msgstr ""
+
+#: discovery_panel.py:192 lyrics_panel.py:171 stats_panel.py:106 ui_components.py:315
+msgid "Unknown Artist"
+msgstr ""
+
+#: history_panel.py:165 utils.py:140 youtube_panel.py:492
+msgid "Unknown Date"
+msgstr ""
+
+#: ui_components.py:325
+msgid "Unknown Result (Format Error)"
+msgstr ""
+
+#: history_panel.py:255
+msgid "Unknown Time"
+msgstr ""
+
+#: discovery_panel.py:191 lyrics_panel.py:172 ui_components.py:314
+msgid "Unknown Title"
+msgstr ""
+
+#: stats_panel.py:111
+msgid "Unknown Track"
+msgstr ""
+
+#: audio_player_panel.py:1159
+msgid "Unknown Uploader"
+msgstr ""
+
+#: yt_dlp_manager.py:157
+msgid "Update failed: {}"
+msgstr ""
+
+#: downloader_panel.py:523
+msgid "Update process failed: {}"
+msgstr ""
+
+#: downloader_panel.py:170 downloader_panel.py:171
+msgid "Update yt-dlp"
+msgstr ""
+
+#: yt_dlp_manager.py:145
+msgid "Updated version info to {}"
+msgstr ""
+
+#: onboarding_dialog.py:79
+msgid "Use Recommended Settings"
+msgstr ""
+
+#: onboarding_dialog.py:416
+msgid "Using recommended settings."
+msgstr ""
+
+#: audio_player_panel.py:121
+msgid "VLC Error"
+msgstr ""
+
+#: audio_player_panel.py:180
+msgid "VLC Initialization Error"
+msgstr ""
+
+#: audio_player_panel.py:640
+msgid "VLC could not play the media."
+msgstr ""
+
+#: audio_player_panel.py:795
+msgid "VLC encountered an error during playback."
+msgstr ""
+
+#: video_player_frame.py:55
+msgid "VLC is not installed. Video playback is disabled."
+msgstr ""
+
+#: audio_player_panel.py:121
+msgid "VLC library is not installed. Playback is disabled."
+msgstr ""
+
+#: audio_player_panel.py:604
+msgid "VLC player not ready or no audio URL."
+msgstr ""
+
+#: settings_panel.py:42
+msgid "Verbose"
+msgstr ""
+
+#: youtube_panel.py:922
+msgid "Video Comments"
+msgstr ""
+
+#: youtube_panel.py:912
+msgid "Video Description"
+msgstr ""
+
+#: youtube_panel.py:918
+msgid "Video Details"
+msgstr ""
+
+#: audio_player_panel.py:284
+msgid "Video Player"
+msgstr ""
+
+#: audio_player_panel.py:955 tunevia.py:569
+msgid "Video player is disabled in Feature Manager."
+msgstr ""
+
+#: audio_player_panel.py:577
+msgid "Video unavailable. This often happens due to YouTube changes or age restrictions. Try updating yt-dlp from the Downloader panel or providing a cookies.txt file in Settings."
+msgstr ""
+
+#: youtube_panel.py:759
+msgid "View Comments"
+msgstr ""
+
+#: youtube_panel.py:757
+msgid "View Description"
+msgstr ""
+
+#: youtube_panel.py:756
+msgid "View Video Details"
+msgstr ""
+
+#: youtube_panel.py:752
+msgid "View Videos from Channel/Artist"
+msgstr ""
+
+#: audio_player_panel.py:301
+msgid "View and jump to video chapters."
+msgstr ""
+
+#: audio_player_panel.py:297
+msgid "View and manage bookmarks for the current track."
+msgstr ""
+
+#: audio_player_panel.py:233
+msgid "Volume"
+msgstr ""
+
+#: audio_player_panel.py:895
+msgid "Volume {} percent"
+msgstr ""
+
+#: audio_player_panel.py:230
+msgid "Volume:"
+msgstr ""
+
+#: ui_components.py:350
+msgid "Warning"
+msgstr ""
+
+#: stats_panel.py:154
+msgid "Watching Videos: {}"
+msgstr ""
+
+#: ui_components.py:1207
+msgid "Welcome to Tunevia Version {}!"
+msgstr ""
+
+#: onboarding_dialog.py:95
+msgid "Welcome to Tunevia!"
+msgstr ""
+
+#: onboarding_dialog.py:27
+msgid "Welcome to Tunevia! | Onboarding screen"
+msgstr ""
+
+#: onboarding_dialog.py:291
+msgid "Welcome to Tunevia. Choose the features you want to enable."
+msgstr ""
+
+#: tunevia.py:350
+msgid "What's &New"
+msgstr ""
+
+#: ui_components.py:1199
+msgid "What's New in Tunevia"
+msgstr ""
+
+#: settings_panel.py:338
+msgid "When enabled, automatically plays the next track from the current search results or playlist after the current one finishes. This is disabled in Radio Mode."
+msgstr ""
+
+#: settings_panel.py:341
+msgid "When enabled, the application will save your position in a track when you pause or stop. When you play that track again, you will be asked if you want to resume from where you left off."
+msgstr ""
+
+#: stats_panel.py:172
+msgid "You keep the music playing all day long!"
+msgstr ""
+
+#: onboarding_dialog.py:253
+msgid "You're All Set!"
+msgstr ""
+
+#: onboarding_dialog.py:319
+msgid "You're all set! Press Enter to start using Tunevia."
+msgstr ""
+
+#: stats_panel.py:174
+msgid "You're building up a nice collection."
+msgstr ""
+
+#: downloader_panel.py:122
+msgid "YouTube Downloader"
+msgstr ""
+
+#: tunevia.py:609
+msgid "YouTube Downloader is currently disabled. You can enable it in Settings â Feature Manager."
+msgstr ""
+
+#: settings_panel.py:322
+msgid "YouTube Music"
+msgstr ""
+
+#: radar_panel.py:166 youtube_panel.py:432
+msgid "YouTube Music API is not available."
+msgstr ""
+
+#: youtube_panel.py:357
+msgid "YouTube Music search is unavailable. Please install the 'ytmusicapi' library."
+msgstr ""
+
+#: tunevia.py:708
+msgid "YouTube URL Detected"
+msgstr ""
+
+#: stats_panel.py:21 stats_panel.py:71
+msgid "Your Tunevia Insights"
+msgstr ""
+
+#: radar_panel.py:139
+msgid "Your play history is too short. Listen to at least 5 different songs to get recommendations."
+msgstr ""
+
+#: ui_components.py:226 ui_components.py:235
+msgid "disabled"
+msgstr ""
+
+#: ui_components.py:226 ui_components.py:235
+msgid "enabled"
+msgstr ""
+
+#: utils.py:233
+msgid "lyrics"
+msgstr ""
+
+#: history_panel.py:168
+msgid "played"
+msgstr ""
+
+#: tunevia.py:490
+msgid "tab"
+msgstr ""
+
+#: history_panel.py:166 youtube_panel.py:493
+msgid "uploaded"
+msgstr ""
+
+#: yt_dlp_manager.py:186
+msgid "yt-dlp is already up-to-date (v{})."
+msgstr ""
+
+#: yt_dlp_manager.py:149
+msgid ""
+"yt-dlp updated successfully to v{}!\n"
+"Please restart the application to apply the update."
+msgstr ""
+
+#: settings_panel.py:594
+msgid "{count} items"
+msgstr ""
+
+#: ui_components.py:159 ui_components.py:195
+msgid "{event} Volume"
+msgstr ""
+
+#: onboarding_dialog.py:367 settings_panel.py:462
+msgid "{feature} disabled."
+msgstr ""
+
+#: onboarding_dialog.py:356 settings_panel.py:462
+msgid "{feature} enabled."
+msgstr ""
+
+#: settings_panel.py:459
+msgid "{feature} setting updated. This change will take full effect after restarting Tunevia."
+msgstr ""
+
+#: ui_components.py:675
+msgid "{freq} Band Gain"
+msgstr ""
+
+#: stats_panel.py:150
+msgid "{h}h {m}m"
+msgstr ""
+
+#: discovery_panel.py:88
+msgid "â¨ New Releases"
+msgstr ""
+
+#: radar_panel.py:121
+msgid "ð¡ Scan for Recommendations"
+msgstr ""
+
+#: discovery_panel.py:86
+msgid "ð¥ Trending Songs (Global)"
+msgstr ""
+

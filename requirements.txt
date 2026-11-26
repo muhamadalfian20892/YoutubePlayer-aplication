@@ -1,0 +1,10 @@
+wxPython
+requests
+yt-dlp
+python-vlc
+pygame
+packaging
+ytmusicapi
+lyricsgenius
+beautifulsoup4
+certifi

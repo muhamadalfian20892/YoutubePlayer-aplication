@@ -1,0 +1,441 @@
+
+#: settings_panel.py:438
+msgid "Search cache cleared."
+msgstr "Cache pencarian dibersihkan."
+
+#: settings_panel.py:429
+msgid "Search cache is already empty."
+msgstr "Cache pencarian sudah kosong."
+
+#: youtube_panel.py:434
+msgid "Search failed."
+msgstr "Pencarian gagal."
+
+#: lyrics_panel.py:125
+msgid "Search for lyrics on Genius.com."
+msgstr "Cari lirik di Genius.com."
+
+#: settings_panel.py:363
+msgid "Search mode set to {}"
+msgstr "Mode pencarian diatur ke {}"
+
+#: settings_panel.py:368
+msgid "Search suggestions disabled."
+msgstr "Saran pencarian dinonaktifkan."
+
+#: settings_panel.py:368
+msgid "Search suggestions enabled."
+msgstr "Saran pencarian diaktifkan."
+
+#: youtube_panel.py:437
+msgid "Search/Load Error"
+msgstr "Kesalahan Pencarian/Pemuatan"
+
+#: youtube_panel.py:264
+msgid "Search/load new video to see related items."
+msgstr "Cari/muat video baru untuk melihat item terkait."
+
+#: youtube_panel.py:334
+msgid "Searching YouTube Music..."
+msgstr "Mencari YouTube Music..."
+
+#: lyrics_panel.py:138 lyrics_panel.py:220 lyrics_panel.py:223
+msgid "Searching lyrics..."
+msgstr "Mencari lirik..."
+
+#: youtube_panel.py:316
+msgid "Searching videos..."
+msgstr "Mencari video..."
+
+#: settings_panel.py:256
+msgid "Seek Interval:"
+msgstr "Interval Seek:"
+
+#: settings_panel.py:375
+msgid "Seek interval set to {}"
+msgstr "Interval seek diatur ke {}"
+
+#: ui_components.py:414
+msgid "Select an action and change its shortcut. Global shortcuts work even when the app is not focused."
+msgstr "Pilih aksi dan ubah pintasannya. Pintasan global berfungsi bahkan saat aplikasi tidak fokus."
+
+#: ui_components.py:254
+msgid "Select the highlighted lyrics and close"
+msgstr "Pilih lirik yang disorot dan tutup"
+
+#: settings_panel.py:456
+msgid "Select your cookies.txt file"
+msgstr "Pilih file cookies.txt Anda"
+
+#: ui_components.py:332
+msgid "Set New Shortcut"
+msgstr "Atur Pintasan Baru"
+
+#: settings_panel.py:297
+msgid "Set Preferred Audio Language..."
+msgstr "Atur Bahasa Audio Pilihan..."
+
+#: settings_panel.py:474
+msgid "Set Preferred Language"
+msgstr "Atur Bahasa Pilihan"
+
+#: settings_panel.py:298
+msgid "Set a preferred language code (e.g., 'en' for English, 'ja' for Japanese) for audio tracks. When a video has multiple audio tracks, Tunevia will try to select this language automatically."
+msgstr "Atur kode bahasa pilihan (mis., 'en' untuk Inggris, 'ja' untuk Jepang) untuk trek audio. Ketika video memiliki beberapa trek audio, Tunevia akan mencoba memilih bahasa ini secara otomatis."
+
+#: settings_panel.py:257
+msgid "Set the amount of time the Rewind and Fast Forward buttons jump forward or backward in the audio."
+msgstr "Atur jumlah waktu tombol Rewind dan Fast Forward melompat maju atau mundur dalam audio."
+
+#: utils.py:171
+msgid "SetData returned false."
+msgstr "SetData mengembalikan false."
+
+#: yt_dlp_manager.py:63
+msgid "Setting up required components (yt-dlp)... Please wait."
+msgstr "Menyiapkan komponen yang diperlukan (yt-dlp)... Harap tunggu."
+
+#: ui_components.py:423 ui_components.py:433
+msgid "Shortcut"
+msgstr "Pintasan"
+
+#: ui_components.py:499
+msgid "Shortcut changed."
+msgstr "Pintasan diubah."
+
+#: ui_components.py:511
+msgid "Shortcut reset to default."
+msgstr "Pintasan diatur ulang ke default."
+
+#: tunevia.py:85
+msgid "Show/Hide Window"
+msgstr "Tampilkan/Sembunyikan Jendela"
+
+#: downloader_panel.py:379
+msgid "Skipped (already downloaded): {}"
+msgstr "Dilewati (sudah diunduh): {}"
+
+#: downloader_panel.py:261
+msgid "Skipped adding an invalid item."
+msgstr "Melewatkan penambahan item yang tidak valid."
+
+#: lyrics_panel.py:118
+msgid "Song Title:"
+msgstr "Judul Lagu:"
+
+#: lyrics_panel.py:262 lyrics_panel.py:270 lyrics_panel.py:348
+msgid "Song lyrics not found."
+msgstr "Lirik lagu tidak ditemukan."
+
+#: ui_components.py:160
+msgid "Sound Settings"
+msgstr "Pengaturan Suara"
+
+#: settings_panel.py:301
+msgid "Sound Settings..."
+msgstr "Pengaturan Suara..."
+
+#: tunevia.py:353
+msgid "Sound settings saved."
+msgstr "Pengaturan suara disimpan."
+
+#: settings_panel.py:249
+msgid "Standard YouTube"
+msgstr "YouTube Standar"
+
+#: youtube_panel.py:706
+msgid "Start Radio"
+msgstr "Mulai Radio"
+
+#: downloader_panel.py:153
+msgid "Start downloading all items in the list"
+msgstr "Mulai mengunduh semua item dalam daftar"
+
+#: downloader_panel.py:294
+msgid "Starting download process..."
+msgstr "Memulai proses pengunduhan..."
+
+#: youtube_panel.py:989
+msgid "Starting radio with: {}"
+msgstr "Memulai radio dengan: {}"
+
+#: downloader_panel.py:132
+msgid "Status"
+msgstr "Status"
+
+#: history_panel.py:311 youtube_panel.py:640
+msgid "Success"
+msgstr "Sukses"
+
+#: settings_panel.py:241
+msgid "Tab Management"
+msgstr "Manajemen Tab"
+
+#: settings_panel.py:548
+msgid "Tab order and visibility have been reset to default."
+msgstr "Urutan dan visibilitas tab telah diatur ulang ke default."
+
+#: settings_panel.py:564
+msgid "Tab settings updated."
+msgstr "Pengaturan tab diperbarui."
+
+#: utils.py:168
+msgid "Text copied to clipboard!"
+msgstr "Teks disalin ke papan klip!"
+
+#: lyrics_panel.py:181 settings_panel.py:457
+msgid "Text files (*.txt)|*.txt|All files (*.*)|*.*"
+msgstr "File teks (*.txt)|*.txt|Semua file (*.*)|*.*"
+
+#: tunevia.py:251
+msgid "Theme"
+msgstr "Tema"
+
+#: tunevia.py:373
+msgid "Theme set to {}."
+msgstr "Tema diatur ke {}."
+
+#: settings_panel.py:267
+msgid "Theme:"
+msgstr "Tema:"
+
+#: ui_components.py:907
+msgid "This is a {type} ('{title}') with {count} videos."
+msgstr "Ini adalah {type} ('{title}') dengan {count} video."
+
+#: downloader_panel.py:148
+msgid "Time"
+msgstr "Waktu"
+
+#: utils.py:110
+msgid "Time not available"
+msgstr "Waktu tidak tersedia"
+
+#: lyrics_panel.py:286 lyrics_panel.py:358
+msgid "Timeout"
+msgstr "Habis Waktu"
+
+#: downloader_panel.py:131
+msgid "Title"
+msgstr "Judul"
+
+#: tunevia.py:625
+msgid "Toggle Dark Mode"
+msgstr "Alihkan Mode Gelap"
+
+#: tunevia.py:623
+msgid "Toggle Shuffle Mode"
+msgstr "Alihkan Mode Acak"
+
+#: tunevia.py:398 video_player_frame.py:50 video_player_frame.py:52 video_player_frame.py:102 video_player_frame.py:106
+msgid "Tunevia Video Player"
+msgstr "Pemutar Video Tunevia"
+
+#: history_panel.py:86
+msgid "Type to search played videos by title or uploader."
+msgstr "Ketik untuk mencari video yang diputar berdasarkan judul atau pengunggah."
+
+#: downloader_panel.py:133
+msgid "URL"
+msgstr "URL"
+
+#: utils.py:181 utils.py:182
+msgid "Unable to open clipboard."
+msgstr "Tidak dapat membuka papan klip."
+
+#: youtube_panel.py:855
+msgid "Unknown"
+msgstr "Tidak Diketahui"
+
+#: discovery_panel.py:164 lyrics_panel.py:171 ui_components.py:265
+msgid "Unknown Artist"
+msgstr "Artis Tidak Diketahui"
+
+#: history_panel.py:157 utils.py:115 youtube_panel.py:455
+msgid "Unknown Date"
+msgstr "Tanggal Tidak Diketahui"
+
+#: ui_components.py:275
+msgid "Unknown Result (Format Error)"
+msgstr "Hasil Tidak Diketahui (Kesalahan Format)"
+
+#: history_panel.py:221
+msgid "Unknown Time"
+msgstr "Waktu Tidak Diketahui"
+
+#: discovery_panel.py:163 lyrics_panel.py:172 ui_components.py:264
+msgid "Unknown Title"
+msgstr "Judul Tidak Diketahui"
+
+#: yt_dlp_manager.py:118
+msgid "Update failed: {}"
+msgstr "Pembaruan gagal: {}"
+
+#: downloader_panel.py:485
+msgid "Update process failed: {}"
+msgstr "Proses pembaruan gagal: {}"
+
+#: downloader_panel.py:154
+msgid "Update yt-dlp"
+msgstr "Perbarui yt-dlp"
+
+#: video_player_frame.py:55
+msgid "VLC is not installed. Video playback is disabled."
+msgstr "VLC tidak terinstal. Pemutaran video dinonaktifkan."
+
+#: settings_panel.py:40
+msgid "Verbose"
+msgstr "Penuh"
+
+#: youtube_panel.py:867
+msgid "Video Description"
+msgstr "Deskripsi Video"
+
+#: youtube_panel.py:873
+msgid "Video Details"
+msgstr "Detail Video"
+
+#: tunevia.py:255
+msgid "View &Changelog	F2"
+msgstr "Lihat &Log Perubahan	F2"
+
+#: tunevia.py:254
+msgid "View &Readme	F1"
+msgstr "Lihat &Readme	F1"
+
+#: youtube_panel.py:715
+msgid "View Description"
+msgstr "Lihat Deskripsi"
+
+#: youtube_panel.py:714
+msgid "View Video Details"
+msgstr "Lihat Detail Video"
+
+#: youtube_panel.py:710
+msgid "View Videos from Channel/Artist"
+msgstr "Lihat Video dari Channel/Artis"
+
+#: tunevia.py:319
+msgid "Wait for download to complete before closing."
+msgstr "Tunggu unduhan selesai sebelum menutup."
+
+#: ui_components.py:295
+msgid "Warning"
+msgstr "Peringatan"
+
+#: ui_components.py:1062
+msgid "Welcome to Tunevia Version {}!"
+msgstr "Selamat Datang di Tunevia Versi {}!"
+
+#: ui_components.py:1054
+msgid "What's New in Tunevia"
+msgstr "Apa yang Baru di Tunevia"
+
+#: settings_panel.py:281
+msgid "When enabled, Tunevia will automatically detect when a YouTube URL is copied to the clipboard and ask if you want to play or download it."
+msgstr "Saat diaktifkan, Tunevia akan secara otomatis mendeteksi ketika URL YouTube disalin ke clipboard dan bertanya apakah Anda ingin memutar atau mengunduhnya."
+
+#: settings_panel.py:279
+msgid "When enabled, Tunevia will automatically search for lyrics on Genius.com whenever a new track starts playing. The results will appear in the Lyrics tab."
+msgstr "Saat diaktifkan, Tunevia akan secara otomatis mencari lirik di Genius.com setiap kali trek baru mulai diputar. Hasilnya akan muncul di tab Lirik."
+
+#: settings_panel.py:265
+msgid "When enabled, automatically adjusts the volume of all tracks to a standard level. This helps prevent sudden loudness changes between different songs. The change applies to the next track you play."
+msgstr "Saat diaktifkan, secara otomatis menyesuaikan volume semua trek ke level standar. Ini membantu mencegah perubahan kenyaringan yang tiba-tiba antara lagu yang berbeda. Perubahan berlaku untuk trek berikutnya yang Anda putar."
+
+#: settings_panel.py:261
+msgid "When enabled, automatically plays the next track from the current search results or playlist after the current one finishes. This is disabled in Radio Mode."
+msgstr "Saat diaktifkan, secara otomatis memutar trek berikutnya dari hasil pencarian atau daftar putar saat ini setelah yang sekarang selesai. Ini dinonaktifkan di Mode Radio."
+
+#: settings_panel.py:254
+msgid "When enabled, shows search suggestions from Google as you type."
+msgstr "Saat diaktifkan, menampilkan saran pencarian dari Google saat Anda mengetik."
+
+#: settings_panel.py:263
+msgid "When enabled, the application will save your position in a track when you pause or stop. When you play that track again, you will be asked if you want to resume from where you left off."
+msgstr "Saat diaktifkan, aplikasi akan menyimpan posisi Anda dalam trek saat Anda menjeda atau berhenti. Saat Anda memutar trek itu lagi, Anda akan ditanya apakah Anda ingin melanjutkan dari tempat Anda meninggalkannya."
+
+#: downloader_panel.py:119 tunevia.py:495
+msgid "YouTube Downloader"
+msgstr "YouTube Downloader"
+
+#: tunevia.py:405
+msgid "YouTube Link"
+msgstr "Tautan YouTube"
+
+#: settings_panel.py:250
+msgid "YouTube Music"
+msgstr "YouTube Music"
+
+#: youtube_panel.py:329
+msgid "YouTube Music search is unavailable. Please install the 'ytmusicapi' library."
+msgstr "Pencarian YouTube Music tidak tersedia. Silakan instal pustaka 'ytmusicapi'."
+
+#: tunevia.py:694
+msgid "YouTube URL Detected"
+msgstr "URL YouTube Terdeteksi"
+
+#: radar_panel.py:97
+msgid "Your play history is too short. Listen to at least 5 different songs to get recommendations."
+msgstr "Riwayat pemutaran Anda terlalu pendek. Dengarkan setidaknya 5 lagu berbeda untuk mendapatkan rekomendasi."
+
+#: ui_components.py:192
+msgid "disabled"
+msgstr "dinonaktifkan"
+
+#: ui_components.py:192
+msgid "enabled"
+msgstr "diaktifkan"
+
+#: utils.py:197
+msgid "lyrics"
+msgstr "lirik"
+
+#: history_panel.py:160
+msgid "played"
+msgstr "diputar"
+
+#: tunevia.py:516
+msgid "tab"
+msgstr "tab"
+
+#: history_panel.py:158 youtube_panel.py:456
+msgid "uploaded"
+msgstr "diunggah"
+
+#: yt_dlp_manager.py:145
+msgid "yt-dlp is already up-to-date (v{})."
+msgstr "yt-dlp sudah yang terbaru (v{})."
+
+#: tunevia.py:532
+msgid "yt-dlp update available! Yours: {current}, Latest: {latest}"
+msgstr "Update yt-dlp tersedia! Milik Anda: {current}, Terbaru: {latest}"
+
+#: yt_dlp_manager.py:110
+msgid "yt-dlp updated successfully to v{}!"
+msgstr "yt-dlp berhasil diperbarui ke v{}!"
+
+#: settings_panel.py:446
+msgid "{count} items"
+msgstr "{count} item"
+
+#: tunevia.py:474
+msgid "{} added to favorites."
+msgstr "{} ditambahkan ke favorit."
+
+#: tunevia.py:491
+msgid "{} removed from favorites."
+msgstr "{} dihapus dari favorit."
+
+#: discovery_panel.py:62
+msgid "âœ¨ New Releases"
+msgstr "✨ Rilis Baru"
+
+#: radar_panel.py:80
+msgid "ðŸ“¡ Scan for Recommendations"
+msgstr "📡 Pindai Rekomendasi"
+
+#: discovery_panel.py:61
+msgid "ðŸ”¥ Trending Songs (Global)"
+msgstr "🔥 Lagu Trending (Global)"
+

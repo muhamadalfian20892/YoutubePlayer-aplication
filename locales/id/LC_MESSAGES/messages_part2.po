@@ -1,0 +1,803 @@
+#: youtube_panel.py:643
+msgid "Failed to export playlist."
+msgstr "Gagal mengekspor daftar putar."
+
+#: youtube_panel.py:886
+msgid "Failed to extract video information."
+msgstr "Gagal mengekstrak informasi video."
+
+#: youtube_panel.py:613
+msgid "Failed to parse playlist or playlist is empty."
+msgstr "Gagal mengurai daftar putar atau daftar putar kosong."
+
+#: downloader_panel.py:194
+msgid "Fetching info for {} item(s)..."
+msgstr "Mengambil info untuk {} item..."
+
+#: downloader_panel.py:496
+msgid "Fetching information for links. Please wait for it to finish before closing."
+msgstr "Mengambil informasi untuk tautan. Harap tunggu hingga selesai sebelum menutup."
+
+#: lyrics_panel.py:321 lyrics_panel.py:322
+msgid "Fetching lyrics for '{}'..."
+msgstr "Mengambil lirik untuk '{}'..."
+
+#: yt_dlp_manager.py:104
+msgid "Finalizing installation..."
+msgstr "Menyelesaikan instalasi..."
+
+#: youtube_panel.py:995
+msgid "Finding radio station..."
+msgstr "Mencari stasiun radio..."
+
+#: radar_panel.py:126
+msgid "Finding top songs for {artist} ({i}/{total})..."
+msgstr "Mencari lagu teratas untuk {artist} ({i}/{total})..."
+
+#: downloader_panel.py:381
+msgid "Finished downloading: {}"
+msgstr "Selesai mengunduh: {}"
+
+#: tunevia.py:630
+msgid "Focus Favorites"
+msgstr "Fokus ke Favorit"
+
+#: tunevia.py:629
+msgid "Focus History Search Bar"
+msgstr "Fokus ke Bilah Pencarian Riwayat"
+
+#: tunevia.py:631
+msgid "Focus Lyrics Search Bar"
+msgstr "Fokus ke Bilah Pencarian Lirik"
+
+#: tunevia.py:627
+msgid "Focus Music Discovery"
+msgstr "Fokus ke Music Discovery"
+
+#: tunevia.py:628
+msgid "Focus Music Radar"
+msgstr "Fokus ke Music Radar"
+
+#: tunevia.py:632
+msgid "Focus Stats Panel"
+msgstr "Fokus ke Panel Statistik"
+
+#: tunevia.py:626
+msgid "Focus YouTube Search Bar"
+msgstr "Fokus ke Bilah Pencarian YouTube"
+
+#: radar_panel.py:182
+msgid "Found {count} new recommendations."
+msgstr "Ditemukan {count} rekomendasi baru."
+
+#: youtube_panel.py:486
+msgid "Found {num_total} results from YouTube Music."
+msgstr "Ditemukan {num_total} hasil dari YouTube Music."
+
+#: ui_components.py:564
+msgid "Frequency Bands (dB)"
+msgstr "Pita Frekuensi (dB)"
+
+#: settings_panel.py:238
+msgid "General & Accessibility"
+msgstr "Umum & Aksesibilitas"
+
+#: youtube_panel.py:865
+msgid "Getting video description..."
+msgstr "Mendapatkan deskripsi video..."
+
+#: youtube_panel.py:871
+msgid "Getting video details..."
+msgstr "Mendapatkan detail video..."
+
+#: tunevia.py:580
+msgid "Global hotkeys registered based on current configuration."
+msgstr "Global hotkey terdaftar berdasarkan konfigurasi saat ini."
+
+#: ui_components.py:743
+msgid "Go To"
+msgstr "Lompat Ke"
+
+#: help_panel.py:61
+msgid "Help file not found at: {}"
+msgstr "File bantuan tidak ditemukan di: {}"
+
+#: history_panel.py:236
+msgid "History Error"
+msgstr "Kesalahan Riwayat"
+
+#: history_panel.py:311 history_panel.py:312
+msgid "History exported successfully."
+msgstr "Riwayat berhasil diekspor."
+
+#: ui_components.py:880 ui_components.py:911
+msgid "How many videos to add?"
+msgstr "Berapa banyak video yang akan ditambahkan?"
+
+#: lyrics_panel.py:122
+msgid "I don't know artist name"
+msgstr "Saya tidak tahu nama artis"
+
+#: downloader_panel.py:139
+msgid "If checked, downloads only the audio and converts it to an MP3 file."
+msgstr "Jika dicentang, hanya mengunduh audio dan mengonversinya ke file MP3."
+
+#: settings_panel.py:276
+msgid "If checked, minimizing the application will hide it from the taskbar and place an icon in the system tray. You can restore the window by double-clicking the tray icon."
+msgstr "Jika dicentang, me-minimize aplikasi akan menyembunyikannya dari taskbar dan menempatkan ikon di system tray. Anda dapat memulihkan jendela dengan mengklik dua kali ikon tray."
+
+#: settings_panel.py:274
+msgid "If checked, the Tunevia window will always stay on top of all other application windows, even when it's not focused."
+msgstr "Jika dicentang, jendela Tunevia akan selalu berada di atas semua jendela aplikasi lain, bahkan saat tidak fokus."
+
+#: youtube_panel.py:605
+msgid "Import Playlist"
+msgstr "Impor Daftar Putar"
+
+#: youtube_panel.py:595
+msgid "Import Playlist..."
+msgstr "Impor Daftar Putar..."
+
+#: youtube_panel.py:142
+msgid "Import or Export playlists (M3U, PLS)."
+msgstr "Impor atau Ekspor daftar putar (M3U, PLS)."
+
+#: youtube_panel.py:626
+msgid "Imported {} items from playlist."
+msgstr "Mengimpor {} item dari daftar putar."
+
+#: ui_components.py:163
+msgid "Individual Sound Volumes"
+msgstr "Volume Suara Individu"
+
+#: history_panel.py:301 youtube_panel.py:577 youtube_panel.py:630
+msgid "Info"
+msgstr "Info"
+
+#: yt_dlp_manager.py:62
+msgid "Initializing Tunevia"
+msgstr "Menginisialisasi Tunevia"
+
+#: lyrics_panel.py:280 lyrics_panel.py:352
+msgid "Internet connection error: "
+msgstr "Kesalahan koneksi internet: "
+
+#: history_panel.py:157 utils.py:121 youtube_panel.py:455
+msgid "Invalid Date"
+msgstr "Tanggal Tidak Valid"
+
+#: history_panel.py:219
+msgid "Invalid Timestamp"
+msgstr "Timestamp Tidak Valid"
+
+#: ui_components.py:413
+msgid "Keyboard Shortcuts"
+msgstr "Pintasan Keyboard"
+
+#: settings_panel.py:303
+msgid "Keyboard Shortcuts..."
+msgstr "Pintasan Keyboard..."
+
+#: tunevia.py:359
+msgid "Keyboard shortcuts updated."
+msgstr "Pintasan keyboard diperbarui."
+
+#: tunevia.py:341
+msgid "Language changed to {}."
+msgstr "Bahasa diubah ke {}."
+
+#: youtube_panel.py:1054
+msgid "Last Played Song"
+msgstr "Lagu Terakhir Diputar"
+
+#: settings_panel.py:269 tunevia.py:252
+msgid "Light"
+msgstr "Terang"
+
+#: youtube_panel.py:144
+msgid "List of YouTube search results or playlist items. Right-click for options. Double-click or Enter to play."
+msgstr "Daftar hasil pencarian YouTube atau item daftar putar. Klik kanan untuk opsi. Klik dua kali atau Enter untuk memutar."
+
+#: ui_components.py:252
+msgid "List of lyrics search results"
+msgstr "Daftar hasil pencarian lirik"
+
+#: history_panel.py:87
+msgid "List of recently played videos (max {max_items}). Double-click or Enter to play."
+msgstr "Daftar video yang baru diputar (maks {max_items}). Klik dua kali atau Enter untuk memutar."
+
+#: youtube_panel.py:148
+msgid "List of related videos or the current radio queue. Double-click or Enter to play."
+msgstr "Daftar video terkait atau antrean radio saat ini. Klik dua kali atau Enter untuk memutar."
+
+#: youtube_panel.py:855
+msgid "Listening to: {title} - {uploader} via Tunevia {url}"
+msgstr "Mendengarkan: {title} - {uploader} via Tunevia {url}"
+
+#: youtube_panel.py:154
+msgid "Load More Results"
+msgstr "Muat Lebih Banyak Hasil"
+
+#: youtube_panel.py:155
+msgid "Load the next batch of results."
+msgstr "Muat kumpulan hasil berikutnya."
+
+#: youtube_panel.py:483
+msgid "Loaded {num_total} results from cache."
+msgstr "Memuat {num_total} hasil dari cache."
+
+#: youtube_panel.py:822
+msgid "Loaded {} related videos."
+msgstr "Memuat {} video terkait."
+
+#: youtube_panel.py:315
+msgid "Loading channel videos..."
+msgstr "Memuat video channel..."
+
+#: discovery_panel.py:65 discovery_panel.py:78 discovery_panel.py:140
+msgid "Loading charts..."
+msgstr "Memuat tangga lagu..."
+
+#: youtube_panel.py:303
+msgid "Loading from cache..."
+msgstr "Memuat dari cache..."
+
+#: youtube_panel.py:320
+msgid "Loading more..."
+msgstr "Memuat lebih banyak..."
+
+#: discovery_panel.py:67 discovery_panel.py:79 discovery_panel.py:141
+msgid "Loading new releases..."
+msgstr "Memuat rilis baru..."
+
+#: youtube_panel.py:314
+msgid "Loading playlist items..."
+msgstr "Memuat item daftar putar..."
+
+#: radar_panel.py:198
+msgid "Loading recommended track..."
+msgstr "Memuat trek yang direkomendasikan..."
+
+#: youtube_panel.py:509
+msgid "Loading related videos..."
+msgstr "Memuat video terkait..."
+
+#: discovery_panel.py:159
+msgid "Loading track..."
+msgstr "Memuat trek..."
+
+#: downloader_panel.py:146
+msgid "Log"
+msgstr "Log"
+
+#: lyrics_panel.py:363
+msgid "Lyrics Fetch Error"
+msgstr "Kesalahan Pengambilan Lirik"
+
+#: lyrics_panel.py:44 lyrics_panel.py:49
+msgid "Lyrics Initialization Error"
+msgstr "Kesalahan Inisialisasi Lirik"
+
+#: lyrics_panel.py:291
+msgid "Lyrics Search Error"
+msgstr "Kesalahan Pencarian Lirik"
+
+#: lyrics_panel.py:305 ui_components.py:250
+msgid "Lyrics Search Results"
+msgstr "Hasil Pencarian Lirik"
+
+#: lyrics_panel.py:200
+msgid "Lyrics component not initialized."
+msgstr "Komponen lirik tidak diinisialisasi."
+
+#: lyrics_panel.py:356
+msgid "Lyrics fetch timed out."
+msgstr "Pengambilan lirik habis waktu."
+
+#: lyrics_panel.py:190 lyrics_panel.py:191
+msgid "Lyrics saved successfully!"
+msgstr "Lirik berhasil disimpan!"
+
+#: lyrics_panel.py:266 lyrics_panel.py:345
+msgid "Lyrics search complete."
+msgstr "Pencarian lirik selesai."
+
+#: lyrics_panel.py:284
+msgid "Lyrics search timed out."
+msgstr "Pencarian lirik habis waktu."
+
+#: ui_components.py:161
+msgid "Master Sound Effects Volume"
+msgstr "Volume Efek Suara Master"
+
+#: ui_components.py:162
+msgid "Master Volume"
+msgstr "Volume Master"
+
+#: ui_components.py:251
+msgid "Matching results found. Use up/down arrows to navigate and Enter to select:"
+msgstr "Hasil yang cocok ditemukan. Gunakan panah atas/bawah untuk navigasi dan Enter untuk memilih:"
+
+#: downloader_panel.py:149
+msgid "Message"
+msgstr "Pesan"
+
+#: settings_panel.py:275 tunevia.py:250
+msgid "Minimize to System Tray"
+msgstr "Minimize ke System Tray"
+
+#: tunevia.py:369
+msgid "Minimize to tray disabled."
+msgstr "Minimize ke tray dinonaktifkan."
+
+#: tunevia.py:369
+msgid "Minimize to tray enabled."
+msgstr "Minimize ke tray diaktifkan."
+
+#: lyrics_panel.py:326
+msgid "Missing artist name or song title in selected result."
+msgstr "Nama artis atau judul lagu hilang di hasil yang dipilih."
+
+#: settings_panel.py:280
+msgid "Monitor Clipboard for YouTube URLs"
+msgstr "Pantau Clipboard untuk URL YouTube"
+
+#: settings_panel.py:75 settings_panel.py:243
+msgid "Move Down"
+msgstr "Pindah ke Bawah"
+
+#: settings_panel.py:74 settings_panel.py:242
+msgid "Move Up"
+msgstr "Pindah ke Atas"
+
+#: settings_panel.py:286
+msgid "NVDA Verbosity Level"
+msgstr "Tingkat Verbositas NVDA"
+
+#: settings_panel.py:424
+msgid "NVDA verbosity set to {}"
+msgstr "Verbositas NVDA diatur ke {}"
+
+#: ui_components.py:775
+msgid "No bookmarks for this track."
+msgstr "Tidak ada penanda untuk trek ini."
+
+#: youtube_panel.py:577
+msgid "No channel URL available for this item."
+msgstr "Tidak ada URL channel yang tersedia untuk item ini."
+
+#: ui_components.py:781
+msgid "No description"
+msgstr "Tidak ada deskripsi"
+
+#: youtube_panel.py:884
+msgid "No description available."
+msgstr "Tidak ada deskripsi yang tersedia."
+
+#: history_panel.py:139
+msgid "No history items match '{}'."
+msgstr "Tidak ada item riwayat yang cocok dengan '{}'."
+
+#: lyrics_panel.py:252 lyrics_panel.py:342 youtube_panel.py:370 youtube_panel.py:398
+msgid "No internet connection detected."
+msgstr "Koneksi internet tidak terdeteksi."
+
+#: discovery_panel.py:134
+msgid "No items found in playlist."
+msgstr "Tidak ada item yang ditemukan dalam daftar putar."
+
+#: downloader_panel.py:289
+msgid "No items in queue to download."
+msgstr "Tidak ada item dalam antrean untuk diunduh."
+
+#: history_panel.py:301 youtube_panel.py:630
+msgid "No items to export."
+msgstr "Tidak ada item untuk diekspor."
+
+#: lyrics_panel.py:151
+msgid "No lyrics loaded. Please search for a song."
+msgstr "Tidak ada lirik dimuat. Silakan cari lagu."
+
+#: lyrics_panel.py:167 lyrics_panel.py:168
+msgid "No lyrics to save."
+msgstr "Tidak ada lirik untuk disimpan."
+
+#: radar_panel.py:179
+msgid "No new recommendations found."
+msgstr "Tidak ada rekomendasi baru ditemukan."
+
+#: youtube_panel.py:1044
+msgid "No related songs found."
+msgstr "Tidak ada lagu terkait ditemukan."
+
+#: youtube_panel.py:813
+msgid "No related videos found."
+msgstr "Tidak ada video terkait ditemukan."
+
+#: youtube_panel.py:168 youtube_panel.py:478
+msgid "No results found for '{query}'."
+msgstr "Tidak ada hasil ditemukan untuk '{query}'."
+
+#: youtube_panel.py:479
+msgid "No results found."
+msgstr "Tidak ada hasil ditemukan."
+
+#: tunevia.py:450
+msgid "No song is currently loaded."
+msgstr "Tidak ada lagu yang sedang dimuat."
+
+#: settings_panel.py:478
+msgid "None"
+msgstr "Tidak Ada"
+
+#: radar_panel.py:97
+msgid "Not Enough Data"
+msgstr "Data Tidak Cukup"
+
+#: lyrics_panel.py:275 lyrics_panel.py:350
+msgid "Not Found"
+msgstr "Tidak Ditemukan"
+
+#: help_panel.py:78 lyrics_panel.py:163
+msgid "Nothing to copy."
+msgstr "Tidak ada yang disalin."
+
+#: utils.py:64
+msgid "Notification sound file not found: {}"
+msgstr "File suara notifikasi tidak ditemukan: {}"
+
+#: ui_components.py:64 ui_components.py:169 ui_components.py:253 ui_components.py:418 ui_components.py:918 ui_components.py:1069
+msgid "OK"
+msgstr "OKE"
+
+#: youtube_panel.py:712
+msgid "Open Channel/Artist in Browser"
+msgstr "Buka Channel/Artis di Browser"
+
+#: tunevia.py:633
+msgid "Open Downloader"
+msgstr "Buka Downloader"
+
+#: tunevia.py:634
+msgid "Open Equalizer"
+msgstr "Buka Equalizer"
+
+#: youtube_panel.py:711
+msgid "Open Video in Browser"
+msgstr "Buka Video di Browser"
+
+#: youtube_panel.py:157
+msgid "Open YouTube Downloader"
+msgstr "Buka YouTube Downloader"
+
+#: settings_panel.py:304
+msgid "Open a dialog to customize the global and in-app keyboard shortcuts for player controls and other actions."
+msgstr "Buka dialog untuk menyesuaikan pintasan keyboard global dan dalam aplikasi untuk kontrol pemutar dan tindakan lainnya."
+
+#: settings_panel.py:302
+msgid "Open a dialog to enable or disable specific application sounds, such as the startup sound or notification sounds."
+msgstr "Buka dialog untuk mengaktifkan atau menonaktifkan suara aplikasi tertentu, seperti suara startup atau suara notifikasi."
+
+#: settings_panel.py:296
+msgid "Open the 10-band audio equalizer to adjust frequency gains and pre-amplification. You can use built-in presets or save your own."
+msgstr "Buka equalizer audio 10-band untuk menyesuaikan penguatan frekuensi dan pra-amplifikasi. Anda dapat menggunakan preset bawaan atau menyimpan milik Anda sendiri."
+
+#: youtube_panel.py:158
+msgid "Open the YouTube Downloader window."
+msgstr "Buka jendela YouTube Downloader."
+
+#: downloader_panel.py:496 tunevia.py:319
+msgid "Operation in Progress"
+msgstr "Operasi Sedang Berlangsung"
+
+#: downloader_panel.py:137
+msgid "Options"
+msgstr "Opsi"
+
+#: settings_panel.py:291
+msgid "Path to your cookies.txt file, exported from your browser. Providing this file helps yt-dlp access age-restricted or members-only content that requires a login."
+msgstr "Jalur ke file cookies.txt Anda, diekspor dari browser. Menyediakan file ini membantu yt-dlp mengakses konten yang dibatasi usia atau khusus anggota yang memerlukan login."
+
+#: tunevia.py:107
+msgid "Pause"
+msgstr "Jeda"
+
+#: tunevia.py:104
+msgid "Paused"
+msgstr "Dijeda"
+
+#: tunevia.py:87 tunevia.py:107
+msgid "Play"
+msgstr "Putar"
+
+#: youtube_panel.py:705
+msgid "Play Audio"
+msgstr "Putar Audio"
+
+#: youtube_panel.py:754
+msgid "Play Related Video"
+msgstr "Putar Video Terkait"
+
+#: history_panel.py:89
+msgid "Play Selected"
+msgstr "Putar yang Dipilih"
+
+#: youtube_panel.py:152
+msgid "Play a video to see related items."
+msgstr "Putar video untuk melihat item terkait."
+
+#: history_panel.py:282
+msgid "Play history cleared."
+msgstr "Riwayat putar dibersihkan."
+
+#: history_panel.py:141 history_panel.py:272
+msgid "Play history is empty."
+msgstr "Riwayat putar kosong."
+
+#: history_panel.py:90
+msgid "Play the selected video from history"
+msgstr "Putar video yang dipilih dari riwayat"
+
+#: ui_components.py:726
+msgid "Playback Bookmarks"
+msgstr "Bookmark Pemutaran"
+
+#: history_panel.py:238
+msgid "Playback Error"
+msgstr "Kesalahan Pemutaran"
+
+#: settings_panel.py:236
+msgid "Playback Settings"
+msgstr "Pengaturan Pemutaran"
+
+#: settings_panel.py:417
+msgid "Player keyboard shortcuts disabled."
+msgstr "Pintasan keyboard pemutar dinonaktifkan."
+
+#: settings_panel.py:417
+msgid "Player keyboard shortcuts enabled."
+msgstr "Pintasan keyboard pemutar diaktifkan."
+
+#: tunevia.py:104
+msgid "Playing"
+msgstr "Memutar"
+
+#: youtube_panel.py:309
+msgid "Playing direct link."
+msgstr "Memutar tautan langsung."
+
+#: youtube_panel.py:308
+msgid "Playing direct video link..."
+msgstr "Memutar tautan video langsung..."
+
+#: history_panel.py:233
+msgid "Playing from history: {}"
+msgstr "Memutar dari riwayat: {}"
+
+#: youtube_panel.py:830
+msgid "Playing..."
+msgstr "Memutar..."
+
+#: youtube_panel.py:800 youtube_panel.py:922
+msgid "Playing: {}"
+msgstr "Memutar: {}"
+
+#: downloader_panel.py:246 youtube_panel.py:141
+msgid "Playlist"
+msgstr "Daftar Putar"
+
+#: youtube_panel.py:640 youtube_panel.py:641
+msgid "Playlist exported successfully."
+msgstr "Daftar putar berhasil diekspor."
+
+#: downloader_panel.py:243
+msgid "Playlist is empty or could not be loaded."
+msgstr "Daftar putar kosong atau tidak dapat dimuat."
+
+#: lyrics_panel.py:211
+msgid "Please enter a song title."
+msgstr "Silakan masukkan judul lagu."
+
+#: lyrics_panel.py:215
+msgid "Please enter artist name or check 'I don't know artist name'."
+msgstr "Silakan masukkan nama artis atau centang 'Saya tidak tahu nama artis'."
+
+#: ui_components.py:295
+msgid "Please select a search result."
+msgstr "Silakan pilih hasil pencarian."
+
+#: downloader_panel.py:283
+msgid "Please select a valid download directory."
+msgstr "Silakan pilih direktori unduhan yang valid."
+
+#: history_panel.py:225 history_panel.py:240 history_panel.py:246 history_panel.py:251
+msgid "Please select an item from the history list."
+msgstr "Silakan pilih item dari daftar riwayat."
+
+#: history_panel.py:242
+msgid "Please select exactly one item to play."
+msgstr "Silakan pilih tepat satu item untuk diputar."
+
+#: ui_components.py:49
+msgid "Please select your desired language."
+msgstr "Silakan pilih bahasa yang Anda inginkan."
+
+#: ui_components.py:557
+msgid "Pre-Amp"
+msgstr "Pre-Amp"
+
+#: ui_components.py:663
+msgid "Pre-amp {} percent"
+msgstr "Pre-amp {} persen"
+
+#: settings_panel.py:478
+msgid "Preferred audio language set to: {}"
+msgstr "Bahasa audio pilihan diatur ke: {}"
+
+#: ui_components.py:698
+msgid "Preset '{}' deleted."
+msgstr "Preset '{}' dihapus."
+
+#: ui_components.py:688
+msgid "Preset '{}' saved."
+msgstr "Preset '{}' disimpan."
+
+#: ui_components.py:677
+msgid "Preset name cannot be empty."
+msgstr "Nama preset tidak boleh kosong."
+
+#: ui_components.py:549
+msgid "Preset:"
+msgstr "Preset:"
+
+#: ui_components.py:333
+msgid ""
+"Press the desired key combination now...\n"
+"(Press Escape to cancel)"
+msgstr ""
+"Tekan kombinasi tombol yang diinginkan sekarang...\n"
+"(Tekan Escape untuk membatalkan)"
+
+#: settings_panel.py:38
+msgid "Quiet"
+msgstr "Hening"
+
+#: radar_panel.py:83
+msgid "Radar feature disabled. Please install 'ytmusicapi' library."
+msgstr "Fitur radar dinonaktifkan. Silakan instal pustaka 'ytmusicapi'."
+
+#: youtube_panel.py:147 youtube_panel.py:806
+msgid "Radio Queue"
+msgstr "Antrean Radio"
+
+#: tunevia.py:422
+msgid "Radio finished or could not find more songs."
+msgstr "Radio selesai atau tidak dapat menemukan lebih banyak lagu."
+
+#: youtube_panel.py:1053
+msgid "Radio queue empty, finding more songs..."
+msgstr "Antrean radio kosong, mencari lebih banyak lagu..."
+
+#: youtube_panel.py:813
+msgid "Radio queue is empty."
+msgstr "Antrean radio kosong."
+
+#: youtube_panel.py:1049
+msgid "Radio queue updated."
+msgstr "Antrean radio diperbarui."
+
+#: youtube_panel.py:147 youtube_panel.py:806
+msgid "Related Videos"
+msgstr "Video Terkait"
+
+#: settings_panel.py:262
+msgid "Remember Playback Position"
+msgstr "Ingat Posisi Pemutaran"
+
+#: settings_panel.py:385
+msgid "Remember playback position disabled."
+msgstr "Ingat posisi pemutaran dinonaktifkan."
+
+#: settings_panel.py:385
+msgid "Remember playback position enabled."
+msgstr "Ingat posisi pemutaran diaktifkan."
+
+#: downloader_panel.py:124 history_panel.py:91
+msgid "Remove Selected"
+msgstr "Hapus yang Dipilih"
+
+#: downloader_panel.py:127
+msgid "Remove all items from the download list"
+msgstr "Hapus semua item dari daftar unduhan"
+
+#: downloader_panel.py:125
+msgid "Remove the selected item from the list"
+msgstr "Hapus item yang dipilih dari daftar"
+
+#: history_panel.py:92
+msgid "Remove the selected video(s) from history"
+msgstr "Hapus video yang dipilih dari riwayat"
+
+#: history_panel.py:266
+msgid "Removed selected item(s) from history."
+msgstr "Item yang dipilih dihapus dari riwayat."
+
+#: settings_panel.py:76 settings_panel.py:244
+msgid "Reset"
+msgstr "Reset"
+
+#: ui_components.py:417
+msgid "Reset All"
+msgstr "Reset Semua"
+
+#: ui_components.py:586
+msgid "Reset Bands"
+msgstr "Reset Frekuensi"
+
+#: ui_components.py:416
+msgid "Reset to Default"
+msgstr "Kembalikan ke Default"
+
+#: lyrics_panel.py:167 lyrics_panel.py:194
+msgid "Save Error"
+msgstr "Kesalahan Simpan"
+
+#: lyrics_panel.py:129
+msgid "Save Lyrics"
+msgstr "Simpan Lirik"
+
+#: lyrics_panel.py:180
+msgid "Save Lyrics As"
+msgstr "Simpan Lirik Sebagai"
+
+#: ui_components.py:673
+msgid "Save Preset"
+msgstr "Simpan Preset"
+
+#: ui_components.py:584
+msgid "Save Preset..."
+msgstr "Simpan Preset..."
+
+#: lyrics_panel.py:190
+msgid "Save Successful"
+msgstr "Simpan Berhasil"
+
+#: lyrics_panel.py:130
+msgid "Save the displayed lyrics to a text file."
+msgstr "Simpan lirik yang ditampilkan ke file teks."
+
+#: radar_panel.py:181
+msgid "Scan complete! Found {count} new tracks you might like."
+msgstr "Pemindaian selesai! Ditemukan {count} trek baru yang mungkin Anda sukai."
+
+#: radar_panel.py:178
+msgid "Scan complete. Couldn't find any new recommendations."
+msgstr "Pemindaian selesai. Tidak dapat menemukan rekomendasi baru."
+
+#: radar_panel.py:86
+msgid "Scan history to find new tracks."
+msgstr "Pindai riwayat untuk menemukan trek baru."
+
+#: radar_panel.py:104
+msgid "Scanning for recommendations..."
+msgstr "Memindai rekomendasi..."
+
+#: discovery_panel.py:80
+msgid "Scraping YouTube Playlists..."
+msgstr "Mengambil Daftar Putar YouTube..."
+
+#: history_panel.py:85
+msgid "Search History:"
+msgstr "Riwayat Pencarian:"
+
+#: lyrics_panel.py:124
+msgid "Search Lyrics"
+msgstr "Cari Lirik"
+
+#: settings_panel.py:235
+msgid "Search Settings"
+msgstr "Pengaturan Pencarian"
+
+#: settings_panel.py:248
+msgid "Search Source"
+msgstr "Sumber Pencarian"

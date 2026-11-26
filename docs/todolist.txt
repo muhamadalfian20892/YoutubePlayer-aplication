@@ -1,0 +1,19 @@
+Tunevia Roadmap & Brainstorming
+===============================
+Author: Muhammad Alfian (Technokers Lab)
+Target: Version 1.7.0
+
+Hey guys, this is Alfian. I've been thinking a lot about where Tunevia should go next. Version 1.6.1 is pretty stable, but there is always room to make this thing faster, more accessible, and just way cooler. 
+
+Since I rely on NVDA, everything here will be built with keyboard navigation and screen readers in mind. Here is my massive brain-dump of things I want to add and fix for the big 1.7.0 update!
+
+16. **Bring Back Pitch Control**: The old pitch control was removed because it was buggy. I want to bring it back and make it actually work using VLC's advanced scaling filters.
+17. **Country-Specific Discovery**: Add a dropdown in the Discovery tab so you can check the "Top 100" in Japan, Brazil, or the US, instead of just Global.
+18. **Comment Replies**: In the Video Comments viewer, add the ability to press Enter on a comment to fetch and read the replies to that specific thread.
+19. **Queue Reordering**: Allow users to reorder the upcoming song queue using Alt + Up/Down arrows.
+20. **Visual Video Fullscreen**: In the new "Show Video" popup, add a hotkey (F or Enter) to actually make the video fullscreen for sighted users.
+21. **Update Progress Announcer**: When yt-dlp is updating on startup, have NVDA announce the percentage so users aren't left wondering if the app froze.
+22. **Smart Radio Continuity**: If you are using "Start Radio" and you close the app, it should remember your radio session and give you a button to resume the endless mix when you open it next time.
+
+This is going to take a lot of coffee, but 1.7.0 is going to be massive. Let's get to work!
+- Muhammad Alfian

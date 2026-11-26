@@ -1,0 +1,83 @@
+Contributor Code of Conduct for tunevia
+
+Welcome to tunevia!
+
+This document outlines the rules and best practices for all contributors—whether you're coding or translating—to help keep the project clean, maintainable, and accessible for everyone.
+
+General Guidelines
+
+Treat all contributors with respect, regardless of their role.
+
+Be open to feedback and different perspectives.
+
+Communicate clearly and concisely.
+
+Don’t commit broken or untested code.
+
+Avoid submitting unrelated or unnecessary files.
+
+For Coders
+
+Let’s keep the codebase organized and easy to navigate.
+
+File Structure Rules (Example)
+
+All Python UI code should go into ui.py.
+
+Translation files are stored in the locales/ folder.
+
+You may create additional files (e.g., a.py, b.py, etc.) if needed, as long as it improves clarity and maintainability.
+
+Coding Guidelines
+
+Follow the PEP 8 Python style guide.
+
+Use meaningful, descriptive names for variables and functions.
+
+Keep functions and classes short and focused on a single responsibility.
+
+Avoid hardcoding translatable strings—wrap them with _().
+
+Separate UI logic from core functionality.
+
+Avoid circular imports and overly coupled components.
+
+Use relative imports within modules when appropriate.
+
+For Translators
+
+Thanks for helping make tunevia more accessible in different languages!
+
+Translation Guidelines
+
+Only translate using the messages.pot or en/messages.po files.
+
+Do not modify or add source strings directly in .po files.
+
+Keep placeholders like %s, {} unchanged.
+
+Match the original string’s punctuation and formatting.
+
+Avoid adding personal branding, comments, or unrelated content.
+
+If a string’s meaning is unclear, feel free to reach out to the maintainer for clarification.
+
+Please Avoid
+
+Disrupting file structure or formatting on purpose.
+
+Adding new features or languages without prior discussion.
+
+Editing files outside your role (e.g., coders modifying translation files).
+
+Pushing malicious, unstable, or non-functional code.
+
+Breaking the build or translation system and leaving it unfixed.
+
+❤ Huge Thanks!
+
+Your contribution truly matters. By following this Code of Conduct, you're helping tunevia stay clean, stable, and inclusive for everyone involved.
+
+If you have any questions or need support, feel free to contact the maintainer:
+
+Email: Muhammad Alfian
