@@ -43,15 +43,22 @@ And just like that, the remaining tasks are completely done! We've overhauled th
 The 1.6.4 Release is Officially Compiled!
 Well everyone, that brings us to the finish line for version 1.6.4! All tests pass cleanly, memory usage is trimmed down, accessibility is top-notch, and the release executable is compiled and ready to go. Thank you all for testing and supporting Tunevia, and enjoy the snappiest, most reliable music player yet!
 
-Version 1.6.5: Spatial Audio and Portable Build Hardening
-Version 1.6.5 introduces Spatial Audio so listeners can widen the stereo field and dial in room depth while keeping Tunevia's memory footprint small. Through the new Spatial Audio dialog (Ctrl+Shift+E) or quick toggle (Ctrl+Shift+S), users can pick from Subtle Wide, Concert Hall, Studio Room, or Wide Stage presets, or tune width, room size, and depth independently. Under the hood, PCM frames from VLC flow through a lightweight fixed-buffer Mid-Side and reflection processor directly into Windows WaveOut, working alongside the 10-band equalizer, speed control, and mono toggle.
+Version 1.6.5
+	Added Spatial Audio so you can widen the stereo soundstage and add room depth from the Spatial Audio dialog (Ctrl+Shift+E) or toggle it with Ctrl+Shift+S. Pick between five presets or adjust Width, Room Size, and Depth directly.
 
-This update also fixes the packaging and startup failures that stopped the compiled app from launching on other Windows machines. PyInstaller now bundles yt-dlp, lyricsgenius, BeautifulSoup, and ytmusicapi directly inside the distribution without UPX packing on runtime DLLs, drops machine-specific VLC plugin caches, keeps Python's DLL search path intact instead of calling SetDllDirectoryW, and runs safely without a console window.
+	Fixed packaged builds failing to launch on other Windows PCs by bundling yt-dlp, lyricsgenius, BeautifulSoup, and ytmusicapi directly, preloading libvlccore.dll, and dropping machine-specific plugin caches.
 
-Finally, a full static and runtime audit closed dozens of hidden bugs across the app: undefined size helpers in the Downloader, missing imports in the Audio Player, Lyrics, and Radar panels, empty-list selection crashes in Favorites and History, menu event binding in Video Comments, Light theme contrast resets, seek intervals up to one hour saving properly, and worker-thread UI guards across every panel.
+	Fixed undefined size helpers in the Downloader, missing imports in the Audio Player, Lyrics, and Radar panels, empty-list crashes in Favorites and History, Light theme background resets, and seek intervals up to 1 hour.
 
-Version 1.7.0: Built-In Updates, Lossless Playback, 48 kHz Audio Modes, and Focus Fixes
-Version 1.7.0 adds a silent startup update checker and in-app updater (Help -> Check for Updates) with progress reporting and hash/archive verification, fixes Alt+Tab window handling so switching tasks never hides or traps the window, upgrades internal DSP processing to 48 kHz, and introduces local Lossless playback (FLAC, WAV, AIFF, WavPack, APE, ALAC) alongside Bit-Perfect bypass, Bass Boost, Vocal Clarity, Night Mode compression, Smart NVDA Audio Ducking, A-B Loop, Sleep Timer with fade-out, an Up-Next Queue across panels, 0-9 percentage seeking, and instant Track/Audio telemetry via the I key.
+Version 1.7.0
+	Added a built-in update checker and updater (Help -> Check for Updates), fixed Alt+Tab leaving the window hidden or minimized, upgraded DSP processing to 48 kHz, and added local lossless file support (FLAC, WAV, AIFF, WavPack, APE, ALAC), Bass Boost, Vocal Clarity, Night Mode, NVDA Ducking, A-B Loop, Sleep Timer, Up-Next Queue, 0-9 jumps, and track info on the I key.
 
-Version 1.7.1: YouTube Lossless Direct Mode and Live Stream Telemetry
-Version 1.7.1 extends Lossless Bit-Perfect Direct Mode (Ctrl+Shift+L) to live YouTube playback. When enabled, Tunevia prioritizes the highest-bitrate master audio stream available from YouTube, upgrades active playback on the fly if a higher-bitrate format exists, bypasses EQ and DSP coloration in favor of native 32-bit float audio output, and reads out live stream codec, bitrate, and sample rate when pressing I.
+Version 1.7.1
+	Extended Lossless mode (Ctrl+Shift+L) to YouTube streams, picking the highest available bitrate and reading out live codec, bitrate, and sample rate when you press I.
+
+Version 1.7.4
+	Audio effects (Spatial Audio, Bass Boost, Vocal Clarity, Night Mode, Mono, Normalization, Equalizer, and NVDA Ducking) now work while Lossless mode is enabled.
+
+	Toggling or adjusting effects applies right away in real time without stopping or restarting playback.
+
+	Vocal Clarity and Spatial Audio can now run together, and toggling Equalizer in Feature Manager updates the active track right away.

@@ -1,100 +1,138 @@
+New on 11/27/2026:
+
+	Audio effects (Spatial Audio, Bass Boost, Vocal Clarity, Night Mode, Mono, Audio Normalization, Equalizer, and NVDA Ducking) now work while Lossless mode is turned on. Previously, turning on Lossless mode shut off every effect.
+
+	Toggling or adjusting audio effects no longer stops and restarts playback. Everything runs through the 48 kHz live audio output from the start of a track, so changes apply right away without cutting the sound.
+
+	Vocal Clarity and Spatial Audio can now be used together instead of Vocal Clarity quietly overriding Spatial Audio.
+
+	Toggling the Equalizer feature in Feature Manager now updates the playing track right away instead of waiting for the next track.
+
+	The I key track info readout now lists Lossless mode alongside any active effects, including Audio Normalization.
+
+
+
 New on 11/26/2026:
-	Fixed stereo output and playback issues when Lossless mode is off (v1.7.3): Audio Normalization alone now uses native 32-bit float stereo filtering without detouring through legacy 16-bit WaveOut output, fixed the 44.1 kHz vs 48 kHz sample-rate mismatch when switching audio devices in DSP mode, prevented HTTP 403 stream errors on Lossless upgrades from cutting playback by automatically falling back to the playable stream while respecting preferred audio language, preferred true stereo endpoints when matching Windows WaveOut devices, clarified Mono: On/Off button labels, and guarded notebook tab selection bounds on startup.
-	Fixed the startup freeze and slow launch on packaged Windows builds (v1.7.2): removed forced cold plugin rescanning on every launch, kept and automatically synchronized VLC's plugin cache timestamps after ZIP extraction so Windows Defender no longer scans hundreds of DLLs on startup, trimmed unused plugins from the bundle, and moved audio engine, sound effects, and heavy optional modules off the window creation path so the app opens in a couple of seconds without hanging your computer.
-	Extended Lossless Bit-Perfect Direct Mode (v1.7.1, Ctrl+Shift+L) to YouTube streams: prioritizes peak-bitrate master audio streams (including Premium 256 kbps / 48 kHz Opus when available), automatically upgrades the playing YouTube track to the highest available audio format on toggle, routes directly through native 32-bit float VLC output bypassing EQ/DSP coloration, and announces live stream codec, bitrate, and sample rate via the I key.
-	Released Tunevia 1.7.0 with built-in application updates (Help -> Check for Updates or Ctrl+K), fixing the Alt+Tab minimize glitch so switching apps no longer hides or traps Tunevia in a minimized state, upgrading the DSP pipeline to 48 kHz, and adding Lossless local audio support plus 10 audiophile and screen-reader features: Local & Lossless file opening (Ctrl+O for FLAC, WAV, AIFF, WavPack, APE, ALAC), Lossless Bit-Perfect bypass (Ctrl+Shift+L), C-speed Bass Boost (Ctrl+Shift+B), Vocal Clarity podcast mode (Ctrl+Shift+V), Night Listening compressor (Ctrl+Shift+N), Smart NVDA Audio Ducking (Ctrl+Shift+D), A-B Segment Loop (Ctrl+Shift+A), Sleep Timer with 15-second gentle fade-out (Ctrl+Shift+Z), Up-Next Queue manager (Ctrl+Shift+Q + "Play Next" in context menus), 0-9 percentage seeking, and instant Track/Audio telemetry readout (I key).
-	Fixed tracks sometimes advancing their timer without audible sound after pausing or changing songs: resetting the Windows WaveOut sink during flush now clears the paused state and restarts the hardware device handle, added automatic unpause recovery on incoming audio writes, resolved saved audio output GUIDs on demand before playing the very first track, and ensured fallback stream selection skips video-only (`acodec=none`) formats.
-	Reworked the Spatial Audio output into an event-driven ring buffer (4 x 25 ms slots fed by a dedicated thread) so bursty 48 kHz streams no longer drop frames, crackle, or queue sluggish 1-second buffers. Added peak-headroom clamping and 4-slice gain ramping to RMS Normalization and volume adjustments so transitions stay free of clicks, switched volume scaling to a perceptual curve, ignored VLC's startup volume reset callback so playback always starts at your saved volume slider level, and set the volume slider keyboard step to 5% with debounced NVDA speech.
-	Added Spotify-style Spatial Audio processing (1.6.5)! You can widen the stereo soundstage, add room ambience, and adjust depth across five built-in presets (Off, Subtle Wide, Concert Hall, Studio Room, Wide Stage) or dial in your own percentages. Toggle it anytime with Ctrl+Shift+S, open settings with Ctrl+Shift+E, or run the Spatial Audio commands from Ctrl+K.
-	Built the Spatial Audio DSP engine on standard-library C audio operations paired with fixed ~10 KB ring buffers and direct Windows WaveOut output, keeping playback smooth with very low RAM overhead even when all effects are active. Equalizer, Playback Speed, Volume, Mono Audio, and Audio Normalization continue to work together cleanly.
-	Fixed Tunevia failing to launch on other Windows computers when packaged as an executable! Removed SetDllDirectoryW overriding PyInstaller's _internal folder, preloaded libvlccore.dll, bundled yt-dlp, lyricsgenius, BeautifulSoup, and YouTube Music API packages directly inside the build, removed the machine-specific VLC plugin cache and unused DLLs, disabled UPX packing on Python/wxWidgets runtimes, and added safe UTF-8 stdio handling when running without a console window.
-	Fixed multiple runtime crashes discovered during deep code review: undefined helper calls in the Downloader (format_size vs format_filesize), missing standard imports in the Audio Player, Lyrics, and Radar panels, unsafe worker-thread cursor/UI calls, missing Favorites/Direct-Link handlers on the main window, and empty-list selection crashes in Favorites and History.
-	Fixed Keyboard, Focus, and UI glitches: Audio Player controls now sit across clean keyboard rows without clipping; Sound and Equalizer dialogs properly focus inner sliders for NVDA; Command Palette navigates cleanly with Down Arrow; Comments context menu binds events to the menu cleanly; Light theme resets dark backgrounds recursively; hidden Settings tabs can no longer lock users out of Settings; Seek intervals up to 1 hour (3600s) now save cleanly instead of capping at 60 seconds; and enabling Mono Audio capability in Feature Manager no longer forces mono playback on unexpectedly.
+
+	Fixed stereo output when Lossless mode is off (v1.7.3). Audio Normalization by itself stays in stereo instead of dropping into mono, and switching audio devices in DSP mode now keeps the 48 kHz sample rate.
+
+	If a Lossless format upgrade hits an HTTP 403 error, the player falls back to the previous playable stream instead of stopping playback. Stream selection also respects your preferred audio language and prefers true stereo endpoints when matching Windows WaveOut devices.
+
+	Fixed the startup freeze and slow loading on packaged Windows builds (v1.7.2). Removed forced cold VLC plugin rescans on every launch, synced plugin cache timestamps after ZIP extraction, trimmed unused plugins, and moved audio and module loading off the main window startup path.
+
+	Extended Lossless mode (v1.7.1, Ctrl+Shift+L) to YouTube streams. It picks the highest available audio bitrate (such as 256 kbps / 48 kHz Opus when available) and shows live stream codec, bitrate, and sample rate when you press I.
+
+	Released Tunevia 1.7.0 with built-in app updates (Help -> Check for Updates or Ctrl+K) and fixed the Alt+Tab glitch that could leave the window minimized or hidden.
+
+	Upgraded DSP processing to 48 kHz and added local lossless playback (Ctrl+O for FLAC, WAV, AIFF, WavPack, APE, ALAC), Bass Boost (Ctrl+Shift+B), Vocal Clarity (Ctrl+Shift+V), Night Mode (Ctrl+Shift+N), NVDA Ducking (Ctrl+Shift+D), A-B Loop (Ctrl+Shift+A), Sleep Timer with 15-second fade-out (Ctrl+Shift+Z), Up-Next Queue (Ctrl+Shift+Q), 0-9 percentage jumps, and track info on the I key.
+
+	Fixed tracks advancing their timer with no sound after pausing or changing songs. Flushing the WaveOut buffer now clears the paused state and restarts the device handle, and fallback stream selection skips video-only formats.
+
+	Rebuilt Spatial Audio output with a 4 x 25 ms event-driven ring buffer so 48 kHz playback stops dropping frames or crackling. Added peak clamping and gain ramping to normalization and volume changes to prevent clicks, ignored VLC's 100% startup volume reset, and set the volume slider arrow step to 5%.
+
+	Added Spatial Audio (v1.6.5) with presets (Subtle Air, Studio Wide, Concert Hall, 3D Headphones, Ultra Wide) plus sliders for Width, Room Size, and Depth. Use Ctrl+Shift+S to toggle it or Ctrl+Shift+E to open the settings window.
+
+	Fixed packaged .exe builds failing to launch on other Windows PCs by bundling yt-dlp, lyricsgenius, BeautifulSoup, and ytmusicapi directly, preloading libvlccore.dll, and dropping machine-specific plugin caches.
+
+	Fixed several crashes found during code review: missing format_filesize calls in the Downloader, missing standard imports in the player, lyrics, and radar panels, empty-list crashes in Favorites and History, and menu binding in Video Comments.
+
+	Cleaned up player button rows, dialog focus for NVDA, Light theme background resets, and seek intervals up to 1 hour (3600s). Turning on Mono Audio in Feature Manager no longer forces mono playback on by itself.
+
+
 
 New on 10/23/2026:
-	Tab key navigation on the YouTube search screen has finally been cured and can now cycle around in a complete circle without getting stuck! Previously, there was an annoying glitch where pressing Tab would trap you in an endless loop between just the search box and the results list, leaving the Related Videos list, the Downloader button, and the Exit button completely isolated and out of reach via keyboard. The navigation chain is now fixed: pressing Tab or Shift+Tab lets you glide smoothly through the search box, playlist button, search results, related videos, load more button, downloader button, and all the way to the exit button before looping right back to the top!
-	For screen reader users (NVDA), moving into the search results or related videos lists is now crystal-clear! The moment your keyboard focus lands on either list, NVDA warmly announces the list name ("YouTube Search Results List"), so you know exactly where you are without having to guess.
-	Playing long videos like 1-to-4-hour podcasts, talk shows, or audiobooks is now rock-solid and freeze-proof! Previously, if you were listening to a long video and pressed fast-forward several times in quick succession, the audio player would often choke, shut down abruptly, and falsely claim the video was over (announcing "Playback finished" when you were only 15 minutes in). That problem is now completely solved! You can freely jump forward and backward as much as you like without fear of the video dying. Even if your internet connection hiccups or drops out for a moment, the app will automatically reconnect the audio right at the exact second you left off without you having to start all over again!
-	Loading when playing videos is now virtually instantaneous without the long wait! Previously, pressing Enter on a video could leave you waiting 5 to 7 seconds in silence before any audio kicked in. Now, the moment you press Enter, the sound starts playing in the blink of an eye! The secret: while you are browsing through the song list with your arrow keys and listening to titles read by your screen reader, Tunevia quietly prepares the audio stream in the background. So when you hit Enter, your track begins playing right away!
-	The next track in your queue or playlist is now automatically prepared in advance while your current track plays. Once your song finishes or you tap 'Next', the next track plays instantly without any loading pause!
-	No more delays when hitting Pause, and completely free of stuttering or popping when you resume Play! Previously, there was a noticeable split-second lag when pausing before the sound actually stopped, and resuming playback (unpausing) would often cause a momentary stutter or crackle. The audio synchronization has been completely overhauled: the moment you hit the Pause button or tap Spacebar, the sound stops immediately, and pressing Play again resumes with crystal-clear, smooth audio without any hiccups or crackles whatsoever!
-	The Play/Pause button and on-screen playback status now update instantly (zero delay)! The button no longer waits for slow background signals to catch up; the instant you press it, the button label changes to "Play" or "Pause" immediately and your screen reader announces the new state with zero delay.
-	Rewinding and fast-forwarding through songs now feels super snappy and light! Pressing the arrow keys once now jumps forward or backward immediately without hesitation, and NVDA announces the new minute and second on every single tap. If you mash the arrow keys rapidly in a burst, the app smoothly glides straight to your final target timestamp without stuttering or choking the audio.
-	Jumping between Chapters or Bookmarks is now also instantaneous with zero delay!
-	The Related Videos list now reliably fills up with recommendations when you search for something or play a song, instead of sitting there completely empty! It now connects to a super fast direct recommendation channel, and whenever you perform a search, related tracks are automatically fetched for the top result right away.
-	Fixed the audio equalizer resetting all its values back to default whenever you close and reopen the window! Your custom slider adjustments, preamp levels, and chosen presets now save safely to your configuration file and stay exactly where you left them.
-	Added an "Off" setting to NVDA Verbosity for users who want total silence. When set to Off, Tunevia completely mutes all screen reader announcements. In addition, changing any setting in the Settings panel now immediately saves to disk so your preferences are never lost on restart.
-	Rewinding, fast-forwarding, and switching tabs have been made quiet and unobtrusive. In default mode, screen reader chatter during rapid arrow key seeks or screen changes is kept silent, so you can enjoy your music and navigation sound effects peacefully without being talked over.
-	Navigating categories in the Settings sidebar using Up and Down arrows no longer kicks your keyboard focus into the first control of the category page. Your cursor stays comfortably in the category list until you choose to press Tab or Enter to explore its settings.
-	All on-screen text and status messages have been rewritten to be clean, natural, and human-friendly without any brackets or terminal code clutter. Download progress now clearly explains what is happening (for example: "Downloading in progress", "about 2m left", and readable file sizes).
-	The Downloader panel has been streamlined down to a single clean table! The redundant second log list has been removed, so all information (title, status, progress percentage, speed, time remaining, and file size) sits clearly in one place with a simple status line below.
-	You can now copy video links directly from the History tab! You can use the new "Copy Link" button, right-click and choose "Copy Video Link", or simply highlight an item and press Control+C on your keyboard.
-	Cookie files are now automatically detected and properly remembered! If you have a cookies file in your folder, Tunevia detects it on its own, saves the path permanently, and no longer asks you to reload it over and over.
-	Tab Management in Settings now intelligently hides tabs for any features you have turned off in Feature Manager. If you turn off Stats or Radar, those tabs disappear from the tab reordering list, and reappear automatically when you re-enable them.
+
+	Tab navigation on the YouTube search screen can now cycle all the way through the screen without getting stuck between the search box and results list. You can reach Related Videos, Load More, Downloader, and Exit with Tab and Shift+Tab.
+
+	NVDA now announces "Search Results" and "Related Videos" with item counts when you tab into those lists.
+
+	Long videos like 1-to-4-hour podcasts should no longer cut off early and falsely announce "Playback finished" when you fast-forward repeatedly. If the stream drops mid-seek or on a brief connection hiccup, the player reconnects at your current timestamp.
+
+	Highlighting a track in search results or the queue now pre-fetches the stream URL in the background so playback starts much faster when you press Enter.
+
+	Next tracks in your queue or playlist are pre-fetched while the current track plays.
+
+	Fixed the short delay on Pause and the stutter when unpausing. The Play/Pause button and status text now update right away when pressed.
+
+	Rewinding and fast-forwarding with arrow keys now jumps immediately and debounces rapid taps so audio does not choke. Chapter and bookmark jumps also apply right away.
+
+	Related Videos now fills with recommendations again after a search or when playing a video.
+
+	Fixed the Equalizer resetting back to Flat every time you closed and reopened its window. Custom sliders, preamp, and presets now save properly.
+
+	Added an "Off" option to NVDA Verbosity for total speech silence, and made Settings save immediately when changed. Rewind, fast-forward, and tab changes are now quiet in Default verbosity mode.
+
+	Arrow keys in the Settings category sidebar no longer yank focus into the right-hand controls until you press Tab or Enter.
+
+	Cleaned up Downloader status text into one table, removing the redundant second log box and showing plain progress estimates like "about 2m left".
+
+	You can now copy video links from the History tab using the Copy Link button, right-click menu, or Ctrl+C.
+
+	Cookies files in the app folder are now detected and remembered automatically, and Tab Management hides tabs whose features are turned off in Feature Manager.
+
+
 
 New on 10/19/2026:
-	Fixed a severe freezing issue where Tunevia could become completely unresponsive when opened as a standalone .exe or after updates! I discovered that the What's New dialog and several popup windows were using an incomplete close command that trapped Windows in an infinite modal lock, and the background engine was attempting synchronous network calls on startup instead of immediately utilizing the libraries already bundled inside the application. I corrected all dialog close routines to terminate modal message pumps cleanly, and made sure Tunevia detects its built-in modules in zero milliseconds without freezing the window.
-	When opening Tunevia for the first time, the application now opens directly to the YouTube search screen with your typing cursor waiting in the search box! Previously, after finishing the initial setup wizard, focus could accidentally land on the Settings tab. I added an explicit startup focus coordinator so you can immediately begin searching for and listening to music the moment the app appears.
-	Keyboard navigation across lists and tabs is now significantly smoother and more responsive! I eliminated redundant event hooks that were intercepting the Tab key multiple times, preventing focus stutter and ensuring natural, fluid arrow and Tab traversal for screen reader users.
-	Application navigation and right-click context menus are now buttery-smooth, responsive, and completely stutter-free! Previously, the memory optimizer was trimming memory pages too aggressively while the app was actively in use, causing slight hesitation and stutter during arrow navigation and menu clicks. The memory cleaner is now much smarter: it keeps all controls and sound buffers running at peak speed in RAM while you are active, and only trims RAM down to 1–4 MB when you are genuinely idle for 45 seconds or when the app is minimized to the taskbar or system tray!
-	Opening Video Details, Descriptions, and Comments dialogs is now instantaneous without UI freeze! I corrected context menu hit-testing coordinates so menus open smoothly right on target, added clean audio confirmation on popup opening, ensured details text wraps automatically without awkward horizontal scrolling, and mapped the Escape key to close popup dialogs instantly.
-	Browsing video comments is now vastly improved! Comments fetch up to 40% faster, the comments list updates smoothly in a single batch without flicker, and you can now press Enter or double-click any comment to open a clean full-comment reader window with convenient buttons to copy the comment text or the author's name!
-	YouTube search is now blazingly, insanely fast! I connected search queries directly to YouTube's lightweight internal search endpoint with a persistent connection. Search results now appear in the blink of an eye (~0.3 seconds—nearly 10x faster than before!) without heavy background engine overhead or freezing your PC!
-	The Settings panel has been completely reorganized into a clean, modern interface with a category sidebar! On the left is an organized sidebar list (Feature Manager, Search Settings, Playback Settings, Appearance & Behavior, Accessibility, Authentication & Cookies, Customization, and Tab Management), and on the right is the dedicated settings page for the active category. It is fully accessible and keyboard-friendly for NVDA and screen reader users—simply use arrow keys or Tab to navigate smoothly between categories!
-	RAM usage when idle has been aggressively slashed down to under 10 MB! Previously, running the app could idle at 50–70 MB of RAM. Tunevia now features an intelligent memory optimizer that automatically trims unneeded memory pages when idle. RAM usage instantly drops down to a mere 1–4 MB, keeping the app ultra-lightweight and battery-friendly even on low-end laptops and PCs!
-	Context menus are now smarter and hide disabled features dynamically! For example, if you disable the "Channel Browser" feature in the Feature Manager, all options to view videos from the channel, open the channel in a browser, or copy channel links are completely hidden from right-click menus. The same goes for Favorites, Downloader, Radio, and Comments—menus only show the tools you actually keep enabled!
-	Fetching video details, descriptions, and comments is now drastically faster! Video details and descriptions now load through a high-speed direct stream in a fraction of a second without heavy video manifest parsing. The video comments viewer also includes smart instant caching, so reopening comments on the same video displays instantly with zero loading delay!
-	Downloads in the Downloader panel are now blazingly, insanely fast! I hooked up multi-threaded parallel fragment downloading (8 simultaneous streams), 10 MB HTTP chunks to bypass YouTube's bandwidth rate-limiting, and put all your CPU processor cores to work (-threads 0) for rapid audio conversion. Songs that used to download gradually now finish in a flash!
-	Download progress is now cleanly displayed in a modern ListView that updates in-place! Previously, every percentage tick would spam a brand new line of text scrolling downwards, creating hundreds of messy lines. Now each song has its own dedicated row with live columns (Title, Status, Progress %, Speed, ETA, and Size) that update smoothly right in one place without flooding the log view.
-	You can now choose your preferred audio format when downloading! Choose between MP3 (192 kbps), M4A/AAC (192 kbps), OPUS (128 kbps), FLAC (lossless audio), and WAV. If you uncheck audio-only, Tunevia automatically downloads high-quality MP4 video with instant stream-copy remuxing without slow re-encoding!
-	Tab and Shift+Tab keyboard navigation on the YouTube search screen can now be cycled around completely smoothly without getting trapped! Previously, the search results and related videos lists captured the Tab key through special character handling, and the related videos list was disabled when empty, skipping it entirely. Now you can easily Tab or Shift+Tab through the search box, search results, related videos, all the way to the exit button and cycle seamlessly back to the top!
-	For screen reader users (such as NVDA), navigating around the YouTube tab now reads out crystal-clear without any confusing "unknown unknown" speech! I cleaned up the control layout and removed redundant static grouping boxes, giving the "Search Results" and "Related Videos" lists clean native accessible names and helpful guide messages when empty.
-	Pressing Tab on the main application tab bar now automatically moves focus directly into the first control of the active page, and Shift+Tab moves to the last control, creating a natural, fluid, trap-free keyboard workflow throughout the entire app!
-	Resuming audio after pausing now plays instantly without any 1-2 second stutter or delay! Previously, unpausing forced the player engine to renegotiate the audio stream from scratch and rebuild audio filters. Now it resumes smoothly right from the buffered sound in memory, so your track picks right back up without missing a beat!
-	The Audio Output device selector on the Audio Player tab now properly switches your playback to your chosen headphones or speakers! A module parameter mismatch was preventing Windows from applying the device switch. The "Default" output device is also now cleanly listed, and your chosen output device stays remembered for subsequent tracks.
-	You can now press Enter (or Numpad Enter) directly on your keyboard to play songs across all lists (YouTube search results, related videos, Discovery charts and new releases, Radar recommendations, Favorites, and History)! Screen reader users no longer need to press NVDA+Enter just to start playback; simply navigate to any song and tap Enter to listen!
-	When you open Tunevia for the first time, the very first setup screen now warmly asks if you'd like to use sound effects for navigating and clicking around ("This app also comes with sound effects for navigating around, opening items, and actions. Would you like to enable them?"). If you prefer a completely quiet experience, just uncheck the box and the app will stay silent without making you hunt through the settings menus later. Best of all, your choice is remembered even if you switch presets on the next page!
-	If you turn off sound effects in Sound Settings, the app now completely skips searching for or loading sound files on your hard drive whenever you click buttons or move around, making everything feel instant and lightning-fast!
-	No more annoying stutter or freeze on your very first click! All sound effects are now quietly prepared in the background right when the app boots up, so clicking buttons or switching tabs for the first time on older computers won't make the app pause or hesitate for a second.
-	For screen reader users (especially NVDA), navigating around and adjusting the volume will no longer cause the app to stutter or freeze up! There was a tiny hidden delay in the code that paused the whole window whenever NVDA spoke a word, which made rapid arrow key navigation feel sluggish on some systems. That pause has been completely kicked out, so moving through lists and sliders feels super snappy now!
-	The bridge connecting Tunevia to NVDA is now much smarter and automatically adapts to 32-bit or 64-bit Windows, includes a reliable backup beep sound, and stays quiet instead of generating background errors when NVDA isn't running.
-	Seeking back and forth through songs is now so much smoother! Previously, if you mashed the rewind or fast-forward keys or dragged the progress slider rapidly, the app would flood YouTube with dozens of download requests at once, which could choke your connection and make playback freeze or crash. Now it politely waits a split second until you stop pressing before fetching the audio stream, keeping everything stable and crash-free.
-	Songs now start playing noticeably faster! Whenever you clicked to play a track, Tunevia used to ask YouTube twice in a row for the exact same stream info behind the scenes. I got rid of that unnecessary second check, so your music starts up with much less delay!
-	You can now skip through tracks as fast as you want without weird audio overlap! Previously, if you rapidly hit 'Next', a song that was slow to load would sometimes finish in the background and start playing right over your new song. I gave each play request a tracking number so any late-arriving song is immediately tossed out.
-	The playback time and duration display is now much lighter on system resources. It only redraws the text when the seconds actually tick forward instead of constantly refreshing the screen, saving CPU power and battery on laptops.
-	Switching audio output devices (like from your speakers to your headphones) in the Sound Settings now routes cleanly through Windows' modern sound system, so device switching actually works reliably without silence or glitches.
-	If you use the mono audio option (which is awesome if you're only listening with one earbud), it now properly locks onto the song right as it starts playing, so you won't accidentally get stuck with only half the audio channels.
-	Fixed a sneaky memory leak when toggling between playing music and watching music videos with the "Show Video" button. Also, closing the video player now cleanly puts the video display back where it belongs without leaving ghost windows behind.
-	Squashed a nasty crash in the YouTube tab where clicking to view related videos would suddenly make the app vanish into thin air! It turned out the code was trying to read video details before it had even fetched them, which is now sorted out.
-	The YouTube Music engine now initializes only when you actually use it rather than freezing the app during startup if your internet connection is acting slow or spotty.
-	Search results history is now capped at your 20 most recent searches. Previously, Tunevia would remember every single thing you ever searched for forever, which caused your settings file to bloat up like a balloon and made launching the app slower and slower over time. Now it quietly cleans up the oldest searches to keep things trim and fast!
-	Fixed a crash when clicking the "Play" button on the YouTube clipboard link detection popup! It had a typo in the function name that caused it to explode instead of playing your song, but now it plays the link instantly just as you'd expect.
-	The Stats panel now accurately counts your total listening hours! Song durations weren't being passed properly into the play history log, so the stats screen had to guess based on generic defaults. Now it knows the exact length of every song you played.
-	Downloading songs in the Downloader panel will no longer cause the whole application to freeze up when you have high-speed downloads going! I limited how frequently the progress log prints updates and capped the maximum lines it keeps in view, so your computer won't get bogged down drawing endless text updates.
-	Cleaned up right-click context menus across the Discovery, Radar, and Favorites panels so they properly discard themselves after closing instead of quietly hanging out in computer memory.
-	The Discovery panel now handles empty song charts gracefully instead of throwing an error dialog if your internet dropped out before the list loaded.
-	The Radar discovery tab is now much tougher when scanning songs that might be missing direct web links, skipping past them smoothly instead of throwing a sudden error.
-	The video comments popup now displays quotes, apostrophes, and ampersands cleanly! It used to show ugly raw web codes like &quot; or &#39;, but now it decodes them so you see normal, readable sentences.
-	Your settings and playlist files are now completely immune to getting corrupted or turned into blank 0-byte files! The app now writes everything to a safe temporary file first, and only replaces your real save file once it knows the write succeeded. If your PC suddenly shuts off or loses power while saving, your playlists and settings will remain completely unharmed.
-	Customizing your keyboard shortcuts in the Shortcuts dialog now takes effect the instant you hit save and close the window! You no longer have to restart the whole app just for your new hotkeys to work.
-	Tidied up the VLC audio engine startup by dropping an old, obsolete configuration option that was spitting out annoying warnings in the background console.
-	For anyone running the standalone Windows `.exe` build, the entire package has been completely tidied up! All translation catalogs, YouTube security certificates, and vital audio libraries are bundled cleanly, guaranteeing that the app starts up and runs smoothly on any Windows machine right out of the box with zero missing component errors.
+
+	Fixed a freeze where packaged .exe builds could lock up on the What's New dialog or wait on startup network calls. Dialogs now close modal loops properly and bundled modules are detected locally.
+
+	First-time startup now focuses the YouTube search box instead of landing on the Settings tab.
+
+	Removed duplicate Tab key hooks that caused focus stutter in lists and tabs.
+
+	Idle memory trimming now waits until you have been idle for 45 seconds or minimized the window, instead of trimming while you are actively navigating lists and menus.
+
+	Fixed right-click coordinates on search results and added Escape-key closing and word-wrapping to Video Details, Description, and Comments dialogs.
+
+	Video Comments now load faster, update without flicker, and let you press Enter or double-click any comment to read or copy the full text.
+
+	YouTube search and channel browsing now use a direct InnerTube request with yt-dlp as fallback, cutting search wait times down to under a second.
+
+	Reorganized Settings into a category sidebar on the left and option pages on the right.
+
+	Context menus now hide options for features that are disabled in Feature Manager (such as Channel Browser, Favorites, Downloader, Radio, and Comments).
+
+	Downloader now uses 8 concurrent fragment downloads, 10 MB HTTP chunks, multi-core FFmpeg encoding, and lets you pick MP3, M4A, OPUS, FLAC, or WAV for audio downloads.
+
+	Enter (and Numpad Enter) now plays tracks directly in every list without needing NVDA+Enter.
+
+	Added a checkbox on page 1 of the onboarding wizard so you can turn off UI sound effects right from first launch, and kept that choice even if you switch presets on page 2.
+
+	Disabling sound effects now skips loading sound files from disk, and enabled sounds are preloaded in the background on startup.
+
+	Removed the blocking delay during NVDA speech calls so list and slider navigation stays responsive. Also updated the NVDA bridge to pick 32-bit or 64-bit DLLs automatically.
+
+	Debounced rapid seeking, removed duplicate stream extraction calls on track start, and added request IDs so skipping tracks fast never lets an older track play over the new one.
+
+	Audio output device switching now applies properly on Windows and lists the Default device.
+
+	Fixed a memory leak and leftover ghost window when toggling Show Video on and off.
+
+	Fixed a crash when viewing related videos before details were fetched, a crash when clicking Play on the clipboard link popup, and a missing duration bug that threw off Stats listening hours.
+
+	Capped search history at 20 cached queries, decoded HTML entities like &quot; in comments, and switched settings and playlists to atomic temp-file writes so power loss cannot wipe them to 0 bytes.
+
+	Custom keyboard shortcuts now apply as soon as you save and close the Shortcuts dialog.
+
+
 
 New on 09/03/2026:
-	Say hello to Tunevia's brand new first-launch onboarding wizard! If you haven't set up Tunevia yet, the app will now warmly greet you on startup with an accessible 4-step setup wizard, helping you tailor the exact features you want before the main player even loads.
-	Introducing the centralized Feature Manager! Tunevia is packed with awesome tools like discovery, radar, lyrics, downloading, equalizers, bookmarks, and stats, but not everyone needs every single module loaded all the time. You can now toggle 25 individual features across 6 organized categories (Core, Discovery, Lyrics, Downloads, Audio, and Advanced) to optimize performance and memory.
-	Added 4 convenient presets in both the onboarding wizard and Settings tab: Music Player (pure lightweight playback), Music + Discovery, Power User (all 25 features unlocked), and Recommended Settings (a balanced, snappy experience).
-	Smart dependency management is here! Enabling advanced features like MP3 Conversion will automatically enable its parent YouTube Downloader, and turning off Lyrics Search will cleanly uncheck and disable dependent auto-lyrics options so you never have conflicting settings.
-	Startup speed is now vastly improved! Optional tabs and heavy modules (such as the Genius lyrics and YouTube Music APIs) are skipped entirely at launch if they are disabled, saving precious boot time and system resources.
-	Discovery scraping is now lazy-loaded! Instead of firing off network scraping threads the instant Tunevia starts, the Discovery panel now waits until you actually navigate to the tab for the first time.
-	Cleaned up redundant settings! We removed duplicate controls that appeared in both the regular settings sections and the feature list, including live search suggestions, audio normalization, minimize to tray, auto-fetch lyrics, clipboard monitoring, and player shortcuts. Everything is now managed cleanly in one place.
-	Major screen reader accessibility overhaul for NVDA users! Every single edit box, search field, combo box, and button across the entire app now has proper accessible labels and names, because tooltips are definitely not labels!
-	The YouTube search box now has a clear preceding "Search YouTube:" label and an explicit accessible name, so NVDA will no longer announce it as a blank, unlabelled field!
-	Replaced the confusing black heart character ("❤") on the favorite button with clean text ("Favorite" / "Favorited") and dynamic accessible actions ("Add to Favorites" / "Remove from Favorites")!
-	Added an accessible label and name to the audio output device dropdown, making switching audio outputs smooth and fully announced.
-	Every button, queue list, download log, and input box across the Downloader, Lyrics panel, History panel, Favorites panel, Radar panel, Stats panel, and custom dialogs (Bookmarks, Multi-Link Entry, Playlist Count, Command Palette) now has an explicit accessible name.
-	Don't worry about your saved songs: disabling features like history, favorites, or bookmarks in the Feature Manager will never delete your underlying data; everything is safely preserved and will be right there when you re-enable them!
-	Player shortcuts and global media hotkeys are now bundled right into the Music Player and Music + Discovery presets! You get full in-app arrow controls (Up/Down arrow to adjust volume, Left/Right arrow to seek) and global shortcuts (Alt+Shift+Up/Down/Left/Right/P/N/B) out of the box, and volume adjustments now work smoothly on the Audio Player tab even before a track is loaded!
+
+	Added a 4-step onboarding wizard on first launch so you can pick a usage preset or choose individual features before the main window opens.
+
+	Added the Feature Manager with 25+ toggles across 6 categories (Core, Discovery, Lyrics, Downloads, Audio, and Advanced) plus 4 presets: Music Player, Music + Discovery, Power User, and Recommended Settings.
+
+	Dependent features now toggle together automatically (for example, turning on MP3 Conversion enables Downloader, and turning off Lyrics Search disables Auto Lyrics).
+
+	Disabled tabs and heavy modules (like Genius lyrics and YouTube Music) are skipped at startup, and Discovery now loads playlists only when you open the Discovery tab.
+
+	Removed duplicate checkboxes between regular settings and Feature Manager.
+
+	Added proper accessible labels and names to search boxes, buttons, dropdowns, and lists across every panel and dialog for NVDA, and replaced the heart symbol on the Favorite button with "Favorite" / "Favorited".
+
+	Disabling History, Favorites, or Bookmarks in Feature Manager hides the UI without deleting your saved data.
+
+	Included player arrow keys and global hotkeys in the Music Player and Music + Discovery presets, and allowed volume adjustments before a track is loaded.
 
 New on 5/7/2026:
 I've crushed a nasty bug that was causing the app to crash right at startup! It turns out I'd forgotten to actually write the code for the "Comment Fetch Limit" setting change, even though the button was there waiting for it. I've added the missing 'on_comment_limit_change' function now, so you can change that setting in the Settings tab without the app exploding.

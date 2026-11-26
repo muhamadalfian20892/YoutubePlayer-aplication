@@ -175,6 +175,7 @@ class SpatialAudioProcessor:
         self._night_gain = 1.0
         self._last_night_gain = 1.0
         self._last_gain = None
+        self._was_spatial = False
 
     @staticmethod
     def _volume_gain(percent: int) -> float:
@@ -244,6 +245,7 @@ class SpatialAudioProcessor:
             self._night_gain = 1.0
             self._last_night_gain = 1.0
             self._last_gain = None
+            self._was_spatial = False
             self._duck_until = 0.0
 
     def process_chunk(self, pcm_bytes: bytes) -> bytes:
@@ -286,7 +288,7 @@ class SpatialAudioProcessor:
                 self._last_norm_gain = 1.0
 
             # Bass Boost: 3-stage frame-shifted C-speed low-pass average using audioop
-            if bass_boost > 0 and not mono:
+            if bass_boost > 0:
                 bb_amt = (bass_boost / 100.0) * 0.65
                 self._lp_ring.extend(pcm)
                 keep_lp = self._lp_hist_bytes + aligned_len
@@ -301,73 +303,89 @@ class SpatialAudioProcessor:
                 low = _add(low, _mul(s16, 0.20))
                 headroom_bb = 1.0 / (1.0 + bb_amt * 0.55)
                 pcm = _add(_mul(pcm, headroom_bb), _mul(low, bb_amt * headroom_bb))
+            else:
+                self._lp_ring[:] = b"\x00" * self._lp_hist_bytes
 
             if mono:
+                self._prev_mid_frame = b"\x00\x00"
+                if self._was_spatial:
+                    self._ring_l[:] = b"\x00" * self._hist_bytes
+                    self._ring_r[:] = b"\x00" * self._hist_bytes
+                    self._was_spatial = False
                 mono_ch = _tomono(pcm, 0.5, 0.5)
                 out = _tostereo(mono_ch, 1.0, 1.0)
-            elif vocal_clarity:
-                # Center-vocal clarity: gentle 1-frame high-pass on Mid, boost Mid, tame Side background.
-                mid = _tomono(pcm, 0.5, 0.5)
-                side = _tomono(pcm, 0.5, -0.5)
-                mid_delayed = self._prev_mid_frame + mid[:-2] if len(mid) >= 2 else mid
-                if len(mid) >= 2:
-                    self._prev_mid_frame = mid[-2:]
-                mid_hp = _add(mid, _mul(mid_delayed, -0.32))
-                mid_boost = _mul(mid_hp, 1.18)
-                side_tame = _mul(side, 0.45)
-                l_vc = _add(mid_boost, side_tame)
-                r_vc = _add(mid_boost, _mul(side_tame, -1.0))
-                out = _add(_tostereo(l_vc, 1.0, 0.0), _tostereo(r_vc, 0.0, 1.0))
-            elif spatial:
-                clen = aligned_len // 2
-                mid = _tomono(pcm, 0.5, 0.5)
-                side = _tomono(pcm, 0.5, -0.5)
-
-                w = width / 100.0
-                r = room_size / 100.0
-                d = depth / 100.0
-
-                headroom = 1.0 / (1.0 + max(0.0, w - 1.0) * 0.42 + r * 0.35 + d * 0.15)
-                m_scaled = _mul(mid, headroom)
-                s_scaled = _mul(side, w * headroom)
-
-                l_dry = _add(m_scaled, s_scaled)
-                r_dry = _add(m_scaled, _mul(s_scaled, -1.0))
-
-                self._ring_l.extend(l_dry)
-                self._ring_r.extend(r_dry)
-                max_ring = self._hist_bytes + clen
-                if len(self._ring_l) > max_ring:
-                    del self._ring_l[:-max_ring]
-                    del self._ring_r[:-max_ring]
-
-                if (r > 0.01 or d > 0.01) and len(self._ring_l) >= clen + self._d4:
-                    end = len(self._ring_l)
-                    t1_r = bytes(self._ring_r[end - clen - self._d1 : end - self._d1])
-                    t1_l = bytes(self._ring_l[end - clen - self._d1 : end - self._d1])
-                    t2_l = bytes(self._ring_l[end - clen - self._d2 : end - self._d2])
-                    t2_r = bytes(self._ring_r[end - clen - self._d2 : end - self._d2])
-                    t3_r = bytes(self._ring_r[end - clen - self._d3 : end - self._d3])
-                    t3_l = bytes(self._ring_l[end - clen - self._d3 : end - self._d3])
-                    t4_l = bytes(self._ring_l[end - clen - self._d4 : end - self._d4])
-                    t4_r = bytes(self._ring_r[end - clen - self._d4 : end - self._d4])
-
-                    wet_l = _add(_mul(t1_r, 0.32 * d), _mul(t2_l, 0.24 * r))
-                    wet_l = _add(wet_l, _mul(t3_r, -0.20 * r))
-                    wet_l = _add(wet_l, _mul(t4_l, 0.15 * r))
-
-                    wet_r = _add(_mul(t1_l, -0.32 * d), _mul(t2_r, 0.24 * r))
-                    wet_r = _add(wet_r, _mul(t3_l, 0.20 * r))
-                    wet_r = _add(wet_r, _mul(t4_r, -0.15 * r))
-
-                    l_out = _add(l_dry, wet_l)
-                    r_out = _add(r_dry, wet_r)
-                else:
-                    l_out = l_dry
-                    r_out = r_dry
-
-                out = _add(_tostereo(l_out, 1.0, 0.0), _tostereo(r_out, 0.0, 1.0))
             else:
+                if vocal_clarity:
+                    # Center-vocal clarity: gentle 1-frame high-pass on Mid, boost Mid, tame Side background.
+                    mid = _tomono(pcm, 0.5, 0.5)
+                    side = _tomono(pcm, 0.5, -0.5)
+                    mid_delayed = self._prev_mid_frame + mid[:-2] if len(mid) >= 2 else mid
+                    if len(mid) >= 2:
+                        self._prev_mid_frame = mid[-2:]
+                    mid_hp = _add(mid, _mul(mid_delayed, -0.32))
+                    mid_boost = _mul(mid_hp, 1.18)
+                    side_tame = _mul(side, 0.45)
+                    l_vc = _add(mid_boost, side_tame)
+                    r_vc = _add(mid_boost, _mul(side_tame, -1.0))
+                    pcm = _add(_tostereo(l_vc, 1.0, 0.0), _tostereo(r_vc, 0.0, 1.0))
+                else:
+                    self._prev_mid_frame = b"\x00\x00"
+
+                if spatial:
+                    self._was_spatial = True
+                    clen = aligned_len // 2
+                    mid = _tomono(pcm, 0.5, 0.5)
+                    side = _tomono(pcm, 0.5, -0.5)
+
+                    w = width / 100.0
+                    r = room_size / 100.0
+                    d = depth / 100.0
+
+                    headroom = 1.0 / (1.0 + max(0.0, w - 1.0) * 0.42 + r * 0.35 + d * 0.15)
+                    m_scaled = _mul(mid, headroom)
+                    s_scaled = _mul(side, w * headroom)
+
+                    l_dry = _add(m_scaled, s_scaled)
+                    r_dry = _add(m_scaled, _mul(s_scaled, -1.0))
+
+                    self._ring_l.extend(l_dry)
+                    self._ring_r.extend(r_dry)
+                    max_ring = self._hist_bytes + clen
+                    if len(self._ring_l) > max_ring:
+                        del self._ring_l[:-max_ring]
+                        del self._ring_r[:-max_ring]
+
+                    if (r > 0.01 or d > 0.01) and len(self._ring_l) >= clen + self._d4:
+                        end = len(self._ring_l)
+                        t1_r = bytes(self._ring_r[end - clen - self._d1 : end - self._d1])
+                        t1_l = bytes(self._ring_l[end - clen - self._d1 : end - self._d1])
+                        t2_l = bytes(self._ring_l[end - clen - self._d2 : end - self._d2])
+                        t2_r = bytes(self._ring_r[end - clen - self._d2 : end - self._d2])
+                        t3_r = bytes(self._ring_r[end - clen - self._d3 : end - self._d3])
+                        t3_l = bytes(self._ring_l[end - clen - self._d3 : end - self._d3])
+                        t4_l = bytes(self._ring_l[end - clen - self._d4 : end - self._d4])
+                        t4_r = bytes(self._ring_r[end - clen - self._d4 : end - self._d4])
+
+                        wet_l = _add(_mul(t1_r, 0.32 * d), _mul(t2_l, 0.24 * r))
+                        wet_l = _add(wet_l, _mul(t3_r, -0.20 * r))
+                        wet_l = _add(wet_l, _mul(t4_l, 0.15 * r))
+
+                        wet_r = _add(_mul(t1_l, -0.32 * d), _mul(t2_r, 0.24 * r))
+                        wet_r = _add(wet_r, _mul(t3_l, 0.20 * r))
+                        wet_r = _add(wet_r, _mul(t4_r, -0.15 * r))
+
+                        l_out = _add(l_dry, wet_l)
+                        r_out = _add(r_dry, wet_r)
+                    else:
+                        l_out = l_dry
+                        r_out = r_dry
+
+                    pcm = _add(_tostereo(l_out, 1.0, 0.0), _tostereo(r_out, 0.0, 1.0))
+                elif self._was_spatial:
+                    self._ring_l[:] = b"\x00" * self._hist_bytes
+                    self._ring_r[:] = b"\x00" * self._hist_bytes
+                    self._was_spatial = False
+
                 out = pcm
 
             if night_mode:

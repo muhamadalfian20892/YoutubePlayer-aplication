@@ -503,19 +503,19 @@ class TestWXDialogsAndBugFixes(unittest.TestCase):
             self.assertEqual(picked_url, "https://example.com/audio.m4a")
             self.assertEqual(picked_id, "140")
 
-            # Lossless bit-perfect detection & bypass (both local and YouTube streams)
+            # Lossless mode keeps real-time DSP active on both local and YouTube streams
             panel.is_local_file = True
             panel.local_file_path = r"C:\music\audiophile.flac"
             panel.main_frame.settings["lossless_mode"] = True
             panel.main_frame.settings["spatial_audio_enabled"] = True
             self.assertTrue(panel._is_lossless_active())
-            self.assertFalse(panel._needs_dsp_pipeline())
+            self.assertTrue(panel._needs_dsp_pipeline())
 
-            # YouTube stream in lossless mode: DSP bypassed, abr>=200 selector active, peak bitrate picked
+            # YouTube stream in lossless mode: DSP remains active, abr>=200 selector active, peak bitrate picked
             panel.is_local_file = False
             panel.local_file_path = None
             self.assertTrue(panel._is_lossless_active())
-            self.assertFalse(panel._needs_dsp_pipeline())
+            self.assertTrue(panel._needs_dsp_pipeline())
             sel_str = panel._get_audio_format_selector()
             self.assertIn("abr>=200", sel_str)
 
@@ -813,11 +813,15 @@ class TestUpdaterAndExtendedDSPV17(unittest.TestCase):
         main_mock.is_favorite.return_value = False
         panel = audio_player_panel.AudioPlayerPanel(frame, main_mock)
         try:
-            # 1. Normalization alone keeps native WASAPI VLC output via normvol filter
-            self.assertFalse(panel._needs_dsp_pipeline())
+            # 1. Real-time DSP pipeline stays active so toggling normalization never restarts VLC;
+            # VLC normvol is only used as fallback when WinMM DSP output is unavailable
+            self.assertTrue(panel._needs_dsp_pipeline())
+            panel._using_dsp_output = True
+            self.assertFalse(panel._should_use_vlc_normvol())
+            panel._using_dsp_output = False
             self.assertTrue(panel._should_use_vlc_normvol())
             s["lossless_mode"] = True
-            self.assertFalse(panel._should_use_vlc_normvol())
+            self.assertTrue(panel._should_use_vlc_normvol())
             s["lossless_mode"] = False
 
             # 2. Mono button shows explicit On / Off state
@@ -861,6 +865,93 @@ class TestUpdaterAndExtendedDSPV17(unittest.TestCase):
             self.assertEqual(panel.audio_url, "https://example.com/18.mp4")
             self.assertEqual(panel.current_audio_format_id, "18")
             self.assertIsNone(panel._fallback_audio_stream)
+        finally:
+            panel.cleanup_on_exit()
+            frame.Destroy()
+
+    def test_v174_realtime_effects_no_restart_and_lossless_compatibility(self):
+        import audio_player_panel
+
+        app = wx.App.Get() or wx.App(False)
+        frame = wx.Frame(None)
+        main_mock = MagicMock()
+        main_mock.video_frame = None
+        s = settings_manager.load_settings()
+        s["lossless_mode"] = False
+        s["spatial_audio_enabled"] = False
+        s["bass_boost"] = 0
+        s["vocal_clarity_enabled"] = False
+        s["night_mode_enabled"] = False
+        s["mono_audio"] = False
+        s["audio_normalization"] = False
+        s["equalizer_enabled"] = True
+        s["equalizer_bands"] = [3.0] * constants.EQUALIZER_BANDS
+        s["nvda_ducking_enabled"] = False
+        main_mock.settings = s
+        main_mock.is_favorite.return_value = False
+        panel = audio_player_panel.AudioPlayerPanel(frame, main_mock)
+        try:
+            panel.is_loaded = True
+            panel.is_playing = True
+            panel.is_local_file = True
+            panel.audio_url = r"C:\music\track.flac"
+            panel._using_dsp_output = True
+
+            # Toggling or adjusting any effect must update DSP live without stopping/restarting VLC
+            with patch.object(panel.player, "stop") as mock_stop, patch.object(panel, "_play_media_with_vlc") as mock_play, patch("audio_player_panel.nvda.speak"):
+                panel.on_toggle_mono(None)
+                panel.on_toggle_mono(None)
+                panel.on_toggle_spatial_audio(None)
+                panel.apply_spatial_audio_settings({"enabled": True, "preset": "Ultra Wide", "width": 225, "room_size": 45, "depth": 55})
+                panel.on_cycle_bass_boost(None)
+                panel.on_toggle_vocal_clarity(None)
+                panel.on_toggle_night_mode(None)
+                panel.on_toggle_nvda_ducking(None)
+                panel.apply_normalization(True)
+                panel.on_toggle_lossless_mode(None)
+
+                mock_stop.assert_not_called()
+                mock_play.assert_not_called()
+
+            # Effects remain active when Lossless mode is enabled
+            self.assertTrue(s["lossless_mode"])
+            self.assertTrue(panel._needs_dsp_pipeline())
+            self.assertEqual(panel.spatial_processor.bass_boost, 35)
+            self.assertTrue(panel.spatial_processor.vocal_clarity)
+            self.assertTrue(panel.spatial_processor.night_mode)
+            self.assertTrue(panel.spatial_processor.normalization_enabled)
+            self.assertTrue(panel.spatial_processor.spatial_enabled)
+            self.assertIsNotNone(panel.player.get_media() if False else panel.equalizer)
+
+            # Telemetry readout includes Lossless and active effects
+            panel.video_title = "Lossless Track"
+            panel.video_uploader = "Artist"
+            spoken = []
+            with patch("audio_player_panel.nvda.speak", side_effect=lambda msg, *a, **k: spoken.append(msg)):
+                panel.speak_track_and_audio_info()
+            self.assertTrue(spoken)
+            info_msg = spoken[0]
+            self.assertIn("Lossless", info_msg)
+            self.assertIn("Spatial Audio", info_msg)
+            self.assertIn("Bass Boost 35%", info_msg)
+            self.assertIn("Vocal Clarity", info_msg)
+            self.assertIn("Night Mode", info_msg)
+            self.assertIn("Audio Normalization", info_msg)
+            self.assertIn("Equalizer", info_msg)
+
+            # Vocal Clarity + Spatial Audio stack together in SpatialAudioProcessor
+            pcm = _make_stereo_pcm(sample_rate=48000, duration_s=0.1, freq_l=440.0, freq_r=880.0, amp=10000)
+            proc_vc = spatial_audio.SpatialAudioProcessor(48000)
+            proc_vc.configure(vocal_clarity=True, spatial_enabled=False, volume_percent=100)
+            out_vc = proc_vc.process_chunk(pcm)
+
+            proc_both = spatial_audio.SpatialAudioProcessor(48000)
+            proc_both.configure(vocal_clarity=True, spatial_enabled=True, width=200, room_size=50, depth=50, volume_percent=100)
+            out_both = proc_both.process_chunk(pcm)
+            self.assertNotEqual(out_vc, out_both)
+            _, side_vc = _mid_side_rms(out_vc)
+            _, side_both = _mid_side_rms(out_both)
+            self.assertGreater(side_both, side_vc)
         finally:
             panel.cleanup_on_exit()
             frame.Destroy()

@@ -695,9 +695,16 @@ class SettingsPanel(wx.Panel):
                 utils.preload_sounds_async(self.main_frame.settings)
         elif feature_id in (feature_manager.FEATURE_MONO_AUDIO, feature_manager.FEATURE_SPATIAL_AUDIO, feature_manager.FEATURE_AUDIO_NORMALIZATION, feature_manager.FEATURE_EQUALIZER, feature_manager.FEATURE_BOOKMARKS, feature_manager.FEATURE_VIDEO_PLAYER, feature_manager.FEATURE_FAVORITES):
             if hasattr(self.main_frame, 'audio_player_panel') and self.main_frame.audio_player_panel:
-                self.main_frame.audio_player_panel.retranslate_ui()
-                if hasattr(self.main_frame.audio_player_panel, '_apply_dsp_backend_transition'):
-                    self.main_frame.audio_player_panel._apply_dsp_backend_transition()
+                ap = self.main_frame.audio_player_panel
+                ap.retranslate_ui()
+                if feature_id == feature_manager.FEATURE_EQUALIZER:
+                    ap.apply_equalizer_settings({
+                        "enabled": enabled and self.main_frame.settings.get("equalizer_enabled", False),
+                        "preamp": self.main_frame.settings.get("equalizer_preamp", constants.DEFAULT_PREAMP_PERCENT),
+                        "bands": self.main_frame.settings.get("equalizer_bands", constants.EQUALIZER_PRESETS["Flat"]),
+                    })
+                elif hasattr(ap, '_apply_dsp_backend_transition'):
+                    ap._apply_dsp_backend_transition()
 
 
     def on_search_mode_change(self, event):

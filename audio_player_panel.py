@@ -73,6 +73,7 @@ class AudioPlayerPanel(wx.Panel):
         self.spatial_processor = spatial_audio.SpatialAudioProcessor(sample_rate=constants.DSP_SAMPLE_RATE)
         self.winmm_output = spatial_audio.WinMMOutput()
         self._using_dsp_output = False
+        self._dsp_backend_failed = False
         self._dsp_callbacks = None
 
         # Audiophile & Blind-First Playback Enhancements
@@ -1114,24 +1115,16 @@ class AudioPlayerPanel(wx.Panel):
             print(f"Background fetch for all audio tracks failed: {e}")
 
     def _is_lossless_active(self):
-        """Returns True whenever Lossless Bit-Perfect direct mode is enabled (YouTube and local)."""
+        """Returns True whenever Lossless high-bitrate stream selection mode is enabled."""
         return bool(self.main_frame.settings.get("lossless_mode", False))
 
     def _needs_dsp_pipeline(self):
-        if self._is_lossless_active():
-            return False
-        s = self.main_frame.settings
-        spatial_on = feature_manager.is_feature_enabled(s, feature_manager.FEATURE_SPATIAL_AUDIO) and s.get("spatial_audio_enabled", False)
-        mono_on = feature_manager.is_feature_enabled(s, feature_manager.FEATURE_MONO_AUDIO) and s.get("mono_audio", False)
-        bass_on = int(s.get("bass_boost", 0)) > 0
-        vocal_on = bool(s.get("vocal_clarity_enabled", False))
-        night_on = bool(s.get("night_mode_enabled", False))
-        duck_on = bool(s.get("nvda_ducking_enabled", False))
-        return bool(spatial_on or mono_on or bass_on or vocal_on or night_on or duck_on)
+        """Keeps the real-time 48 kHz WinMM DSP pipeline active so effects toggle live without restarting audio."""
+        return True
 
     def _should_use_vlc_normvol(self):
-        """Uses VLC's native float stereo normalizer when normalization is the only active effect."""
-        if self._is_lossless_active() or self._using_dsp_output:
+        """Uses VLC's native float stereo normalizer only as a fallback when WinMM DSP output is unavailable."""
+        if self._using_dsp_output:
             return False
         s = self.main_frame.settings
         return (
@@ -1189,7 +1182,9 @@ class AudioPlayerPanel(wx.Panel):
                 if self._using_dsp_output:
                     self._recreate_native_player()
                 self._using_dsp_output = False
+                self._dsp_backend_failed = True
                 return
+            self._dsp_backend_failed = False
 
             if not self._dsp_callbacks:
                 @vlc.CallbackDecorators.AudioPlayCb
@@ -1305,7 +1300,7 @@ class AudioPlayerPanel(wx.Panel):
         self.player.set_rate(rate)
         
         eq_settings = {
-            "enabled": (not self._is_lossless_active()) and feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_EQUALIZER) and self.main_frame.settings.get("equalizer_enabled", False),
+            "enabled": feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_EQUALIZER) and self.main_frame.settings.get("equalizer_enabled", False),
             "preamp": self.main_frame.settings.get("equalizer_preamp", constants.DEFAULT_PREAMP_PERCENT),
             "bands": self.main_frame.settings.get("equalizer_bands", constants.EQUALIZER_PRESETS["Flat"]),
         }
@@ -2452,10 +2447,10 @@ class AudioPlayerPanel(wx.Panel):
         self.player.set_equalizer(self.equalizer)
 
     def _apply_dsp_backend_transition(self):
-        """Updates live DSP parameters in 0 ms, or switches VLC output backend smoothly."""
+        """Updates live DSP parameters in 0 ms without stopping or restarting playback."""
         self._sync_dsp_settings()
         need_dsp = self._needs_dsp_pipeline()
-        if need_dsp == self._using_dsp_output:
+        if need_dsp == self._using_dsp_output or (need_dsp and self._dsp_backend_failed):
             return
         if self.is_loaded and self.player and self.audio_url:
             cur_time = self.player.get_time()
@@ -2526,10 +2521,11 @@ class AudioPlayerPanel(wx.Panel):
         self._apply_dsp_backend_transition()
 
     def apply_normalization(self, enabled):
+        self.main_frame.settings["audio_normalization"] = bool(enabled)
         self._sync_dsp_settings()
         if self._using_dsp_output:
             return
-        if not self._is_lossless_active() and self.is_loaded and self.player and self.audio_url:
+        if self.is_loaded and self.player and self.audio_url:
             cur_time = self.player.get_time()
             was_playing = self.is_playing
             self.resume_position_ms = cur_time if cur_time > 0 else self._last_valid_pos_ms
@@ -2613,7 +2609,7 @@ class AudioPlayerPanel(wx.Panel):
     def _apply_nvda_duck_hook(self):
         if self.main_frame.settings.get("nvda_ducking_enabled", False):
             def _on_nvda_speak(spoken_text):
-                if self.is_playing and self._using_dsp_output and not self._is_lossless_active():
+                if self.is_playing and self._using_dsp_output:
                     dur = max(0.8, min(4.0, len(spoken_text) * 0.055 + 0.5))
                     self.spatial_processor.trigger_duck(duration_s=dur, level=0.30)
             nvda.set_speech_hook(_on_nvda_speak)
@@ -2648,15 +2644,23 @@ class AudioPlayerPanel(wx.Panel):
         modes = []
         s = self.main_frame.settings
         if self._is_lossless_active():
-            modes.append(_("Lossless Bit-Perfect"))
-        else:
-            if s.get("spatial_audio_enabled"): modes.append(_("Spatial Audio"))
-            if int(s.get("bass_boost", 0)) > 0: modes.append(_("Bass Boost {}%").format(s.get("bass_boost")))
-            if s.get("vocal_clarity_enabled"): modes.append(_("Vocal Clarity"))
-            if s.get("night_mode_enabled"): modes.append(_("Night Mode"))
-            if s.get("mono_audio"): modes.append(_("Mono"))
-            if s.get("equalizer_enabled"): modes.append(_("Equalizer"))
-            if s.get("nvda_ducking_enabled"): modes.append(_("NVDA Ducking"))
+            modes.append(_("Lossless"))
+        if feature_manager.is_feature_enabled(s, feature_manager.FEATURE_SPATIAL_AUDIO) and s.get("spatial_audio_enabled"):
+            modes.append(_("Spatial Audio"))
+        if int(s.get("bass_boost", 0)) > 0:
+            modes.append(_("Bass Boost {}%").format(s.get("bass_boost")))
+        if s.get("vocal_clarity_enabled"):
+            modes.append(_("Vocal Clarity"))
+        if s.get("night_mode_enabled"):
+            modes.append(_("Night Mode"))
+        if feature_manager.is_feature_enabled(s, feature_manager.FEATURE_MONO_AUDIO) and s.get("mono_audio"):
+            modes.append(_("Mono"))
+        if feature_manager.is_feature_enabled(s, feature_manager.FEATURE_AUDIO_NORMALIZATION) and s.get("audio_normalization"):
+            modes.append(_("Audio Normalization"))
+        if feature_manager.is_feature_enabled(s, feature_manager.FEATURE_EQUALIZER) and s.get("equalizer_enabled"):
+            modes.append(_("Equalizer"))
+        if s.get("nvda_ducking_enabled"):
+            modes.append(_("NVDA Ducking"))
         mode_str = ", ".join(modes) if modes else _("Standard")
 
         ext_info = _("Local File") if self.is_local_file else _("YouTube Stream")
@@ -2758,15 +2762,12 @@ class AudioPlayerPanel(wx.Panel):
         self.main_frame.settings["lossless_mode"] = new_val
         self.main_frame.save_settings()
 
-        if new_val:
-            self.apply_equalizer_settings({"enabled": False})
-        else:
-            eq_settings = {
-                "enabled": feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_EQUALIZER) and self.main_frame.settings.get("equalizer_enabled", False),
-                "preamp": self.main_frame.settings.get("equalizer_preamp", constants.DEFAULT_PREAMP_PERCENT),
-                "bands": self.main_frame.settings.get("equalizer_bands", constants.EQUALIZER_PRESETS["Flat"]),
-            }
-            self.apply_equalizer_settings(eq_settings)
+        eq_settings = {
+            "enabled": feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_EQUALIZER) and self.main_frame.settings.get("equalizer_enabled", False),
+            "preamp": self.main_frame.settings.get("equalizer_preamp", constants.DEFAULT_PREAMP_PERCENT),
+            "bands": self.main_frame.settings.get("equalizer_bands", constants.EQUALIZER_PRESETS["Flat"]),
+        }
+        self.apply_equalizer_settings(eq_settings)
 
         upgraded_stream = False
         if new_val and self.is_loaded and not self.is_local_file and self.available_audio_tracks:
@@ -2808,18 +2809,8 @@ class AudioPlayerPanel(wx.Panel):
             self._fallback_audio_stream = None
 
         if not upgraded_stream:
-            prev_dsp = self._using_dsp_output
             self._apply_dsp_backend_transition()
-            if (
-                not new_val
-                and not prev_dsp
-                and self._should_use_vlc_normvol()
-                and self.is_loaded
-                and self.player
-                and self.audio_url
-            ):
-                self.apply_normalization(True)
-        nvda.speak(_("Lossless Bit-Perfect mode enabled.") if new_val else _("Lossless Bit-Perfect mode disabled."))
+        nvda.speak(_("Lossless mode enabled.") if new_val else _("Lossless mode disabled."))
 
     def on_cycle_bass_boost(self, event=None):
         levels = [0, 35, 70, 100]
