@@ -2,14 +2,11 @@ import wx
 import os
 import re
 import threading
-import requests
+import importlib.util
 
-try:
-    import lyricsgenius
-    LYRICSGENIUS_ENABLED = True
-except ImportError:
-    lyricsgenius = None
-    LYRICSGENIUS_ENABLED = False
+# Defer importing lyricsgenius (and bs4/requests) until a lyrics search is started.
+lyricsgenius = None
+LYRICSGENIUS_ENABLED = importlib.util.find_spec("lyricsgenius") is not None
 
 # Local application imports
 import nvda
@@ -36,15 +33,24 @@ class LyricsSearchPanel(wx.Panel):
         self.current_artist = ""
         self.current_title = ""
 
-        self._initialize_genius()
         self.InitUI()
+
+    def get_genius(self):
+        """Lazily initializes and returns the Genius API client off the startup path."""
+        if self.genius is None:
+            self._initialize_genius()
+        return self.genius
 
     def _initialize_genius(self):
         """Initializes the lyricsgenius library instance."""
-        if not LYRICSGENIUS_ENABLED or lyricsgenius is None:
+        global lyricsgenius, LYRICSGENIUS_ENABLED
+        if not LYRICSGENIUS_ENABLED:
             self.genius = None
             return
         try:
+            if lyricsgenius is None:
+                import lyricsgenius as _lg
+                lyricsgenius = _lg
             self.genius = lyricsgenius.Genius(
                 self.token, skip_non_songs=True, excluded_terms=["(Remix)", "(Live)"],
                 remove_section_headers=True, timeout=20, retries=2
@@ -104,7 +110,7 @@ class LyricsSearchPanel(wx.Panel):
         self.SetSizer(vbox)
         self.retranslate_ui() # Call after UI elements are created
 
-        if self.genius:
+        if LYRICSGENIUS_ENABLED or self.genius:
             self.tc_artis.MoveAfterInTabOrder(self.tc_judul)
             self.cb_no_artist.MoveAfterInTabOrder(self.tc_artis)
             self.button_cari.MoveAfterInTabOrder(self.cb_no_artist)
@@ -209,7 +215,7 @@ class LyricsSearchPanel(wx.Panel):
                     print(error_msg)
 
     def OnSearchLyrics(self, event):
-        if not self.genius:
+        if not LYRICSGENIUS_ENABLED and not self.genius:
             utils.show_error_dialog(self, _("Lyrics component not initialized."), _("Error"))
             return
         if self.search_in_progress:
@@ -238,7 +244,7 @@ class LyricsSearchPanel(wx.Panel):
         threading.Thread(target=self.perform_search, args=(artis, judul, no_artist, False), daemon=True).start()
 
     def search_lyrics_auto(self, title, artist):
-        if not self.genius or not title or not artist:
+        if (not LYRICSGENIUS_ENABLED and not self.genius) or not title or not artist:
             print("Auto-fetch: Genius not ready or missing title/artist.")
             return
         if self.search_in_progress:
@@ -261,6 +267,7 @@ class LyricsSearchPanel(wx.Panel):
         threading.Thread(target=self.perform_search, args=(artist, title, False, True), daemon=True).start()
 
     def perform_search(self, artist, title, no_artist, is_auto=False):
+        import requests
         error_message = None
         results = None
 
@@ -268,8 +275,12 @@ class LyricsSearchPanel(wx.Panel):
             if not utils.is_internet_available():
                 raise requests.exceptions.ConnectionError(_("No internet connection detected."))
 
+            genius = self.get_genius()
+            if not genius:
+                raise RuntimeError(_("Lyrics component not initialized."))
+
             if no_artist and not is_auto:
-                response = self.genius.search_songs(title, per_page=15)
+                response = genius.search_songs(title, per_page=15)
                 results = response.get('hits', []) if response else []
                 results = self._remove_duplicate_results(results)
                 if results:
@@ -314,7 +325,7 @@ class LyricsSearchPanel(wx.Panel):
         if not self:
             return
         self.search_in_progress = False
-        if self.genius:
+        if LYRICSGENIUS_ENABLED or self.genius:
             self.button_cari.Enable()
         if wx.IsBusy():
             wx.EndBusyCursor()
@@ -354,6 +365,7 @@ class LyricsSearchPanel(wx.Panel):
             wx.CallAfter(self.finalize_search)
 
     def _fetch_selected_lyrics(self, artist, title):
+        import requests
         lyrics = None
         error_message = None
         try:
@@ -405,9 +417,11 @@ class LyricsSearchPanel(wx.Panel):
         self.button_save.Disable()
 
     def _fetch_lyrics_direct(self, artist, title):
-        if not self.genius: return None
+        import requests
+        genius = self.get_genius()
+        if not genius: return None
         try:
-            song = self.genius.search_song(title=title, artist=artist)
+            song = genius.search_song(title=title, artist=artist)
             if song and hasattr(song, 'lyrics'):
                 lyrics = self._clean_lyrics(song.lyrics)
                 return lyrics.strip() if lyrics else None

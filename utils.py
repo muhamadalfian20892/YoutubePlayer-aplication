@@ -3,7 +3,7 @@ import re
 import os
 import sys
 import threading
-import requests
+import importlib.util
 from datetime import datetime
 
 # Local application imports
@@ -15,41 +15,65 @@ from translation_manager import _
 # Suppress pygame welcome banner
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
-# Safely import the pygame library
-try:
-    import pygame
-    SOUNDS_ENABLED = True
-    # We will initialize the mixer in the main app entry point
-except ImportError:
-    SOUNDS_ENABLED = False
-    print("Warning: 'pygame' library not found. Install it (`pip install pygame`) to enable application sounds.")
+# Defer importing pygame (SDL/audio DLLs) until sound effects are initialized off the startup path.
+_pygame = None
+_sound_init_lock = threading.Lock()
+SOUNDS_ENABLED = importlib.util.find_spec("pygame") is not None
 
 # Cache for loaded sound objects to avoid disk I/O
 _sound_cache = {}
 _last_sound_play_time = {}
 
-def preload_sounds_async(settings=None):
-    """Preloads all defined sound files into _sound_cache in a background thread."""
+
+def init_sound_engine_async(settings=None, on_ready=None):
+    """Initializes pygame.mixer and preloads sound assets in a background thread."""
     if not SOUNDS_ENABLED:
         return
     if settings and not settings.get("sound_effects_enabled", True):
         return
 
-    def _worker():
-        if not pygame.mixer.get_init():
+    def _invoke_ready():
+        if not on_ready:
             return
-        for ev_info in constants.SOUND_EVENTS.values():
-            fn = ev_info.get('file')
-            if fn and fn not in _sound_cache:
-                sp = path_utils.get_resource_path(os.path.join("sound", fn))
-                if os.path.exists(sp):
-                    try:
-                        _sound_cache[fn] = pygame.mixer.Sound(sp)
-                    except Exception:
-                        pass
+        if wx.GetApp() is not None and not wx.IsMainThread():
+            wx.CallAfter(on_ready)
+        else:
+            on_ready()
 
-    t = threading.Thread(target=_worker, daemon=True, name="SoundPreloadThread")
-    t.start()
+    def _worker():
+        global _pygame, SOUNDS_ENABLED
+        with _sound_init_lock:
+            if _pygame is None:
+                try:
+                    import pygame as _pg
+                    _pygame = _pg
+                except ImportError:
+                    SOUNDS_ENABLED = False
+                    print("Warning: 'pygame' library not found. Install it (`pip install pygame`) to enable application sounds.")
+                    return
+            try:
+                if not _pygame.mixer.get_init():
+                    _pygame.mixer.init()
+                for ev_info in constants.SOUND_EVENTS.values():
+                    fn = ev_info.get('file')
+                    if fn and fn not in _sound_cache:
+                        sp = path_utils.get_resource_path(os.path.join("sound", fn))
+                        if os.path.exists(sp):
+                            try:
+                                _sound_cache[fn] = _pygame.mixer.Sound(sp)
+                            except Exception:
+                                pass
+            except Exception as e:
+                print(f"Could not initialize pygame mixer for sounds: {e}")
+                return
+        _invoke_ready()
+
+    threading.Thread(target=_worker, daemon=True, name="SoundEngineInitThread").start()
+
+
+def preload_sounds_async(settings=None):
+    """Preloads all defined sound files into _sound_cache in a background thread."""
+    init_sound_engine_async(settings=settings)
 
 
 def clear_sound_cache():
@@ -67,7 +91,11 @@ def play_sound(settings, event_key):
     if not settings.get("sound_effects_enabled", True):
         return
 
-    if not pygame.mixer.get_init():
+    if _pygame is None:
+        init_sound_engine_async(settings)
+        return
+
+    if not _pygame.mixer.get_init():
         return
 
     # Throttle identical sound events triggered within 50ms to prevent audio queue lag
@@ -103,7 +131,7 @@ def play_sound(settings, event_key):
                 print(_("Notification sound file not found: {}").format(sound_file_path))
                 return
             
-            sound = pygame.mixer.Sound(sound_file_path)
+            sound = _pygame.mixer.Sound(sound_file_path)
             _sound_cache[sound_filename] = sound
 
         # Calculate and set volume (check both sound_effects_volume and master_volume for compatibility)
@@ -115,7 +143,7 @@ def play_sound(settings, event_key):
         
         sound.play()
 
-    except pygame.error as e:
+    except _pygame.error as e:
         print(f"Error playing sound '{sound_filename}' with pygame: {e}")
 
 
@@ -181,6 +209,7 @@ def format_filesize(size_bytes):
 
 def is_internet_available():
     """Checks for a basic internet connection."""
+    import requests
     try:
         requests.get("https://www.google.com", timeout=5)
         return True

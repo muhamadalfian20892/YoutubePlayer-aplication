@@ -1,11 +1,9 @@
 import os
 import sys
-import requests
-import zipfile
-import shutil
 import wx
 import time
 import re
+import importlib.util
 
 try:
     from translation_manager import _
@@ -75,6 +73,10 @@ def _perform_download_and_install(progress_callback=None):
     Uses a progress_callback if provided, otherwise shows a wx.ProgressDialog.
     Returns (True, success_message) or (False, error_message).
     """
+    import requests
+    import zipfile
+    import shutil
+
     app_data_path = get_app_data_path()
     api_url = 'https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest'
     headers = {'User-Agent': 'Tunevia/1.0 (https://github.com/Technokers/Tunevia)'}
@@ -183,6 +185,7 @@ def run_update_from_panel(progress_callback):
     """
     # Check current version first to avoid unnecessary downloads
     try:
+        import requests
         import yt_dlp
         from packaging import version
         current = version.parse(yt_dlp.version.__version__)
@@ -204,27 +207,21 @@ def run_update_from_panel(progress_callback):
 
 def ensure_yt_dlp():
     """
-    Checks if yt-dlp is installed. If not, triggers the installation.
-    Adds the correct path to sys.path for importing.
+    Checks if yt-dlp is installed without importing it on startup.
+    Adds the correct path to sys.path so later playback/download imports resolve fast.
     """
     # 1. First, check if custom yt-dlp exists in AppData
     yt_dlp_path = get_yt_dlp_path()
-    if os.path.isdir(yt_dlp_path):
+    if os.path.isfile(os.path.join(yt_dlp_path, "__init__.py")):
         setup_sys_path()
-        try:
-            import yt_dlp
-            print("Found existing yt-dlp installation in AppData.")
-            return True
-        except Exception as e:
-            print(f"Warning: Failed importing yt_dlp from AppData: {e}")
+        print("Found existing yt-dlp installation in AppData.")
+        return True
 
-    # 2. Check if yt_dlp is already bundled in the environment / PyInstaller bundle
-    try:
-        import yt_dlp
+    # 2. Check if yt_dlp spec is discoverable in the bundled/environment path
+    setup_sys_path()
+    if importlib.util.find_spec("yt_dlp") is not None:
         print("Using bundled/environment yt-dlp.")
         return True
-    except ImportError:
-        pass
 
     # 3. Fallback to download only if not available anywhere
     print("yt-dlp not found. Starting automatic installation process.")

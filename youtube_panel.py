@@ -2,7 +2,7 @@ import wx
 import re
 import threading
 import webbrowser
-import requests
+import importlib.util
 import traceback
 import time
 import random
@@ -15,14 +15,9 @@ import utils
 import feature_manager
 from translation_manager import _
 
-
-
-# Import YouTube Music API library safely
-try:
-    from ytmusicapi import YTMusic
-    YTMUSIC_ENABLED = True
-except ImportError:
-    YTMUSIC_ENABLED = False
+# Defer importing ytmusicapi until YouTube Music mode is actually used.
+YTMUSIC_ENABLED = importlib.util.find_spec("ytmusicapi") is not None
+if not YTMUSIC_ENABLED:
     print("Warning: YouTube Music API not found. Please run 'pip install ytmusicapi' to enable YouTube Music search.")
 from video_comments_dialog import VideoCommentsDialog
 
@@ -57,8 +52,8 @@ class YoutubeSearchPanel(wx.Panel):
         self.Bind(wx.EVT_TIMER, self._on_prefetch_timer, self.prefetch_timer)
         self._pending_prefetch_url = None
 
-        # Persistent HTTP session and in-memory caches for blazingly fast queries
-        self.http_session = requests.Session()
+        # Persistent HTTP session (created lazily on first network query) and in-memory caches
+        self._http_session = None
         self._video_details_cache = {}
         self._continuation_tokens = {}
 
@@ -68,12 +63,20 @@ class YoutubeSearchPanel(wx.Panel):
         self.InitUI()
         self.Bind(wx.EVT_WINDOW_DESTROY, self._on_destroy)
 
+    @property
+    def http_session(self):
+        if self._http_session is None:
+            import requests
+            self._http_session = requests.Session()
+        return self._http_session
+
     def _on_destroy(self, event):
-        if hasattr(self, 'http_session') and self.http_session:
+        if getattr(self, '_http_session', None):
             try:
-                self.http_session.close()
+                self._http_session.close()
             except Exception:
                 pass
+            self._http_session = None
         event.Skip()
 
     def get_ytmusic(self):
@@ -83,6 +86,7 @@ class YoutubeSearchPanel(wx.Panel):
             return None
         if self.ytmusic is None:
             try:
+                from ytmusicapi import YTMusic
                 self.ytmusic = YTMusic()
             except Exception as e:
                 print(f"Failed to initialize YTMusic API: {e}")
@@ -655,7 +659,7 @@ class YoutubeSearchPanel(wx.Panel):
         fetched_results, error_msg, list_title = [], None, None
         try:
             if not utils.is_internet_available():
-                raise requests.exceptions.ConnectionError(_("No internet connection detected."))
+                raise ConnectionError(_("No internet connection detected."))
 
             # Fast-path 1: Direct InnerTube search for standard keyword queries
             if search_type == 'search':
@@ -727,7 +731,7 @@ class YoutubeSearchPanel(wx.Panel):
         fetched_results, error_msg = [], None
         try:
             if not utils.is_internet_available():
-                raise requests.exceptions.ConnectionError(_("No internet connection detected."))
+                raise ConnectionError(_("No internet connection detected."))
 
             ytm = self.get_ytmusic()
             if not ytm:

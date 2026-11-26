@@ -52,8 +52,6 @@ from datetime import datetime, timezone
 # --- Third-Party Imports ---
 import wx
 import wx.adv
-import requests
-from packaging import version
 
 # --- Local Application Imports ---
 # Importing these after sys.path is fixed
@@ -84,9 +82,6 @@ yt_dlp_manager.setup_sys_path()
 
 # --- Initialize Translation ---
 translation_manager.set_language()
-
-# --- Configure VLC Environment ---
-path_utils.setup_vlc_environment()
 
 # --- Core Component Imports ---
 from youtube_panel import YoutubeSearchPanel
@@ -260,13 +255,26 @@ class MainFrame(wx.Frame):
         # Build accelerators for Ctrl+Number shortcuts
         self.rebuild_accelerators_and_hotkeys()
         
-        # Play startup sound with a slight delay
+        # Start VLC and sound subsystems off the critical window-creation path
         def play_logo_sound():
+            if not self:
+                return
             startup_cfg = self.settings.get("sound_settings", {}).get("app_startup", True)
             startup_enabled = startup_cfg.get("enabled", True) if isinstance(startup_cfg, dict) else bool(startup_cfg)
             if self.settings.get("sound_effects_enabled", True) and startup_enabled:
                 utils.play_sound(self.settings, "app_startup")
-        wx.CallLater(500, play_logo_sound)
+
+        def _start_deferred_subsystems():
+            if not self:
+                return
+            if self.audio_player_panel:
+                self.audio_player_panel.start_vlc_init_async()
+            utils.init_sound_engine_async(
+                self.settings,
+                on_ready=lambda: wx.CallLater(150, play_logo_sound) if self else None,
+            )
+
+        wx.CallAfter(_start_deferred_subsystems)
         
         # Check for post-update version bump, then optionally check quietly for new app updates
         wx.CallLater(2000, self.check_for_updates_and_show_whats_new)
@@ -324,9 +332,9 @@ class MainFrame(wx.Frame):
                 self.audio_player_panel.cleanup_on_exit()
             except Exception as e:
                 print(f"Error during audio player cleanup: {e}")
-        if hasattr(self, 'youtube_panel') and self.youtube_panel and hasattr(self.youtube_panel, 'http_session'):
+        if hasattr(self, 'youtube_panel') and self.youtube_panel and getattr(self.youtube_panel, '_http_session', None):
             try:
-                self.youtube_panel.http_session.close()
+                self.youtube_panel._http_session.close()
             except Exception:
                 pass
         if getattr(self, 'taskbar_icon', None):
@@ -345,7 +353,7 @@ class MainFrame(wx.Frame):
 
         # Initialize Core panels (always created)
         self.youtube_panel = YoutubeSearchPanel(self.notebook, self)
-        self.audio_player_panel = AudioPlayerPanel(self.notebook, self)
+        self.audio_player_panel = AudioPlayerPanel(self.notebook, self, defer_vlc_init=True)
         self.settings_panel = SettingsPanel(self.notebook, self)
         self.help_panel = HelpPanel(self.notebook, self)
 
@@ -898,6 +906,7 @@ class MainFrame(wx.Frame):
             self.save_settings()
             return
 
+        from packaging import version
         try:
             if version.parse(current_version_str) > version.parse(last_version_str):
                 self.settings["last_run_version"] = current_version_str
@@ -1129,16 +1138,6 @@ if __name__ == '__main__':
 
         print("Initializing ThemeManager...")
         ThemeManager.initialize()
-
-        print("Initializing pygame mixer...")
-        try:
-            import pygame
-            pygame.mixer.init()
-            print("Pygame mixer initialized.")
-            # Preload sounds in background to avoid stutter during navigation
-            utils.preload_sounds_async(settings)
-        except Exception as e:
-            print(f"Could not initialize pygame mixer for sounds: {e}")
 
         print("Ensuring yt-dlp...")
         if not yt_dlp_manager.ensure_yt_dlp():

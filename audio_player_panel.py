@@ -16,16 +16,11 @@ import spatial_audio
 from translation_manager import _
 from ui_components import EqualizerDialog, BookmarksDialog, SpatialAudioDialog, SleepTimerDialog, UpNextQueueDialog
 
-# Ensure VLC DLL paths and environment are configured before importing vlc
-path_utils.setup_vlc_environment()
+import importlib.util
 
-# Safely import the vlc library
-try:
-    import vlc
-    VLC_ENABLED = True
-except (Exception, SystemExit) as e:
-    VLC_ENABLED = False
-    print(f"FATAL: VLC library failed to load ({e}). Please ensure VLC SDK/binaries are available.")
+# Defer VLC DLL loading and import until player initialization.
+vlc = None
+VLC_ENABLED = importlib.util.find_spec("vlc") is not None
 
 # TurboStream Predictive Stream URL Cache & Concurrency Controls
 _STREAM_CACHE_TTL = 14400  # 4 hours TTL
@@ -57,7 +52,7 @@ class AudioPlayerPanel(wx.Panel):
     """
     A wx.Panel that contains all controls for audio playback, using a VLC backend.
     """
-    def __init__(self, parent, main_frame):
+    def __init__(self, parent, main_frame, defer_vlc_init=False):
         super().__init__(parent)
         self.main_frame = main_frame
 
@@ -69,6 +64,10 @@ class AudioPlayerPanel(wx.Panel):
         self.equalizer_dialog = None
         self.bookmarks_dialog = None
         self.spatial_dialog = None
+        self._vlc_ready_event = threading.Event()
+        self._vlc_init_lock = threading.Lock()
+        self._vlc_init_thread = None
+        self._defer_vlc_init = bool(defer_vlc_init)
 
         # Spatial Audio & DSP Output State
         self.spatial_processor = spatial_audio.SpatialAudioProcessor(sample_rate=constants.DSP_SAMPLE_RATE)
@@ -145,13 +144,42 @@ class AudioPlayerPanel(wx.Panel):
         self.audio_devices = []
         self.devices_populated = False
 
-        self._init_vlc()
         self.init_ui()
         self._sync_dsp_settings()
         self._apply_nvda_duck_hook()
         self._disable_controls()
 
-        wx.CallLater(2000, self.populate_audio_devices_choice)
+        if not self._defer_vlc_init:
+            self._init_vlc()
+            wx.CallLater(2000, self.populate_audio_devices_choice)
+
+    def start_vlc_init_async(self):
+        """Initializes VLC off the UI thread so the main window appears immediately."""
+        if self.player is not None or not VLC_ENABLED:
+            self._vlc_ready_event.set()
+            return
+        if self._vlc_init_thread and self._vlc_init_thread.is_alive():
+            return
+
+        def _bg_init():
+            self._init_vlc()
+            if self.player is not None and wx.GetApp() is not None:
+                wx.CallAfter(self.populate_audio_devices_choice)
+
+        self._vlc_init_thread = threading.Thread(target=_bg_init, daemon=True, name="VLCInitThread")
+        self._vlc_init_thread.start()
+
+    def ensure_vlc_ready(self, timeout=15.0):
+        """Ensures VLC backend initialization has completed before playback."""
+        if self.player is not None:
+            return True
+        if self._vlc_init_thread and self._vlc_init_thread.is_alive():
+            self._vlc_ready_event.wait(timeout=timeout)
+            return self.player is not None
+        if VLC_ENABLED:
+            self._init_vlc()
+            return self.player is not None
+        return False
 
     def _on_debounced_seek_timer(self, event):
         if self._pending_seek_pos is not None and self.player and self.is_loaded:
@@ -174,87 +202,100 @@ class AudioPlayerPanel(wx.Panel):
 
     def _init_vlc(self):
         """Initializes the VLC instance and media player with PyInstaller awareness and robust logging."""
-        global VLC_ENABLED
+        global vlc, VLC_ENABLED
         import traceback
 
-        is_frozen = getattr(sys, 'frozen', False)
-        meipass_dir = getattr(sys, '_MEIPASS', None)
+        with self._vlc_init_lock:
+            if self.vlc_instance is not None and self.player is not None:
+                self._vlc_ready_event.set()
+                return
 
-        print("=== VLC Initialization Diagnostics ===")
-        print(f"[VLC Log] Running from frozen bundle: {is_frozen}")
-        if meipass_dir:
-            print(f"[VLC Log] sys._MEIPASS directory: {meipass_dir}")
+            is_frozen = getattr(sys, 'frozen', False)
+            meipass_dir = getattr(sys, '_MEIPASS', None)
 
-        if not VLC_ENABLED:
-            print("[VLC Log] VLC_ENABLED is False (import failed).")
-            utils.show_error_dialog(self.main_frame, _("VLC library is not installed. Playback is disabled."), _("VLC Error"))
-            return
+            print("=== VLC Initialization Diagnostics ===")
+            print(f"[VLC Log] Running from frozen bundle: {is_frozen}")
+            if meipass_dir:
+                print(f"[VLC Log] sys._MEIPASS directory: {meipass_dir}")
 
-        # 1. Ensure VLC DLL directory and environment are configured
-        path_utils.setup_vlc_environment()
-        vlc_dll_file = path_utils.get_resource_path('libvlc.dll')
-        vlc_bin_dir = os.path.dirname(vlc_dll_file) if (vlc_dll_file and os.path.exists(vlc_dll_file)) else None
+            if not VLC_ENABLED:
+                print("[VLC Log] VLC_ENABLED is False (import failed).")
+                utils.show_error_dialog(self.main_frame, _("VLC library is not installed. Playback is disabled."), _("VLC Error"))
+                self._vlc_ready_event.set()
+                return
 
-        print(f"[VLC Log] Resolved libvlc.dll path: {vlc_dll_file}")
-        print(f"[VLC Log] libvlc.dll exists: {os.path.exists(vlc_dll_file) if vlc_dll_file else False}")
-        print(f"[VLC Log] Resolved VLC bin directory: {vlc_bin_dir}")
+            # 1. Ensure VLC DLL directory and environment are configured
+            path_utils.setup_vlc_environment()
+            vlc_dll_file = path_utils.get_resource_path('libvlc.dll')
+            vlc_bin_dir = os.path.dirname(vlc_dll_file) if (vlc_dll_file and os.path.exists(vlc_dll_file)) else None
 
-        # 2. Resolve VLC plugins directory
-        plugin_path = path_utils.get_resource_path('plugins')
-        plugin_exists = os.path.isdir(plugin_path) if plugin_path else False
+            print(f"[VLC Log] Resolved libvlc.dll path: {vlc_dll_file}")
+            print(f"[VLC Log] libvlc.dll exists: {os.path.exists(vlc_dll_file) if vlc_dll_file else False}")
+            print(f"[VLC Log] Resolved VLC bin directory: {vlc_bin_dir}")
 
-        print(f"[VLC Log] Resolved VLC plugin path: {plugin_path}")
-        print(f"[VLC Log] VLC plugin path exists: {plugin_exists}")
+            # 2. Resolve VLC plugins directory and sync cache mtimes after ZIP extraction
+            plugin_path = path_utils.get_resource_path('plugins')
+            plugin_exists = os.path.isdir(plugin_path) if plugin_path else False
 
-        # 3. Create VLC Instance and Media Player
-        # Note: In VLC 3.0+, VLC_PLUGIN_PATH env var is used; --plugin-path is deprecated.
-        try:
-            vlc_args = [
-                "--no-xlib",
-                "--quiet",
-                "--no-plugins-cache",
-                "--network-caching=500",
-                "--file-caching=500",
-                "--live-caching=500",
-                "--sout-mux-caching=500",
-                "--http-reconnect"
-            ]
+            print(f"[VLC Log] Resolved VLC plugin path: {plugin_path}")
+            print(f"[VLC Log] VLC plugin path exists: {plugin_exists}")
+            if plugin_exists:
+                matched, patched = path_utils.sync_vlc_plugins_cache(plugin_path)
+                print(f"[VLC Log] Plugin cache sync: matched={matched}, patched={patched}")
 
-            print(f"[VLC Log] Creating vlc.Instance with args: {vlc_args}")
-            self.vlc_instance = vlc.Instance(*vlc_args)
+            # 3. Create VLC Instance and Media Player
+            # Note: In VLC 3.0+, VLC_PLUGIN_PATH env var is used; --plugin-path is deprecated.
+            try:
+                if vlc is None:
+                    import vlc as _vlc_mod
+                    vlc = _vlc_mod
 
-            if self.vlc_instance is None:
-                raise RuntimeError("vlc.Instance(...) returned None. Plugin path or VLC binaries may be invalid.")
+                vlc_args = [
+                    "--no-xlib",
+                    "--quiet",
+                    "--network-caching=500",
+                    "--file-caching=500",
+                    "--live-caching=500",
+                    "--sout-mux-caching=500",
+                    "--http-reconnect"
+                ]
 
-            print("[VLC Log] VLC Instance creation succeeded.")
-            self.player = self.vlc_instance.media_player_new()
+                print(f"[VLC Log] Creating vlc.Instance with args: {vlc_args}")
+                self.vlc_instance = vlc.Instance(*vlc_args)
 
-            if self.player is None:
-                raise RuntimeError("media_player_new() returned None.")
+                if self.vlc_instance is None:
+                    raise RuntimeError("vlc.Instance(...) returned None. Plugin path or VLC binaries may be invalid.")
 
-            print("[VLC Log] VLC Media Player creation succeeded.")
-            self.equalizer = vlc.AudioEqualizer()
-            self._bind_vlc_events()
+                print("[VLC Log] VLC Instance creation succeeded.")
+                self.player = self.vlc_instance.media_player_new()
 
-        except Exception as e:
-            VLC_ENABLED = False
-            self.vlc_instance = None
-            self.player = None
-            tb_str = traceback.format_exc()
-            print(f"[VLC Log] ERROR: VLC Instance creation failed: {e}")
-            print(f"[VLC Log] Exception Traceback:\n{tb_str}")
+                if self.player is None:
+                    raise RuntimeError("media_player_new() returned None.")
 
-            error_msg = _(
-                "Failed to initialize VLC player backend: {}\n\n"
-                "Troubleshooting Information:\n"
-                "- Verify that 'libvlc.dll', 'libvlccore.dll', and the 'plugins' directory exist in the application folder.\n"
-                "- Verify Microsoft Visual C++ Redistributable is installed.\n"
-                "- The application will continue in degraded mode with playback disabled."
-            ).format(e)
+                print("[VLC Log] VLC Media Player creation succeeded.")
+                self.equalizer = vlc.AudioEqualizer()
+                self._bind_vlc_events()
 
-            utils.show_error_dialog(self.main_frame, error_msg, _("VLC Initialization Error"))
-        finally:
-            print("========================================")
+            except Exception as e:
+                VLC_ENABLED = False
+                self.vlc_instance = None
+                self.player = None
+                tb_str = traceback.format_exc()
+                print(f"[VLC Log] ERROR: VLC Instance creation failed: {e}")
+                print(f"[VLC Log] Exception Traceback:\n{tb_str}")
+
+                error_msg = _(
+                    "Failed to initialize VLC player backend: {}\n\n"
+                    "Troubleshooting Information:\n"
+                    "- Verify that 'libvlc.dll', 'libvlccore.dll', and the 'plugins' directory exist in the application folder.\n"
+                    "- Verify Microsoft Visual C++ Redistributable is installed.\n"
+                    "- The application will continue in degraded mode with playback disabled."
+                ).format(e)
+
+                utils.show_error_dialog(self.main_frame, error_msg, _("VLC Initialization Error"))
+            finally:
+                self._vlc_ready_event.set()
+                print("========================================")
 
     def _bind_vlc_events(self):
         """Binds callbacks to VLC media player events."""
@@ -1193,8 +1234,21 @@ class AudioPlayerPanel(wx.Panel):
         self.player = self.vlc_instance.media_player_new()
         self._bind_vlc_events()
 
-    def _play_media_with_vlc(self, request_id=None):
+    def _play_media_with_vlc(self, request_id=None, _vlc_wait_retried=False):
         if request_id is not None and request_id != self._current_request_id:
+            return
+        if self.player is None and VLC_ENABLED and not _vlc_wait_retried:
+            self.start_vlc_init_async()
+            self.update_status(_("Initializing audio engine..."))
+
+            def _wait_and_retry():
+                self._vlc_ready_event.wait(timeout=15.0)
+                if request_id is not None and request_id != self._current_request_id:
+                    return
+                if wx.GetApp() is not None:
+                    wx.CallAfter(self._play_media_with_vlc, request_id, True)
+
+            threading.Thread(target=_wait_and_retry, daemon=True, name="VLCReadyWaitThread").start()
             return
         if not self.player or not self.audio_url:
             self._playback_failed(_("VLC player not ready or no audio URL."))
@@ -2033,6 +2087,8 @@ class AudioPlayerPanel(wx.Panel):
     def cleanup_on_exit(self):
         nvda.set_speech_hook(None)
         self.save_current_position()
+        if self._vlc_init_thread and self._vlc_init_thread.is_alive():
+            self._vlc_ready_event.wait(timeout=2.0)
         if self.timer.IsRunning(): self.timer.Stop()
         if hasattr(self, '_seek_timer') and self._seek_timer.IsRunning():
             self._seek_timer.Stop()

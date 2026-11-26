@@ -5,6 +5,7 @@ import threading
 import random
 import time
 import os
+import importlib.util
 
 # local stuff
 import nvda
@@ -13,12 +14,9 @@ import utils
 import feature_manager
 from translation_manager import _
 
-# try to get the yt music api, w/e if it fails
-try:
-    from ytmusicapi import YTMusic
-    YTMUSIC_WORKS = True
-except ImportError:
-    YTMUSIC_WORKS = False
+# Defer importing ytmusicapi until Radar scan is actually triggered.
+YTMUSIC_WORKS = importlib.util.find_spec("ytmusicapi") is not None
+if not YTMUSIC_WORKS:
     print("Warning: ytmusicapi is not installed. Radar recommendations are unavailable.")
 
 class RadarPanel(wx.Panel):
@@ -41,6 +39,7 @@ class RadarPanel(wx.Panel):
             return None
         if self.ytm is None:
             try:
+                from ytmusicapi import YTMusic
                 self.ytm = YTMusic()
             except Exception as e:
                 print(f"YouTube Music API initialization failed: {e}")

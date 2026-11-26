@@ -35,6 +35,9 @@ def set_language(lang_code=None, settings=None):
             except Exception:
                 lang_code = constants.DEFAULT_PREFERRED_LANGUAGE
 
+    if _current_trans is not None and _active_lang_code == lang_code:
+        return
+
     _active_lang_code = lang_code
     print(f"Attempting to set language to: {lang_code}")
     locale_dir = get_locale_dir()

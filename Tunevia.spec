@@ -41,16 +41,26 @@ a = Analysis(
     optimize=0,
 )
 
-# Drop unused bass DLLs and machine-specific VLC plugins.dat cache so VLC rescans cleanly on any PC.
-a.datas = [
-    d for d in a.datas
-    if not d[0].replace('\\', '/').startswith('libs/bass/')
-    and not d[0].replace('\\', '/').endswith('plugins.dat')
-]
-a.binaries = [
-    b for b in a.binaries
-    if not b[0].replace('\\', '/').startswith('libs/bass/')
-]
+# Drop unused bass DLLs and strictly unused VLC plugins while keeping plugins.dat intact.
+_UNUSED_VLC_PLUGIN_DIRS = {
+    'gui', 'visualization', 'video_splitter', 'stream_out', 'access_output',
+    'mux', 'services_discovery', 'control', 'lua', 'keystore',
+    'video_filter', 'spu', 'stream_extractor',
+}
+
+def _keep_bundle_entry(entry):
+    norm = entry[0].replace('\\', '/').lower()
+    if norm.startswith('libs/bass/'):
+        return False
+    parts = norm.split('/')
+    if 'plugins' in parts:
+        idx = parts.index('plugins')
+        if idx + 2 < len(parts) and parts[idx + 1] in _UNUSED_VLC_PLUGIN_DIRS:
+            return False
+    return True
+
+a.datas = [d for d in a.datas if _keep_bundle_entry(d)]
+a.binaries = [b for b in a.binaries if _keep_bundle_entry(b)]
 
 pyz = PYZ(a.pure)
 

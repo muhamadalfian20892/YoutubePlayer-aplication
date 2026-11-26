@@ -1,4 +1,5 @@
 import os
+import struct
 import sys
 
 def get_resource_path(relative_path):
@@ -57,6 +58,69 @@ def get_resource_path(relative_path):
 
 _dll_dir_handles = []
 _preloaded_vlccore = None
+
+
+def sync_vlc_plugins_cache(plugins_dir):
+    """
+    Syncs recorded plugin DLL mtimes inside VLC's plugins.dat with disk mtimes
+    when file sizes match, preventing slow cold rescans after ZIP extraction.
+    """
+    if not plugins_dir or not os.path.isdir(plugins_dir):
+        return (0, 0)
+    dat_path = os.path.join(plugins_dir, "plugins.dat")
+    if not os.path.isfile(dat_path):
+        return (0, 0)
+
+    try:
+        with open(dat_path, "rb") as f:
+            buf = bytearray(f.read())
+    except OSError:
+        return (0, 0)
+
+    matched = 0
+    patched = 0
+    for root, _, files in os.walk(plugins_dir):
+        for fn in files:
+            if not fn.lower().endswith(".dll"):
+                continue
+            full = os.path.join(root, fn)
+            rel = os.path.relpath(full, plugins_dir).replace("/", "\\")
+            rel_b = rel.encode("utf-8")
+            needle = struct.pack("<H", len(rel_b) + 1) + rel_b + b"\x00"
+            pos = buf.find(needle)
+            if pos == -1:
+                continue
+            meta_off = pos + len(needle)
+            if meta_off + 17 > len(buf) or buf[meta_off] != 1:
+                continue
+            stored_mtime, stored_size = struct.unpack_from("<qq", buf, meta_off + 1)
+            try:
+                st = os.stat(full)
+            except OSError:
+                continue
+            if stored_size != st.st_size:
+                continue
+            matched += 1
+            disk_mtime = int(st.st_mtime)
+            if stored_mtime != disk_mtime:
+                struct.pack_into("<q", buf, meta_off + 1, disk_mtime)
+                patched += 1
+
+    if patched > 0:
+        tmp_path = dat_path + ".tmp"
+        try:
+            with open(tmp_path, "wb") as f:
+                f.write(buf)
+            os.replace(tmp_path, dat_path)
+        except OSError:
+            try:
+                if os.path.exists(tmp_path):
+                    os.remove(tmp_path)
+            except OSError:
+                pass
+            return (matched, 0)
+
+    return (matched, patched)
 
 
 def setup_vlc_environment():

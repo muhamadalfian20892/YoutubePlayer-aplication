@@ -701,6 +701,97 @@ class TestUpdaterAndExtendedDSPV17(unittest.TestCase):
         finally:
             fr.Destroy()
 
+    def test_vlc_plugins_cache_sync_handles_mtime_and_size_guard(self):
+        import shutil
+        import tempfile
+        import time
+        import path_utils
+
+        src_dat = os.path.join(os.path.dirname(__file__), "libs", "plugins", "plugins.dat")
+        src_dll = os.path.join(os.path.dirname(__file__), "libs", "plugins", "access", "libhttp_plugin.dll")
+        if not (os.path.isfile(src_dat) and os.path.isfile(src_dll)):
+            self.skipTest("Bundled VLC plugins.dat or libhttp_plugin.dll not present")
+
+        tmp = tempfile.mkdtemp(prefix="tunevia_pdat_test_")
+        try:
+            pdir = os.path.join(tmp, "plugins")
+            adir = os.path.join(pdir, "access")
+            os.makedirs(adir, exist_ok=True)
+            shutil.copy2(src_dat, os.path.join(pdir, "plugins.dat"))
+            dst_dll = os.path.join(adir, "libhttp_plugin.dll")
+            shutil.copy2(src_dll, dst_dll)
+
+            # Simulate ZIP extraction changing DLL timestamp
+            new_ts = time.time() + 120.0
+            os.utime(dst_dll, (new_ts, new_ts))
+            matched, patched = path_utils.sync_vlc_plugins_cache(pdir)
+            self.assertEqual(matched, 1)
+            self.assertEqual(patched, 1)
+
+            # Second sync should be a clean no-op
+            matched2, patched2 = path_utils.sync_vlc_plugins_cache(pdir)
+            self.assertEqual(matched2, 1)
+            self.assertEqual(patched2, 0)
+
+            # Altering DLL file size must prevent cache patching
+            with open(dst_dll, "ab") as f:
+                f.write(b"\x00")
+            new_ts2 = new_ts + 60.0
+            os.utime(dst_dll, (new_ts2, new_ts2))
+            matched3, patched3 = path_utils.sync_vlc_plugins_cache(pdir)
+            self.assertEqual(matched3, 0)
+            self.assertEqual(patched3, 0)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_vlc_no_plugins_cache_removed_and_deferred_init(self):
+        import inspect
+        import audio_player_panel
+
+        src = inspect.getsource(audio_player_panel.AudioPlayerPanel._init_vlc)
+        self.assertNotIn("--no-plugins-cache", src)
+
+        app = wx.App.Get() or wx.App(False)
+        frame = wx.Frame(None)
+        main_mock = MagicMock()
+        main_mock.video_frame = None
+        main_mock.settings = settings_manager.load_settings()
+        main_mock.is_favorite.return_value = False
+        panel = audio_player_panel.AudioPlayerPanel(frame, main_mock, defer_vlc_init=True)
+        try:
+            self.assertIsNone(panel.player)
+            panel.start_vlc_init_async()
+            self.assertTrue(panel.ensure_vlc_ready(timeout=15.0))
+            self.assertIsNotNone(panel.player)
+        finally:
+            panel.cleanup_on_exit()
+            frame.Destroy()
+
+    def test_ensure_yt_dlp_does_not_eagerly_import_and_utils_lazy_pygame(self):
+        import subprocess
+        import sys
+
+        repo_dir = os.path.dirname(os.path.abspath(__file__))
+        code = (
+            "import sys; "
+            "import yt_dlp_manager, utils; "
+            "ok = yt_dlp_manager.ensure_yt_dlp(); "
+            "assert ok is True; "
+            "assert 'yt_dlp' not in sys.modules, 'yt_dlp imported eagerly'; "
+            "assert 'pygame' not in sys.modules, 'pygame imported eagerly'; "
+            "assert 'requests' not in sys.modules, 'requests imported eagerly'; "
+            "print('LAZY_IMPORTS_OK')"
+        )
+        res = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=repo_dir,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        self.assertEqual(res.returncode, 0, msg=res.stderr or res.stdout)
+        self.assertIn("LAZY_IMPORTS_OK", res.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

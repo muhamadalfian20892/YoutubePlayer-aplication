@@ -5,7 +5,7 @@ import wx
 # --- Application Details ---
 APP_NAME = "Tunevia"
 APP_AUTHOR = "Technokers Lab"
-APP_VERSION = "1.7.1"
+APP_VERSION = "1.7.2"
 
 # --- App Update Endpoints (internal only; never expose to user UI) ---
 UPDATE_RELEASE_API_URL = "https://api.github.com/repos/muhamadalfian20892/YoutubePlayer-aplication/releases/latest"
