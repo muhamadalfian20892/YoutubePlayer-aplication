@@ -94,6 +94,7 @@ class AudioPlayerPanel(wx.Panel):
         self.current_track_index = None
         self.available_audio_tracks = []
         self.current_audio_format_id = None
+        self.current_stream_meta = {}
         self.resume_position_ms = None
         self.audio_url = None
         self.chapters = []
@@ -552,6 +553,8 @@ class AudioPlayerPanel(wx.Panel):
         self._is_seeking = False
         self.upload_date = upload_date
         self.available_audio_tracks = []
+        self.current_audio_format_id = None
+        self.current_stream_meta = {}
         self.chapters = []
         self.chapters_button.Hide()
         self.title_text.SetValue(f"{self.video_title or '...'} - {self.video_uploader or '...'}")
@@ -578,6 +581,8 @@ class AudioPlayerPanel(wx.Panel):
         if cached_info and cached_info.get('audio_url'):
             print(f"[TurboStream] Instant cache hit for {video_url}! Starting playback immediately.")
             self.audio_url = cached_info['audio_url']
+            self.current_audio_format_id = cached_info.get('current_format_id')
+            self.current_stream_meta = dict(cached_info.get('stream_meta') or {})
             self.chapters = cached_info.get('chapters', [])
             if self.chapters:
                 self.chapters_button.Show()
@@ -598,10 +603,13 @@ class AudioPlayerPanel(wx.Panel):
 
     def get_cached_stream_info(self, video_url):
         if not video_url: return None
+        need_lossless = self._is_lossless_active()
         with _stream_cache_lock:
             entry = _stream_url_cache.get(video_url)
             if entry:
                 if time.time() < entry.get('expires_at', 0):
+                    if need_lossless and not entry.get('lossless_mode', False):
+                        return None
                     return entry
                 else:
                     del _stream_url_cache[video_url]
@@ -618,6 +626,7 @@ class AudioPlayerPanel(wx.Panel):
                     'language': f.get('language'),
                     'format_note': f.get('format_note'),
                     'abr': f.get('abr'),
+                    'asr': f.get('asr'),
                     'url': f.get('url'),
                 })
         with _stream_cache_lock:
@@ -630,6 +639,8 @@ class AudioPlayerPanel(wx.Panel):
                 'upload_date': stream_data.get('upload_date'),
                 'formats': slim_formats,
                 'current_format_id': stream_data.get('current_format_id'),
+                'stream_meta': stream_data.get('stream_meta') or {},
+                'lossless_mode': bool(stream_data.get('lossless_mode', self._is_lossless_active())),
                 'title': stream_data.get('title'),
                 'uploader': stream_data.get('uploader'),
                 'expires_at': time.time() + _STREAM_CACHE_TTL,
@@ -657,15 +668,7 @@ class AudioPlayerPanel(wx.Panel):
                 import yt_dlp
                 fast_ydl_opts = self._get_base_ydl_opts()
                 pref_lang = self.main_frame.settings.get("preferred_audio_language", "").lower().strip()
-                if pref_lang:
-                    format_selector = f'bestaudio[ext=m4a][language={pref_lang}]/bestaudio[language={pref_lang}]/bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
-                else:
-                    format_selector = 'bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
-                
-                if self.main_frame and self.main_frame.video_frame:
-                    format_selector = 'best[ext=mp4][vcodec!=none][acodec!=none]/best[vcodec!=none][acodec!=none]/best'
-                    
-                fast_ydl_opts['format'] = format_selector
+                fast_ydl_opts['format'] = self._get_audio_format_selector(pref_lang)
                 ydl = self._get_shared_ydl(fast_ydl_opts)
                 info = ydl.extract_info(video_url, download=False)
                 if info:
@@ -677,6 +680,8 @@ class AudioPlayerPanel(wx.Panel):
                             'upload_date': info.get('upload_date'),
                             'formats': info.get('formats', []),
                             'current_format_id': fmt_id,
+                            'stream_meta': self._extract_stream_meta(info, fmt_id),
+                            'lossless_mode': self._is_lossless_active(),
                             'title': info.get('title'),
                             'uploader': info.get('uploader') or info.get('channel'),
                         })
@@ -768,20 +773,64 @@ class AudioPlayerPanel(wx.Panel):
             return f"{header} ({', '.join(details)})"
         return header
 
+    def _get_audio_format_selector(self, pref_lang=""):
+        """Builds the yt-dlp format selector, prioritizing peak bitrate master audio in Lossless mode."""
+        if self.main_frame and getattr(self.main_frame, 'video_frame', None):
+            return 'best[ext=mp4][vcodec!=none][acodec!=none]/best[vcodec!=none][acodec!=none]/best'
+        lang = (pref_lang or "").lower().strip()
+        if self._is_lossless_active():
+            if lang:
+                return (
+                    f'bestaudio[language={lang}][abr>=200]/bestaudio[language={lang}][acodec*=opus]/'
+                    f'bestaudio[language={lang}]/bestaudio[abr>=200]/bestaudio[acodec*=opus]/bestaudio/best'
+                )
+            return 'bestaudio[abr>=200]/bestaudio[acodec*=opus]/bestaudio/best'
+        if lang:
+            return f'bestaudio[ext=m4a][language={lang}]/bestaudio[language={lang}]/bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
+        if self.main_frame and self.main_frame.settings.get("prefer_high_bitrate_audio", True):
+            return 'bestaudio[acodec*=opus]/bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
+        return 'bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
+
+    def _extract_stream_meta(self, info, fmt_id=None):
+        """Extracts codec, bitrate (kbps), and sample rate (Hz) metadata for a selected stream."""
+        if not info or not isinstance(info, dict):
+            return {}
+        chosen = None
+        if fmt_id:
+            target_id = str(fmt_id)
+            for f in (info.get('formats') or []) + (info.get('requested_formats') or []):
+                if str(f.get('format_id')) == target_id:
+                    chosen = f
+                    break
+        src = chosen or info
+        return {
+            'acodec': str(src.get('acodec') or ''),
+            'abr': float(src.get('abr') or 0) if src.get('abr') else 0.0,
+            'asr': int(src.get('asr') or 0) if src.get('asr') else 0,
+        }
+
     def _pick_audio_stream(self, info):
-        """Returns (url, format_id) for an audio-bearing stream, avoiding video-only fallbacks."""
+        """Returns (url, format_id) for an audio-bearing stream, selecting peak bitrate in Lossless mode."""
         if not info or not isinstance(info, dict):
             return None, None
+        lossless = self._is_lossless_active()
+        audio_fmts = [
+            f for f in (info.get('formats') or [])
+            if f.get('url') and f.get('acodec') not in (None, 'none')
+        ]
+        if lossless and audio_fmts:
+            audio_fmts.sort(
+                key=lambda f: (f.get('abr') or 0, f.get('asr') or 0, 'opus' in str(f.get('acodec') or '').lower()),
+                reverse=True,
+            )
+            best = audio_fmts[0]
+            return best.get('url'), best.get('format_id')
         direct_url = info.get('url')
         if direct_url and info.get('acodec') != 'none':
             return direct_url, info.get('format_id')
         for f in info.get('requested_formats') or []:
             if f.get('url') and f.get('acodec') not in (None, 'none'):
                 return f.get('url'), f.get('format_id')
-        audio_fmts = [
-            f for f in (info.get('formats') or [])
-            if f.get('url') and f.get('acodec') not in (None, 'none')
-        ]
         if audio_fmts:
             audio_fmts.sort(key=lambda f: (f.get('ext') == 'm4a', f.get('abr') or 0), reverse=True)
             best = audio_fmts[0]
@@ -846,6 +895,8 @@ class AudioPlayerPanel(wx.Panel):
                     'label': label,
                     'lang': lang,
                     'bitrate': bitrate,
+                    'acodec': f.get('acodec') or '',
+                    'asr': int(f.get('asr') or 0) if f.get('asr') else 0,
                 })
 
             if not new_tracks:
@@ -892,6 +943,7 @@ class AudioPlayerPanel(wx.Panel):
                     print(f"[TurboStream] Picked up stream from completed prefetch: {target_url}")
                     self.audio_url = cached['audio_url']
                     self.current_audio_format_id = cached.get('current_format_id')
+                    self.current_stream_meta = dict(cached.get('stream_meta') or {})
                     self.chapters = cached.get('chapters', [])
                     if self.chapters:
                         wx.CallAfter(self.chapters_button.Show)
@@ -912,21 +964,7 @@ class AudioPlayerPanel(wx.Panel):
 
             fast_ydl_opts = self._get_base_ydl_opts()
             pref_lang = self.main_frame.settings.get("preferred_audio_language", "").lower().strip()
-            # StreamGuard Optimization:
-            # YouTube M4A (AAC / format 140) contains exact moov/stbl sample indexes,
-            # enabling sample-accurate, near-instant HTTP Range seeks in VLC without
-            # cluster-seeking stalls or premature EOFs seen in WebM/Opus.
-            if pref_lang:
-                format_selector = f'bestaudio[ext=m4a][language={pref_lang}]/bestaudio[language={pref_lang}]/bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
-            elif self.main_frame.settings.get("prefer_high_bitrate_audio", True):
-                format_selector = 'bestaudio[acodec*=opus]/bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
-            else:
-                format_selector = 'bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
-            
-            if self.main_frame.video_frame:
-                format_selector = 'best[ext=mp4][vcodec!=none][acodec!=none]/best[vcodec!=none][acodec!=none]/best'
-                
-            fast_ydl_opts['format'] = format_selector
+            fast_ydl_opts['format'] = self._get_audio_format_selector(pref_lang)
             
             ydl = self._get_shared_ydl(fast_ydl_opts)
             info = ydl.extract_info(target_url, download=False)
@@ -952,12 +990,15 @@ class AudioPlayerPanel(wx.Panel):
 
             if self.audio_url:
                 self.current_audio_format_id = picked_fmt_id
+                self.current_stream_meta = self._extract_stream_meta(info, picked_fmt_id)
                 self.cache_stream_info(target_url, {
                     'audio_url': self.audio_url,
                     'chapters': self.chapters,
                     'upload_date': self.upload_date,
                     'formats': info.get('formats', []),
                     'current_format_id': self.current_audio_format_id,
+                    'stream_meta': self.current_stream_meta,
+                    'lossless_mode': self._is_lossless_active(),
                     'title': self.video_title,
                     'uploader': self.video_uploader,
                 })
@@ -1029,12 +1070,8 @@ class AudioPlayerPanel(wx.Panel):
             print(f"Background fetch for all audio tracks failed: {e}")
 
     def _is_lossless_active(self):
-        if not self.main_frame.settings.get("lossless_mode", False):
-            return False
-        if not self.is_local_file or not self.local_file_path:
-            return False
-        _, ext = os.path.splitext(self.local_file_path.lower())
-        return ext in constants.LOSSLESS_AUDIO_EXTENSIONS
+        """Returns True whenever Lossless Bit-Perfect direct mode is enabled (YouTube and local)."""
+        return bool(self.main_frame.settings.get("lossless_mode", False))
 
     def _needs_dsp_pipeline(self):
         if self._is_lossless_active():
@@ -1563,6 +1600,8 @@ class AudioPlayerPanel(wx.Panel):
         self.loop_b_ms = None
         self.audio_url = self.video_url = self.video_title = self.video_uploader = self.upload_date = None
         self.current_track_index = self.resume_position_ms = None
+        self.current_audio_format_id = None
+        self.current_stream_meta = {}
         self.chapters = []
         self.chapters_button.Hide()
         self._current_audio_channel = None
@@ -1841,12 +1880,16 @@ class AudioPlayerPanel(wx.Panel):
         def _worker():
             try:
                 opts = self._get_base_ydl_opts()
-                opts['format'] = 'bestaudio[ext=m4a]/bestaudio/best[ext=mp4]/best'
+                pref_lang = self.main_frame.settings.get("preferred_audio_language", "").lower().strip()
+                opts['format'] = self._get_audio_format_selector(pref_lang)
                 ydl = self._get_shared_ydl(opts)
                 info = ydl.extract_info(target_url, download=False)
-                new_url = info.get('url') if info else None
+                new_url, new_fid = self._pick_audio_stream(info) if info else (None, None)
                 if new_url and new_url != self.audio_url and target_url == self.video_url:
                     self.audio_url = new_url
+                    if new_fid:
+                        self.current_audio_format_id = new_fid
+                    self.current_stream_meta = self._extract_stream_meta(info, new_fid)
                     print(f"[ProactiveRefresh] Refreshed stream URL for {target_url}")
             except Exception as e:
                 print(f"[ProactiveRefresh] Error refreshing stream URL: {e}")
@@ -2515,6 +2558,20 @@ class AudioPlayerPanel(wx.Panel):
             ext = os.path.splitext(self.local_file_path)[1].lstrip('.').upper()
             if ext:
                 ext_info = ext
+        elif not self.is_local_file and self.current_stream_meta:
+            parts = []
+            acodec = str(self.current_stream_meta.get('acodec') or '').upper()
+            if acodec:
+                parts.append(acodec.split('.')[0])
+            abr = self.current_stream_meta.get('abr') or 0
+            if abr:
+                parts.append(f"{abr:.0f} kbps")
+            asr = self.current_stream_meta.get('asr') or 0
+            if asr:
+                khz = asr / 1000.0
+                parts.append(f"{int(khz) if khz.is_integer() else round(khz, 1)} kHz")
+            if parts:
+                ext_info = f"{_('YouTube Stream')} ({', '.join(parts)})"
 
         rate = self.speed_slider.GetValue() / 100.0
         vol = self.volume_slider.GetValue()
@@ -2553,6 +2610,8 @@ class AudioPlayerPanel(wx.Panel):
         self.is_radio_mode = False
         self.is_playing = self.is_loaded = self.is_finished = self.notification_sound_played = False
         self.available_audio_tracks = []
+        self.current_audio_format_id = None
+        self.current_stream_meta = {}
         self.chapters = []
         self.chapters_button.Hide()
         self.title_text.SetValue(f"{self.video_title} - {self.video_uploader}")
@@ -2591,7 +2650,45 @@ class AudioPlayerPanel(wx.Panel):
         new_val = not self.main_frame.settings.get("lossless_mode", False)
         self.main_frame.settings["lossless_mode"] = new_val
         self.main_frame.save_settings()
-        self._apply_dsp_backend_transition()
+
+        if new_val:
+            self.apply_equalizer_settings({"enabled": False})
+        else:
+            eq_settings = {
+                "enabled": feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_EQUALIZER) and self.main_frame.settings.get("equalizer_enabled", False),
+                "preamp": self.main_frame.settings.get("equalizer_preamp", constants.DEFAULT_PREAMP_PERCENT),
+                "bands": self.main_frame.settings.get("equalizer_bands", constants.EQUALIZER_PRESETS["Flat"]),
+            }
+            self.apply_equalizer_settings(eq_settings)
+
+        upgraded_stream = False
+        if new_val and self.is_loaded and not self.is_local_file and self.available_audio_tracks:
+            candidates = [t for t in self.available_audio_tracks if t.get("url")]
+            if candidates:
+                best = max(
+                    candidates,
+                    key=lambda t: (t.get("bitrate") or 0, t.get("asr") or 0, "opus" in str(t.get("acodec") or "").lower()),
+                )
+                if str(best["id"]) != str(self.current_audio_format_id):
+                    cur_time = self.player.get_time() if self.player else 0
+                    was_playing = self.is_playing
+                    self.current_audio_format_id = str(best["id"])
+                    self.audio_url = best["url"]
+                    self.current_stream_meta = {
+                        "acodec": best.get("acodec") or "",
+                        "abr": float(best.get("bitrate") or 0),
+                        "asr": int(best.get("asr") or 0),
+                    }
+                    self.resume_position_ms = cur_time if cur_time > 0 else self._last_valid_pos_ms
+                    if self.player:
+                        self.player.stop()
+                    self._play_media_with_vlc(self._current_request_id)
+                    if not was_playing:
+                        wx.CallLater(250, lambda: self.player.set_pause(1) if self.player else None)
+                    upgraded_stream = True
+
+        if not upgraded_stream:
+            self._apply_dsp_backend_transition()
         nvda.speak(_("Lossless Bit-Perfect mode enabled.") if new_val else _("Lossless Bit-Perfect mode disabled."))
 
     def on_cycle_bass_boost(self, event=None):

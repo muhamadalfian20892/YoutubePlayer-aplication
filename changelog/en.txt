@@ -52,3 +52,6 @@ Finally, a full static and runtime audit closed dozens of hidden bugs across the
 
 Version 1.7.0: Built-In Updates, Lossless Playback, 48 kHz Audio Modes, and Focus Fixes
 Version 1.7.0 adds a silent startup update checker and in-app updater (Help -> Check for Updates) with progress reporting and hash/archive verification, fixes Alt+Tab window handling so switching tasks never hides or traps the window, upgrades internal DSP processing to 48 kHz, and introduces local Lossless playback (FLAC, WAV, AIFF, WavPack, APE, ALAC) alongside Bit-Perfect bypass, Bass Boost, Vocal Clarity, Night Mode compression, Smart NVDA Audio Ducking, A-B Loop, Sleep Timer with fade-out, an Up-Next Queue across panels, 0-9 percentage seeking, and instant Track/Audio telemetry via the I key.
+
+Version 1.7.1: YouTube Lossless Direct Mode and Live Stream Telemetry
+Version 1.7.1 extends Lossless Bit-Perfect Direct Mode (Ctrl+Shift+L) to live YouTube playback. When enabled, Tunevia prioritizes the highest-bitrate master audio stream available from YouTube, upgrades active playback on the fly if a higher-bitrate format exists, bypasses EQ and DSP coloration in favor of native 32-bit float audio output, and reads out live stream codec, bitrate, and sample rate when pressing I.

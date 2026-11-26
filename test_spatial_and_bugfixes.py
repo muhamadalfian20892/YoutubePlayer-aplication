@@ -477,6 +477,7 @@ class TestWXDialogsAndBugFixes(unittest.TestCase):
 
         frame = wx.Frame(None)
         main_mock = MagicMock()
+        main_mock.video_frame = None
         s = settings_manager.load_settings()
         s["volume"] = 15
         s["spatial_audio_enabled"] = True
@@ -502,7 +503,7 @@ class TestWXDialogsAndBugFixes(unittest.TestCase):
             self.assertEqual(picked_url, "https://example.com/audio.m4a")
             self.assertEqual(picked_id, "140")
 
-            # Lossless local bit-perfect detection & bypass
+            # Lossless bit-perfect detection & bypass (both local and YouTube streams)
             panel.is_local_file = True
             panel.local_file_path = r"C:\music\audiophile.flac"
             panel.main_frame.settings["lossless_mode"] = True
@@ -510,7 +511,51 @@ class TestWXDialogsAndBugFixes(unittest.TestCase):
             self.assertTrue(panel._is_lossless_active())
             self.assertFalse(panel._needs_dsp_pipeline())
 
+            # YouTube stream in lossless mode: DSP bypassed, abr>=200 selector active, peak bitrate picked
+            panel.is_local_file = False
+            panel.local_file_path = None
+            self.assertTrue(panel._is_lossless_active())
+            self.assertFalse(panel._needs_dsp_pipeline())
+            sel_str = panel._get_audio_format_selector()
+            self.assertIn("abr>=200", sel_str)
+
+            yt_url, yt_id = panel._pick_audio_stream({
+                "formats": [
+                    {"format_id": "140", "url": "https://example.com/140.m4a", "acodec": "mp4a.40.2", "ext": "m4a", "abr": 128, "asr": 44100},
+                    {"format_id": "251", "url": "https://example.com/251.webm", "acodec": "opus", "ext": "webm", "abr": 160, "asr": 48000},
+                    {"format_id": "774", "url": "https://example.com/774.webm", "acodec": "opus", "ext": "webm", "abr": 256, "asr": 48000},
+                ]
+            })
+            self.assertEqual(yt_url, "https://example.com/774.webm")
+            self.assertEqual(yt_id, "774")
+
+            # Live toggle Lossless ON upgrades active YouTube track URL to peak bitrate track
+            panel.main_frame.settings["lossless_mode"] = False
+            panel.is_loaded = True
+            panel.is_playing = True
+            panel.current_audio_format_id = "140"
+            panel.audio_url = "https://example.com/140.m4a"
+            panel.available_audio_tracks = [
+                {"id": "140", "url": "https://example.com/140.m4a", "bitrate": 128, "acodec": "mp4a.40.2", "asr": 44100},
+                {"id": "251", "url": "https://example.com/251.webm", "bitrate": 160, "acodec": "opus", "asr": 48000},
+            ]
+            with patch.object(panel, "_play_media_with_vlc"), patch.object(panel.player, "stop"):
+                with patch("audio_player_panel.nvda.speak"):
+                    panel.on_toggle_lossless_mode(None)
+            self.assertTrue(panel.main_frame.settings["lossless_mode"])
+            self.assertEqual(panel.audio_url, "https://example.com/251.webm")
+            self.assertEqual(panel.current_audio_format_id, "251")
+
+            # Track telemetry (I key) announces live YouTube codec/bitrate/Hz
+            panel.video_title = "Sample Song"
+            panel.video_uploader = "Sample Artist"
+            spoken = []
+            with patch("audio_player_panel.nvda.speak", side_effect=lambda msg, *a, **k: spoken.append(msg)):
+                panel.speak_track_and_audio_info()
+            self.assertTrue(any("160 kbps" in m and "48 kHz" in m for m in spoken), f"Missing telemetry in {spoken}")
+
             # Normal stream should enable DSP pipeline when bass/vocal/night/ducking enabled
+            panel.main_frame.settings["lossless_mode"] = False
             panel.is_local_file = False
             panel.main_frame.settings["spatial_audio_enabled"] = False
             panel.main_frame.settings["bass_boost"] = 35
