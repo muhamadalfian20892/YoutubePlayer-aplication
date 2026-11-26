@@ -98,7 +98,7 @@ class Tunevia60ScenariosTest(unittest.TestCase):
     def test_09_app_metadata(self):
         """Scenario 9: Application metadata (name, version, author) are defined correctly."""
         self.assertEqual(constants.APP_NAME, "Tunevia")
-        self.assertEqual(constants.APP_VERSION, "1.7.2")
+        self.assertEqual(constants.APP_VERSION, "1.7.3")
         self.assertEqual(constants.APP_AUTHOR, "Technokers Lab")
 
     def test_10_sound_events_mapping(self):

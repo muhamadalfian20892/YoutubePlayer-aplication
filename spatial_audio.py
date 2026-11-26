@@ -543,7 +543,8 @@ class WinMMOutput:
         self._feeder_thread = None
 
     @staticmethod
-    def list_devices() -> list:
+    def list_devices_with_caps() -> list:
+        """Returns [(device_id, name, channels), ...] from Windows WaveOut."""
         lib = _get_winmm()
         if not lib:
             return []
@@ -553,10 +554,14 @@ class WinMMOutput:
             caps = WAVEOUTCAPSW()
             for idx in range(count):
                 if lib.waveOutGetDevCapsW(idx, ctypes.byref(caps), ctypes.sizeof(caps)) == 0:
-                    devices.append((idx, caps.szPname.strip()))
+                    devices.append((idx, caps.szPname.strip(), int(caps.wChannels or 2)))
         except Exception:
             pass
         return devices
+
+    @classmethod
+    def list_devices(cls) -> list:
+        return [(idx, name) for idx, name, _ch in cls.list_devices_with_caps()]
 
     @classmethod
     def match_device_id(cls, vlc_device_desc: str) -> int:
@@ -565,12 +570,32 @@ class WinMMOutput:
         target = vlc_device_desc.strip().lower()
         if not target or target == "default":
             return WAVE_MAPPER
-        prefix = target[:24]
-        for dev_id, pname in cls.list_devices():
+
+        best_id = None
+        best_score = (0, 0, 0)
+        for dev_id, pname, ch in cls.list_devices_with_caps():
             p_low = pname.lower()
-            if p_low == target or target.startswith(p_low[:20]) or p_low.startswith(prefix):
-                return dev_id
-        return WAVE_MAPPER
+            if not p_low:
+                continue
+            is_stereo = 1 if ch >= 2 else 0
+            if p_low == target:
+                score = (3, is_stereo, len(p_low))
+            elif len(p_low) >= 20 and target.startswith(p_low):
+                # waveOutGetDevCapsW szPname truncates at 31 chars on Windows.
+                score = (2, is_stereo, len(p_low))
+            else:
+                common = 0
+                for a, b in zip(p_low, target):
+                    if a != b:
+                        break
+                    common += 1
+                if common < 12:
+                    continue
+                score = (1, is_stereo, common)
+            if score > best_score:
+                best_score = score
+                best_id = dev_id
+        return WAVE_MAPPER if best_id is None else best_id
 
     def is_open(self) -> bool:
         with self._lock:

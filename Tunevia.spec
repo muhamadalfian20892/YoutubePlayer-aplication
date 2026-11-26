@@ -19,7 +19,10 @@ hiddenimports = [
 ] + ytm_hiddenimports + cert_hiddenimports + ytdlp_hiddenimports + genius_hiddenimports + bs4_hiddenimports + soup_hiddenimports
 
 datas = [
-    ('docs', 'docs'),
+    ('docs/readme_en.txt', 'docs'),
+    ('docs/readme_id.txt', 'docs'),
+    ('docs/changelog_en.txt', 'docs'),
+    ('docs/changelog_id.txt', 'docs'),
     ('libs', 'libs'),
     ('sound', 'sound'),
     ('locales', 'locales'),

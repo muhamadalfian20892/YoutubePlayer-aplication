@@ -698,6 +698,9 @@ class MainFrame(wx.Frame):
         import time
         self.last_user_activity = time.time()
         idx = event.GetSelection()
+        if idx == wx.NOT_FOUND or idx < 0 or idx >= self.notebook.GetPageCount():
+            event.Skip()
+            return
         tab_name = self.notebook.GetPageText(idx)
         page = self.notebook.GetPage(idx)
         if hasattr(page, 'ensure_data_loaded'):

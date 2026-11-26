@@ -94,6 +94,7 @@ class AudioPlayerPanel(wx.Panel):
         self.available_audio_tracks = []
         self.current_audio_format_id = None
         self.current_stream_meta = {}
+        self._fallback_audio_stream = None
         self.resume_position_ms = None
         self.audio_url = None
         self.chapters = []
@@ -424,8 +425,7 @@ class AudioPlayerPanel(wx.Panel):
 
         has_mono = feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_MONO_AUDIO)
         self.mono_toggle_button.Show(has_mono)
-        self.mono_toggle_button.SetLabel(_("Mono"))
-        self.mono_toggle_button.SetName(_("Mono Audio"))
+        self._update_mono_button_ui()
         self.mono_toggle_button.SetToolTip(_("Toggle mono/stereo audio output."))
 
         self.change_track_button.SetLabel(_("Change Audio Track"))
@@ -596,6 +596,7 @@ class AudioPlayerPanel(wx.Panel):
         self.available_audio_tracks = []
         self.current_audio_format_id = None
         self.current_stream_meta = {}
+        self._fallback_audio_stream = None
         self.chapters = []
         self.chapters_button.Hide()
         self.title_text.SetValue(f"{self.video_title or '...'} - {self.video_uploader or '...'}")
@@ -636,6 +637,8 @@ class AudioPlayerPanel(wx.Panel):
                 self._process_audio_formats(cached_info['formats'])
             self.update_status(_("Starting playback..."))
             self._play_media_with_vlc(request_id)
+            if len(self.available_audio_tracks) <= 1:
+                threading.Thread(target=self._fetch_full_formats_thread, args=(request_id, video_url), daemon=True).start()
             wx.CallLater(1500, self.prefetch_next_track_in_queue)
             return
 
@@ -1120,12 +1123,21 @@ class AudioPlayerPanel(wx.Panel):
         s = self.main_frame.settings
         spatial_on = feature_manager.is_feature_enabled(s, feature_manager.FEATURE_SPATIAL_AUDIO) and s.get("spatial_audio_enabled", False)
         mono_on = feature_manager.is_feature_enabled(s, feature_manager.FEATURE_MONO_AUDIO) and s.get("mono_audio", False)
-        norm_on = feature_manager.is_feature_enabled(s, feature_manager.FEATURE_AUDIO_NORMALIZATION) and s.get("audio_normalization", False)
         bass_on = int(s.get("bass_boost", 0)) > 0
         vocal_on = bool(s.get("vocal_clarity_enabled", False))
         night_on = bool(s.get("night_mode_enabled", False))
         duck_on = bool(s.get("nvda_ducking_enabled", False))
-        return bool(spatial_on or mono_on or norm_on or bass_on or vocal_on or night_on or duck_on)
+        return bool(spatial_on or mono_on or bass_on or vocal_on or night_on or duck_on)
+
+    def _should_use_vlc_normvol(self):
+        """Uses VLC's native float stereo normalizer when normalization is the only active effect."""
+        if self._is_lossless_active() or self._using_dsp_output:
+            return False
+        s = self.main_frame.settings
+        return (
+            feature_manager.is_feature_enabled(s, feature_manager.FEATURE_AUDIO_NORMALIZATION)
+            and bool(s.get("audio_normalization", False))
+        )
 
     def _sync_dsp_settings(self):
         s = self.main_frame.settings
@@ -1266,6 +1278,8 @@ class AudioPlayerPanel(wx.Panel):
             # StreamGuard + TurboStream: Fast responsive start with 500ms caching and auto-reconnect
             media.add_option(":network-caching=500")
             media.add_option(":http-reconnect")
+        if self._should_use_vlc_normvol():
+            media.add_option(":audio-filter=normvol")
 
         self.player.set_media(media)
         media.release()
@@ -1326,6 +1340,7 @@ class AudioPlayerPanel(wx.Panel):
         self.is_finished = False
         self._is_recovering = False
         self._is_seeking = False
+        self._fallback_audio_stream = None
         self._set_play_pause_label(_("Pause"))
         tick_ms = 250 if (self.loop_a_ms is not None and self.loop_b_ms is not None) else 500
         if not self.timer.IsRunning(): self.timer.Start(tick_ms)
@@ -1523,6 +1538,19 @@ class AudioPlayerPanel(wx.Panel):
     def vlc_on_error(self, event):
         if not self:
             return
+        fallback = getattr(self, '_fallback_audio_stream', None)
+        if fallback and self.is_loaded:
+            prev_url, prev_fmt, prev_meta = fallback
+            self._fallback_audio_stream = None
+            if prev_url and prev_url != self.audio_url:
+                cur_time = self.player.get_time() if self.player else -1
+                self.resume_position_ms = cur_time if cur_time > 0 else getattr(self, '_last_valid_pos_ms', 0)
+                self.audio_url = prev_url
+                self.current_audio_format_id = prev_fmt
+                self.current_stream_meta = prev_meta or {}
+                print(f"[StreamGuard] Upgraded stream failed; restoring previous playable format {prev_fmt}.")
+                self._play_media_with_vlc(self._current_request_id)
+                return
         # StreamGuard: If playback was active and dropped during seek, attempt auto-recovery
         if self.is_loaded and getattr(self, '_last_valid_pos_ms', 0) > 0 and not getattr(self, '_is_recovering', False):
             target = getattr(self, '_pending_seek_pos', None) or getattr(self, '_last_valid_pos_ms', 0)
@@ -1570,6 +1598,8 @@ class AudioPlayerPanel(wx.Panel):
                 media = self.vlc_instance.media_new(self.audio_url)
                 media.add_option(":network-caching=500")
                 media.add_option(":http-reconnect")
+                if self._should_use_vlc_normvol():
+                    media.add_option(":audio-filter=normvol")
                 self.player.set_media(media)
                 media.release()
 
@@ -2359,7 +2389,7 @@ class AudioPlayerPanel(wx.Panel):
             if not self.winmm_output.is_open() or self.winmm_output._device_id != dev_idx:
                 self.winmm_output.open(
                     device_id=dev_idx,
-                    sample_rate=44100,
+                    sample_rate=constants.DSP_SAMPLE_RATE,
                     channels=2,
                     bits=16,
                     processor_fn=self.spatial_processor.process_chunk,
@@ -2445,6 +2475,7 @@ class AudioPlayerPanel(wx.Panel):
         self.main_frame.settings["spatial_audio_enabled"] = is_spatial
         if is_spatial and self.main_frame.settings.get("mono_audio", False):
             self.main_frame.settings["mono_audio"] = False
+            self._update_mono_button_ui()
         self._update_spatial_button_ui()
         self._apply_dsp_backend_transition()
         self.main_frame.save_settings()
@@ -2490,11 +2521,29 @@ class AudioPlayerPanel(wx.Panel):
         self.main_frame.settings["spatial_audio_depth"] = int(cfg.get("depth", constants.DEFAULT_SPATIAL_DEPTH))
         if enabled and self.main_frame.settings.get("mono_audio", False):
             self.main_frame.settings["mono_audio"] = False
+            self._update_mono_button_ui()
         self._update_spatial_button_ui()
         self._apply_dsp_backend_transition()
 
     def apply_normalization(self, enabled):
-        self._apply_dsp_backend_transition()
+        self._sync_dsp_settings()
+        if self._using_dsp_output:
+            return
+        if not self._is_lossless_active() and self.is_loaded and self.player and self.audio_url:
+            cur_time = self.player.get_time()
+            was_playing = self.is_playing
+            self.resume_position_ms = cur_time if cur_time > 0 else self._last_valid_pos_ms
+            self.player.stop()
+            self._play_media_with_vlc(self._current_request_id)
+            if not was_playing:
+                wx.CallLater(250, lambda: self.player.set_pause(1) if self.player else None)
+
+    def _update_mono_button_ui(self):
+        if not getattr(self, "mono_toggle_button", None):
+            return
+        is_mono = bool(self.main_frame.settings.get("mono_audio", False))
+        self.mono_toggle_button.SetLabel(_("Mono: On") if is_mono else _("Mono: Off"))
+        self.mono_toggle_button.SetName(_("Mono Audio: On") if is_mono else _("Mono Audio: Off"))
 
     def on_toggle_mono(self, event=None):
         if not feature_manager.is_feature_enabled(self.main_frame.settings, feature_manager.FEATURE_MONO_AUDIO):
@@ -2505,6 +2554,7 @@ class AudioPlayerPanel(wx.Panel):
         if is_mono and self.main_frame.settings.get("spatial_audio_enabled", False):
             self.main_frame.settings["spatial_audio_enabled"] = False
             self._update_spatial_button_ui()
+        self._update_mono_button_ui()
         self.apply_mono_setting()
         self.main_frame.save_settings()
         nvda.speak(_("Mono audio enabled.") if is_mono else _("Stereo audio enabled."), constants.NVDA_VERBOSITY_DEFAULT)
@@ -2668,6 +2718,7 @@ class AudioPlayerPanel(wx.Panel):
         self.available_audio_tracks = []
         self.current_audio_format_id = None
         self.current_stream_meta = {}
+        self._fallback_audio_stream = None
         self.chapters = []
         self.chapters_button.Hide()
         self.title_text.SetValue(f"{self.video_title} - {self.video_uploader}")
@@ -2721,13 +2772,24 @@ class AudioPlayerPanel(wx.Panel):
         if new_val and self.is_loaded and not self.is_local_file and self.available_audio_tracks:
             candidates = [t for t in self.available_audio_tracks if t.get("url")]
             if candidates:
+                pref_lang = (self.main_frame.settings.get("preferred_audio_language", "") or "").lower().strip()
+                lang_candidates = [
+                    t for t in candidates
+                    if pref_lang and str(t.get("lang") or "").lower().startswith(pref_lang)
+                ] if pref_lang else []
+                pool = lang_candidates or candidates
                 best = max(
-                    candidates,
+                    pool,
                     key=lambda t: (t.get("bitrate") or 0, t.get("asr") or 0, "opus" in str(t.get("acodec") or "").lower()),
                 )
                 if str(best["id"]) != str(self.current_audio_format_id):
                     cur_time = self.player.get_time() if self.player else 0
                     was_playing = self.is_playing
+                    self._fallback_audio_stream = (
+                        self.audio_url,
+                        self.current_audio_format_id,
+                        dict(self.current_stream_meta or {}),
+                    )
                     self.current_audio_format_id = str(best["id"])
                     self.audio_url = best["url"]
                     self.current_stream_meta = {
@@ -2742,9 +2804,21 @@ class AudioPlayerPanel(wx.Panel):
                     if not was_playing:
                         wx.CallLater(250, lambda: self.player.set_pause(1) if self.player else None)
                     upgraded_stream = True
+        elif not new_val:
+            self._fallback_audio_stream = None
 
         if not upgraded_stream:
+            prev_dsp = self._using_dsp_output
             self._apply_dsp_backend_transition()
+            if (
+                not new_val
+                and not prev_dsp
+                and self._should_use_vlc_normvol()
+                and self.is_loaded
+                and self.player
+                and self.audio_url
+            ):
+                self.apply_normalization(True)
         nvda.speak(_("Lossless Bit-Perfect mode enabled.") if new_val else _("Lossless Bit-Perfect mode disabled."))
 
     def on_cycle_bass_boost(self, event=None):

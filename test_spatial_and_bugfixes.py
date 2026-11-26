@@ -792,6 +792,79 @@ class TestUpdaterAndExtendedDSPV17(unittest.TestCase):
         self.assertEqual(res.returncode, 0, msg=res.stderr or res.stdout)
         self.assertIn("LAZY_IMPORTS_OK", res.stdout)
 
+    def test_v173_normvol_routing_sample_rate_mono_label_and_403_fallback(self):
+        import audio_player_panel
+
+        app = wx.App.Get() or wx.App(False)
+        frame = wx.Frame(None)
+        main_mock = MagicMock()
+        main_mock.video_frame = None
+        s = settings_manager.load_settings()
+        s["audio_normalization"] = True
+        s["lossless_mode"] = False
+        s["spatial_audio_enabled"] = False
+        s["mono_audio"] = False
+        s["bass_boost"] = 0
+        s["vocal_clarity_enabled"] = False
+        s["night_mode_enabled"] = False
+        s["nvda_ducking_enabled"] = False
+        s["preferred_audio_language"] = "en"
+        main_mock.settings = s
+        main_mock.is_favorite.return_value = False
+        panel = audio_player_panel.AudioPlayerPanel(frame, main_mock)
+        try:
+            # 1. Normalization alone keeps native WASAPI VLC output via normvol filter
+            self.assertFalse(panel._needs_dsp_pipeline())
+            self.assertTrue(panel._should_use_vlc_normvol())
+            s["lossless_mode"] = True
+            self.assertFalse(panel._should_use_vlc_normvol())
+            s["lossless_mode"] = False
+
+            # 2. Mono button shows explicit On / Off state
+            self.assertEqual(panel.mono_toggle_button.GetLabel(), "Mono: Off")
+            with patch.object(panel, "apply_mono_setting"), patch("audio_player_panel.nvda.speak"):
+                panel.on_toggle_mono(None)
+            self.assertEqual(panel.mono_toggle_button.GetLabel(), "Mono: On")
+            with patch.object(panel, "apply_mono_setting"), patch("audio_player_panel.nvda.speak"):
+                panel.on_toggle_mono(None)
+            self.assertEqual(panel.mono_toggle_button.GetLabel(), "Mono: Off")
+
+            # 3. on_select_audio_device uses DSP_SAMPLE_RATE (48000), not 44100
+            panel._using_dsp_output = True
+            panel.audio_devices = [("dev_id_1", "Speakers (Test Stereo)")]
+            panel.audio_device_choice.Clear()
+            panel.audio_device_choice.Append("Speakers (Test Stereo)")
+            panel.audio_device_choice.SetSelection(0)
+            with patch.object(panel.winmm_output, "open", return_value=True) as mock_open:
+                panel.on_select_audio_device(None, speak=False)
+                self.assertEqual(mock_open.call_args.kwargs["sample_rate"], constants.DSP_SAMPLE_RATE)
+            panel._using_dsp_output = False
+
+            # 4. Lossless upgrade respects preferred language and falls back cleanly on HTTP 403 / VLC error
+            panel.is_loaded = True
+            panel.is_local_file = False
+            panel.audio_url = "https://example.com/18.mp4"
+            panel.current_audio_format_id = "18"
+            panel.current_stream_meta = {"acodec": "mp4a.40.2", "abr": 96.0, "asr": 44100}
+            panel.available_audio_tracks = [
+                {"id": "251-de", "url": "https://example.com/251-de.webm", "lang": "de", "bitrate": 192, "acodec": "opus", "asr": 48000},
+                {"id": "140-en", "url": "https://example.com/140-en.m4a", "lang": "en", "bitrate": 129, "acodec": "mp4a.40.2", "asr": 44100},
+            ]
+            with patch.object(panel, "_play_media_with_vlc"), patch.object(panel.player, "stop"), patch("audio_player_panel.nvda.speak"):
+                panel.on_toggle_lossless_mode(None)
+            self.assertEqual(panel.current_audio_format_id, "140-en")
+            self.assertIsNotNone(panel._fallback_audio_stream)
+
+            with patch.object(panel, "_play_media_with_vlc") as mock_play:
+                panel.vlc_on_error(None)
+                mock_play.assert_called_once()
+            self.assertEqual(panel.audio_url, "https://example.com/18.mp4")
+            self.assertEqual(panel.current_audio_format_id, "18")
+            self.assertIsNone(panel._fallback_audio_stream)
+        finally:
+            panel.cleanup_on_exit()
+            frame.Destroy()
+
 
 if __name__ == "__main__":
     unittest.main()
